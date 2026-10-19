@@ -1,214 +1,239 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 801" width="1440" height="801" font-family="Inter, Segoe UI, Arial, sans-serif">
-<rect width="1440" height="801" fill="#f8fafc"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 861" width="1440" height="861" font-family="Inter, Segoe UI, Arial, sans-serif">
+<rect width="1440" height="861" fill="#f8fafc"/>
 <text x="40" y="48" font-size="22" font-weight="700" fill="#0f172a">3. Stock</text>
 <text x="40" y="76" font-size="13.5" fill="#475569">Cada entrada y salida de mercadería, y la foto del stock al cierre de cada mes.</text>
-<path d="M555,181.0 H533 V159.0 H370" fill="none" stroke="#7c5cff" stroke-width="1.6" stroke-opacity=".85" stroke-linejoin="round"/>
-<circle cx="555" cy="181.0" r="3.2" fill="#7c5cff"/>
-<rect x="366.5" y="155.5" width="7" height="7" fill="#7c5cff" transform="rotate(45 370 159.0)"/>
-<path d="M555,247.0 H524 V568.0 H370" fill="none" stroke="#0b7a75" stroke-width="1.6" stroke-opacity=".85" stroke-linejoin="round"/>
-<circle cx="555" cy="247.0" r="3.2" fill="#0b7a75"/>
-<rect x="366.5" y="564.5" width="7" height="7" fill="#0b7a75" transform="rotate(45 370 568.0)"/>
-<path d="M885,203.0 H907 V159.0 H1070" fill="none" stroke="#d97706" stroke-width="1.6" stroke-opacity=".85" stroke-linejoin="round"/>
-<circle cx="885" cy="203.0" r="3.2" fill="#d97706"/>
-<rect x="1066.5" y="155.5" width="7" height="7" fill="#d97706" transform="rotate(45 1070 159.0)"/>
-<path d="M885,225.0 H916 V480.0 H1070" fill="none" stroke="#65a30d" stroke-width="1.6" stroke-opacity=".85" stroke-linejoin="round"/>
-<circle cx="885" cy="225.0" r="3.2" fill="#65a30d"/>
-<rect x="1066.5" y="476.5" width="7" height="7" fill="#65a30d" transform="rotate(45 1070 480.0)"/>
-<path d="M555,568.0 H515 V159.0 H370" fill="none" stroke="#7c5cff" stroke-width="1.6" stroke-opacity=".85" stroke-linejoin="round"/>
-<circle cx="555" cy="568.0" r="3.2" fill="#7c5cff"/>
-<rect x="366.5" y="155.5" width="7" height="7" fill="#7c5cff" transform="rotate(45 370 159.0)"/>
-<path d="M885,590.0 H925 V159.0 H1070" fill="none" stroke="#d97706" stroke-width="1.6" stroke-opacity=".85" stroke-linejoin="round"/>
-<circle cx="885" cy="590.0" r="3.2" fill="#d97706"/>
-<rect x="1066.5" y="155.5" width="7" height="7" fill="#d97706" transform="rotate(45 1070 159.0)"/>
-<path d="M885,612.0 H934 V480.0 H1070" fill="none" stroke="#65a30d" stroke-width="1.6" stroke-opacity=".85" stroke-linejoin="round"/>
-<circle cx="885" cy="612.0" r="3.2" fill="#65a30d"/>
-<rect x="1066.5" y="476.5" width="7" height="7" fill="#65a30d" transform="rotate(45 1070 480.0)"/>
-<rect x="40" y="110" width="330" height="354" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
-<path d="M40,120 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#7c5cff"/>
-<text x="54" y="135" font-size="14.5" font-weight="700" fill="#ffffff">dim_calendario</text>
-<text x="356" y="135" font-size="11" fill="#e2e8f0" text-anchor="end">dimensión</text>
-<rect x="50" y="152" width="24" height="14" rx="3" fill="#fef3c7"/>
-<text x="62" y="163" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
-<text x="80" y="163.5" font-size="12.5" fill="#0f172a" font-weight="600">fecha</text>
-<text x="358" y="163.5" font-size="11.5" fill="#94a3b8" text-anchor="end">date</text>
-<rect x="41" y="170" width="328" height="22" fill="#f8fafc"/>
-<text x="80" y="185.5" font-size="12.5" fill="#0f172a">anio</text>
-<text x="358" y="185.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
-<text x="80" y="207.5" font-size="12.5" fill="#0f172a">trimestre</text>
-<text x="358" y="207.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
-<rect x="41" y="214" width="328" height="22" fill="#f8fafc"/>
-<text x="80" y="229.5" font-size="12.5" fill="#0f172a">mes</text>
-<text x="358" y="229.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
-<text x="80" y="251.5" font-size="12.5" fill="#0f172a">nombre_mes</text>
-<text x="358" y="251.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="41" y="258" width="328" height="22" fill="#f8fafc"/>
-<text x="80" y="273.5" font-size="12.5" fill="#0f172a">anio_mes</text>
-<text x="358" y="273.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<text x="80" y="295.5" font-size="12.5" fill="#0f172a">anio_mes_orden</text>
-<text x="358" y="295.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
-<rect x="41" y="302" width="328" height="22" fill="#f8fafc"/>
-<text x="80" y="317.5" font-size="12.5" fill="#0f172a">semana_iso</text>
-<text x="358" y="317.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
-<text x="80" y="339.5" font-size="12.5" fill="#0f172a">dia_del_anio</text>
-<text x="358" y="339.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
-<rect x="41" y="346" width="328" height="22" fill="#f8fafc"/>
-<text x="80" y="361.5" font-size="12.5" fill="#0f172a">dia_semana</text>
-<text x="358" y="361.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
-<text x="80" y="383.5" font-size="12.5" fill="#0f172a">nombre_dia</text>
-<text x="358" y="383.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="41" y="390" width="328" height="22" fill="#f8fafc"/>
-<text x="80" y="405.5" font-size="12.5" fill="#0f172a">es_fin_de_semana</text>
-<text x="358" y="405.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
-<text x="80" y="427.5" font-size="12.5" fill="#0f172a">es_mes_abierto</text>
-<text x="358" y="427.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
-<rect x="41" y="434" width="328" height="22" fill="#f8fafc"/>
-<text x="80" y="449.5" font-size="12.5" fill="#0f172a">es_hasta_corte</text>
-<text x="358" y="449.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
-<rect x="40" y="519" width="330" height="222" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
-<path d="M40,529 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#0b7a75"/>
-<text x="54" y="544" font-size="14.5" font-weight="700" fill="#ffffff">dim_cliente</text>
-<text x="356" y="544" font-size="11" fill="#e2e8f0" text-anchor="end">dimensión</text>
-<rect x="50" y="561" width="24" height="14" rx="3" fill="#fef3c7"/>
-<text x="62" y="572" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
-<text x="80" y="572.5" font-size="12.5" fill="#0f172a" font-weight="600">cliente_id</text>
-<text x="358" y="572.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="41" y="579" width="328" height="22" fill="#f8fafc"/>
-<text x="80" y="594.5" font-size="12.5" fill="#0f172a">cliente</text>
-<text x="358" y="594.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<text x="80" y="616.5" font-size="12.5" fill="#0f172a">moneda</text>
-<text x="358" y="616.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="41" y="623" width="328" height="22" fill="#f8fafc"/>
-<text x="80" y="638.5" font-size="12.5" fill="#0f172a">canal_id</text>
-<text x="358" y="638.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<text x="80" y="660.5" font-size="12.5" fill="#0f172a">condicion_pago</text>
-<text x="358" y="660.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="41" y="667" width="328" height="22" fill="#f8fafc"/>
-<text x="80" y="682.5" font-size="12.5" fill="#0f172a">dias_vencimiento</text>
-<text x="358" y="682.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
-<text x="80" y="704.5" font-size="12.5" fill="#0f172a">limite_credito</text>
-<text x="358" y="704.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
-<rect x="41" y="711" width="328" height="22" fill="#f8fafc"/>
-<text x="80" y="726.5" font-size="12.5" fill="#0f172a">fecha_alta</text>
-<text x="358" y="726.5" font-size="11.5" fill="#94a3b8" text-anchor="end">date</text>
-<rect x="555" y="110" width="330" height="354" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
-<path d="M555,120 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#0f172a"/>
-<text x="569" y="135" font-size="14.5" font-weight="700" fill="#ffffff">fact_stock_movimiento</text>
-<text x="871" y="135" font-size="11" fill="#e2e8f0" text-anchor="end">hecho</text>
-<rect x="565" y="152" width="24" height="14" rx="3" fill="#fef3c7"/>
-<text x="577" y="163" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
-<text x="595" y="163.5" font-size="12.5" fill="#0f172a" font-weight="600">movimiento_id</text>
-<text x="873" y="163.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
-<rect x="556" y="170" width="328" height="22" fill="#f8fafc"/>
-<rect x="565" y="174" width="24" height="14" rx="3" fill="#dbeafe"/>
-<text x="577" y="185" font-size="9.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">FK</text>
-<text x="595" y="185.5" font-size="12.5" fill="#0f172a">fecha</text>
-<text x="873" y="185.5" font-size="11.5" fill="#94a3b8" text-anchor="end">date</text>
-<rect x="565" y="196" width="24" height="14" rx="3" fill="#dbeafe"/>
-<text x="577" y="207" font-size="9.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">FK</text>
-<text x="595" y="207.5" font-size="12.5" fill="#0f172a">producto_id</text>
-<text x="873" y="207.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="556" y="214" width="328" height="22" fill="#f8fafc"/>
-<rect x="565" y="218" width="24" height="14" rx="3" fill="#dbeafe"/>
-<text x="577" y="229" font-size="9.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">FK</text>
-<text x="595" y="229.5" font-size="12.5" fill="#0f172a">deposito_id</text>
-<text x="873" y="229.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="565" y="240" width="24" height="14" rx="3" fill="#dbeafe"/>
-<text x="577" y="251" font-size="9.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">FK</text>
-<text x="595" y="251.5" font-size="12.5" fill="#0f172a">cliente_id</text>
-<text x="873" y="251.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="556" y="258" width="328" height="22" fill="#f8fafc"/>
-<text x="595" y="273.5" font-size="12.5" fill="#0f172a">tipo_movimiento_id</text>
-<text x="873" y="273.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
-<text x="595" y="295.5" font-size="12.5" fill="#0f172a">tipo_movimiento</text>
-<text x="873" y="295.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="556" y="302" width="328" height="22" fill="#f8fafc"/>
-<text x="595" y="317.5" font-size="12.5" fill="#0f172a">numero_comprobante</text>
-<text x="873" y="317.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
-<text x="595" y="339.5" font-size="12.5" fill="#0f172a">cantidad</text>
-<text x="873" y="339.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
-<rect x="556" y="346" width="328" height="22" fill="#f8fafc"/>
-<text x="595" y="361.5" font-size="12.5" fill="#0f172a">entradas</text>
-<text x="873" y="361.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
-<text x="595" y="383.5" font-size="12.5" fill="#0f172a">salidas</text>
-<text x="873" y="383.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
-<rect x="556" y="390" width="328" height="22" fill="#f8fafc"/>
-<text x="595" y="405.5" font-size="12.5" fill="#0f172a">stock_resultante</text>
-<text x="873" y="405.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
-<text x="595" y="427.5" font-size="12.5" fill="#0f172a">costo_unitario_movimiento</text>
-<text x="873" y="427.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
-<rect x="556" y="434" width="328" height="22" fill="#f8fafc"/>
-<text x="595" y="449.5" font-size="12.5" fill="#0f172a">valor_movimiento</text>
-<text x="873" y="449.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
-<rect x="555" y="519" width="330" height="200" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
-<path d="M555,529 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#0f172a"/>
-<text x="569" y="544" font-size="14.5" font-weight="700" fill="#ffffff">fact_stock_saldo</text>
-<text x="871" y="544" font-size="11" fill="#e2e8f0" text-anchor="end">hecho</text>
-<rect x="565" y="561" width="24" height="14" rx="3" fill="#fef3c7"/>
-<text x="577" y="572" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
-<text x="595" y="572.5" font-size="12.5" fill="#0f172a" font-weight="600">fecha</text>
-<text x="873" y="572.5" font-size="11.5" fill="#94a3b8" text-anchor="end">date</text>
-<rect x="556" y="579" width="328" height="22" fill="#f8fafc"/>
-<rect x="565" y="583" width="24" height="14" rx="3" fill="#fef3c7"/>
-<text x="577" y="594" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
-<text x="595" y="594.5" font-size="12.5" fill="#0f172a" font-weight="600">producto_id</text>
-<text x="873" y="594.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="565" y="605" width="24" height="14" rx="3" fill="#fef3c7"/>
-<text x="577" y="616" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
-<text x="595" y="616.5" font-size="12.5" fill="#0f172a" font-weight="600">deposito_id</text>
-<text x="873" y="616.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="556" y="623" width="328" height="22" fill="#f8fafc"/>
-<text x="595" y="638.5" font-size="12.5" fill="#0f172a">es_cierre_mes</text>
-<text x="873" y="638.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
-<text x="595" y="660.5" font-size="12.5" fill="#0f172a">es_saldo_actual</text>
-<text x="873" y="660.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
-<rect x="556" y="667" width="328" height="22" fill="#f8fafc"/>
-<text x="595" y="682.5" font-size="12.5" fill="#0f172a">stock_unidades</text>
-<text x="873" y="682.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
-<text x="595" y="704.5" font-size="12.5" fill="#0f172a">valor_stock</text>
-<text x="873" y="704.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
-<rect x="1070" y="110" width="330" height="266" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
-<path d="M1070,120 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#d97706"/>
-<text x="1084" y="135" font-size="14.5" font-weight="700" fill="#ffffff">dim_producto</text>
-<text x="1386" y="135" font-size="11" fill="#e2e8f0" text-anchor="end">dimensión</text>
-<rect x="1080" y="152" width="24" height="14" rx="3" fill="#fef3c7"/>
-<text x="1092" y="163" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
-<text x="1110" y="163.5" font-size="12.5" fill="#0f172a" font-weight="600">producto_id</text>
-<text x="1388" y="163.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="1071" y="170" width="328" height="22" fill="#f8fafc"/>
-<text x="1110" y="185.5" font-size="12.5" fill="#0f172a">producto</text>
-<text x="1388" y="185.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<text x="1110" y="207.5" font-size="12.5" fill="#0f172a">unidad_negocio_id</text>
-<text x="1388" y="207.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="1071" y="214" width="328" height="22" fill="#f8fafc"/>
-<text x="1110" y="229.5" font-size="12.5" fill="#0f172a">unidad_negocio</text>
-<text x="1388" y="229.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<text x="1110" y="251.5" font-size="12.5" fill="#0f172a">tipo_unidad_negocio</text>
-<text x="1388" y="251.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="1071" y="258" width="328" height="22" fill="#f8fafc"/>
-<text x="1110" y="273.5" font-size="12.5" fill="#0f172a">unidad_medida</text>
-<text x="1388" y="273.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<text x="1110" y="295.5" font-size="12.5" fill="#0f172a">tipo_item</text>
-<text x="1388" y="295.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="1071" y="302" width="328" height="22" fill="#f8fafc"/>
-<text x="1110" y="317.5" font-size="12.5" fill="#0f172a">costo_actual</text>
-<text x="1388" y="317.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
-<text x="1110" y="339.5" font-size="12.5" fill="#0f172a">ultimo_costo</text>
-<text x="1388" y="339.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
-<rect x="1071" y="346" width="328" height="22" fill="#f8fafc"/>
-<text x="1110" y="361.5" font-size="12.5" fill="#0f172a">descontinuado</text>
-<text x="1388" y="361.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
-<rect x="1070" y="431" width="330" height="112" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
-<path d="M1070,441 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#65a30d"/>
-<text x="1084" y="456" font-size="14.5" font-weight="700" fill="#ffffff">dim_deposito</text>
-<text x="1386" y="456" font-size="11" fill="#e2e8f0" text-anchor="end">dimensión</text>
-<rect x="1080" y="473" width="24" height="14" rx="3" fill="#fef3c7"/>
-<text x="1092" y="484" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
-<text x="1110" y="484.5" font-size="12.5" fill="#0f172a" font-weight="600">deposito_id</text>
-<text x="1388" y="484.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<rect x="1071" y="491" width="328" height="22" fill="#f8fafc"/>
-<text x="1110" y="506.5" font-size="12.5" fill="#0f172a">deposito</text>
-<text x="1388" y="506.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
-<text x="1110" y="528.5" font-size="12.5" fill="#0f172a">permite_facturar</text>
-<text x="1388" y="528.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
-<text x="40" y="771" font-size="12" fill="#475569">PK clave primaria · FK clave foránea · ● origen ◆ destino · línea continua: relación con una dimensión (N:1) · línea punteada: traza entre hechos (por ejemplo, de qué pedido salió una factura)</text>
+<path d="M521,169.0 V578.0 M521,169.0 H370 M555,191.0 H521 M555,578.0 H521" fill="none" stroke="#f8fafc" stroke-width="6" stroke-linejoin="round"/>
+<path d="M521,169.0 V578.0 M521,169.0 H370 M555,191.0 H521 M555,578.0 H521" fill="none" stroke="#7c5cff" stroke-width="1.7" stroke-linejoin="round"/>
+<path d="M919,169.0 V600.0 M919,169.0 H1070 M885,213.0 H919 M885,600.0 H919" fill="none" stroke="#f8fafc" stroke-width="6" stroke-linejoin="round"/>
+<path d="M919,169.0 V600.0 M919,169.0 H1070 M885,213.0 H919 M885,600.0 H919" fill="none" stroke="#d97706" stroke-width="1.7" stroke-linejoin="round"/>
+<path d="M945,235.0 V622.0 M945,490.0 H1070 M885,235.0 H945 M885,622.0 H945" fill="none" stroke="#f8fafc" stroke-width="6" stroke-linejoin="round"/>
+<path d="M945,235.0 V622.0 M945,490.0 H1070 M885,235.0 H945 M885,622.0 H945" fill="none" stroke="#65a30d" stroke-width="1.7" stroke-linejoin="round"/>
+<path d="M495,257.0 V578.0 M495,578.0 H370 M555,257.0 H495" fill="none" stroke="#f8fafc" stroke-width="6" stroke-linejoin="round"/>
+<path d="M495,257.0 V578.0 M495,578.0 H370 M555,257.0 H495" fill="none" stroke="#0b7a75" stroke-width="1.7" stroke-linejoin="round"/>
+<path d="M543,191.0 L555,185.0 M543,191.0 L555,191.0 M543,191.0 L555,197.0" stroke="#7c5cff" stroke-width="1.6" fill="none"/>
+<text x="539" y="186.0" font-size="10" font-weight="700" fill="#7c5cff" text-anchor="end">N</text>
+<circle cx="521" cy="191.0" r="2.6" fill="#7c5cff"/>
+<path d="M543,578.0 L555,572.0 M543,578.0 L555,578.0 M543,578.0 L555,584.0" stroke="#7c5cff" stroke-width="1.6" fill="none"/>
+<text x="539" y="573.0" font-size="10" font-weight="700" fill="#7c5cff" text-anchor="end">N</text>
+<circle cx="521" cy="578.0" r="2.6" fill="#7c5cff"/>
+<path d="M377,163.0 V175.0 M381,163.0 V175.0" stroke="#7c5cff" stroke-width="1.6"/>
+<text x="385" y="164.0" font-size="10" font-weight="700" fill="#7c5cff" text-anchor="start">1</text>
+<circle cx="521" cy="169.0" r="2.6" fill="#7c5cff"/>
+<path d="M897,213.0 L885,207.0 M897,213.0 L885,213.0 M897,213.0 L885,219.0" stroke="#d97706" stroke-width="1.6" fill="none"/>
+<text x="901" y="208.0" font-size="10" font-weight="700" fill="#d97706" text-anchor="start">N</text>
+<circle cx="919" cy="213.0" r="2.6" fill="#d97706"/>
+<path d="M897,600.0 L885,594.0 M897,600.0 L885,600.0 M897,600.0 L885,606.0" stroke="#d97706" stroke-width="1.6" fill="none"/>
+<text x="901" y="595.0" font-size="10" font-weight="700" fill="#d97706" text-anchor="start">N</text>
+<circle cx="919" cy="600.0" r="2.6" fill="#d97706"/>
+<path d="M1063,163.0 V175.0 M1059,163.0 V175.0" stroke="#d97706" stroke-width="1.6"/>
+<text x="1055" y="164.0" font-size="10" font-weight="700" fill="#d97706" text-anchor="end">1</text>
+<circle cx="919" cy="169.0" r="2.6" fill="#d97706"/>
+<path d="M897,235.0 L885,229.0 M897,235.0 L885,235.0 M897,235.0 L885,241.0" stroke="#65a30d" stroke-width="1.6" fill="none"/>
+<text x="901" y="230.0" font-size="10" font-weight="700" fill="#65a30d" text-anchor="start">N</text>
+<circle cx="945" cy="235.0" r="2.6" fill="#65a30d"/>
+<path d="M897,622.0 L885,616.0 M897,622.0 L885,622.0 M897,622.0 L885,628.0" stroke="#65a30d" stroke-width="1.6" fill="none"/>
+<text x="901" y="617.0" font-size="10" font-weight="700" fill="#65a30d" text-anchor="start">N</text>
+<circle cx="945" cy="622.0" r="2.6" fill="#65a30d"/>
+<path d="M1063,484.0 V496.0 M1059,484.0 V496.0" stroke="#65a30d" stroke-width="1.6"/>
+<text x="1055" y="485.0" font-size="10" font-weight="700" fill="#65a30d" text-anchor="end">1</text>
+<circle cx="945" cy="490.0" r="2.6" fill="#65a30d"/>
+<path d="M543,257.0 L555,251.0 M543,257.0 L555,257.0 M543,257.0 L555,263.0" stroke="#0b7a75" stroke-width="1.6" fill="none"/>
+<text x="539" y="252.0" font-size="10" font-weight="700" fill="#0b7a75" text-anchor="end">N</text>
+<circle cx="495" cy="257.0" r="2.6" fill="#0b7a75"/>
+<path d="M377,572.0 V584.0 M381,572.0 V584.0" stroke="#0b7a75" stroke-width="1.6"/>
+<text x="385" y="573.0" font-size="10" font-weight="700" fill="#0b7a75" text-anchor="start">1</text>
+<circle cx="495" cy="578.0" r="2.6" fill="#0b7a75"/>
+<rect x="40" y="120" width="330" height="354" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+<path d="M40,130 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#7c5cff"/>
+<text x="54" y="145" font-size="14.5" font-weight="700" fill="#ffffff">dim_calendario</text>
+<text x="356" y="145" font-size="11" fill="#e2e8f0" text-anchor="end">dimensión</text>
+<rect x="50" y="162" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="62" y="173" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="80" y="173.5" font-size="12.5" fill="#0f172a" font-weight="600">fecha</text>
+<text x="358" y="173.5" font-size="11.5" fill="#94a3b8" text-anchor="end">date</text>
+<rect x="41" y="180" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="195.5" font-size="12.5" fill="#0f172a">anio</text>
+<text x="358" y="195.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<text x="80" y="217.5" font-size="12.5" fill="#0f172a">trimestre</text>
+<text x="358" y="217.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<rect x="41" y="224" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="239.5" font-size="12.5" fill="#0f172a">mes</text>
+<text x="358" y="239.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<text x="80" y="261.5" font-size="12.5" fill="#0f172a">nombre_mes</text>
+<text x="358" y="261.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="41" y="268" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="283.5" font-size="12.5" fill="#0f172a">anio_mes</text>
+<text x="358" y="283.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<text x="80" y="305.5" font-size="12.5" fill="#0f172a">anio_mes_orden</text>
+<text x="358" y="305.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<rect x="41" y="312" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="327.5" font-size="12.5" fill="#0f172a">semana_iso</text>
+<text x="358" y="327.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<text x="80" y="349.5" font-size="12.5" fill="#0f172a">dia_del_anio</text>
+<text x="358" y="349.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<rect x="41" y="356" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="371.5" font-size="12.5" fill="#0f172a">dia_semana</text>
+<text x="358" y="371.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<text x="80" y="393.5" font-size="12.5" fill="#0f172a">nombre_dia</text>
+<text x="358" y="393.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="41" y="400" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="415.5" font-size="12.5" fill="#0f172a">es_fin_de_semana</text>
+<text x="358" y="415.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
+<text x="80" y="437.5" font-size="12.5" fill="#0f172a">es_mes_abierto</text>
+<text x="358" y="437.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
+<rect x="41" y="444" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="459.5" font-size="12.5" fill="#0f172a">es_hasta_corte</text>
+<text x="358" y="459.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
+<rect x="40" y="529" width="330" height="222" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+<path d="M40,539 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#0b7a75"/>
+<text x="54" y="554" font-size="14.5" font-weight="700" fill="#ffffff">dim_cliente</text>
+<text x="356" y="554" font-size="11" fill="#e2e8f0" text-anchor="end">dimensión</text>
+<rect x="50" y="571" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="62" y="582" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="80" y="582.5" font-size="12.5" fill="#0f172a" font-weight="600">cliente_id</text>
+<text x="358" y="582.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="41" y="589" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="604.5" font-size="12.5" fill="#0f172a">cliente</text>
+<text x="358" y="604.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<text x="80" y="626.5" font-size="12.5" fill="#0f172a">moneda</text>
+<text x="358" y="626.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="41" y="633" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="648.5" font-size="12.5" fill="#0f172a">canal_id</text>
+<text x="358" y="648.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<text x="80" y="670.5" font-size="12.5" fill="#0f172a">condicion_pago</text>
+<text x="358" y="670.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="41" y="677" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="692.5" font-size="12.5" fill="#0f172a">dias_vencimiento</text>
+<text x="358" y="692.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<text x="80" y="714.5" font-size="12.5" fill="#0f172a">limite_credito</text>
+<text x="358" y="714.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<rect x="41" y="721" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="736.5" font-size="12.5" fill="#0f172a">fecha_alta</text>
+<text x="358" y="736.5" font-size="11.5" fill="#94a3b8" text-anchor="end">date</text>
+<rect x="555" y="120" width="330" height="354" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+<path d="M555,130 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#0f172a"/>
+<text x="569" y="145" font-size="14.5" font-weight="700" fill="#ffffff">fact_stock_movimiento</text>
+<text x="871" y="145" font-size="11" fill="#e2e8f0" text-anchor="end">hecho</text>
+<rect x="565" y="162" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="577" y="173" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="595" y="173.5" font-size="12.5" fill="#0f172a" font-weight="600">movimiento_id</text>
+<text x="873" y="173.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<rect x="556" y="180" width="328" height="22" fill="#f8fafc"/>
+<rect x="565" y="184" width="24" height="14" rx="3" fill="#dbeafe"/>
+<text x="577" y="195" font-size="9.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">FK</text>
+<text x="595" y="195.5" font-size="12.5" fill="#0f172a">fecha</text>
+<text x="873" y="195.5" font-size="11" fill="#7c5cff" font-weight="600" text-anchor="end">→ calendario</text>
+<rect x="565" y="206" width="24" height="14" rx="3" fill="#dbeafe"/>
+<text x="577" y="217" font-size="9.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">FK</text>
+<text x="595" y="217.5" font-size="12.5" fill="#0f172a">producto_id</text>
+<text x="873" y="217.5" font-size="11" fill="#d97706" font-weight="600" text-anchor="end">→ producto</text>
+<rect x="556" y="224" width="328" height="22" fill="#f8fafc"/>
+<rect x="565" y="228" width="24" height="14" rx="3" fill="#dbeafe"/>
+<text x="577" y="239" font-size="9.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">FK</text>
+<text x="595" y="239.5" font-size="12.5" fill="#0f172a">deposito_id</text>
+<text x="873" y="239.5" font-size="11" fill="#65a30d" font-weight="600" text-anchor="end">→ deposito</text>
+<rect x="565" y="250" width="24" height="14" rx="3" fill="#dbeafe"/>
+<text x="577" y="261" font-size="9.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">FK</text>
+<text x="595" y="261.5" font-size="12.5" fill="#0f172a">cliente_id</text>
+<text x="873" y="261.5" font-size="11" fill="#0b7a75" font-weight="600" text-anchor="end">→ cliente</text>
+<rect x="556" y="268" width="328" height="22" fill="#f8fafc"/>
+<text x="595" y="283.5" font-size="12.5" fill="#0f172a">tipo_movimiento_id</text>
+<text x="873" y="283.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<text x="595" y="305.5" font-size="12.5" fill="#0f172a">tipo_movimiento</text>
+<text x="873" y="305.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="556" y="312" width="328" height="22" fill="#f8fafc"/>
+<text x="595" y="327.5" font-size="12.5" fill="#0f172a">numero_comprobante</text>
+<text x="873" y="327.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<text x="595" y="349.5" font-size="12.5" fill="#0f172a">cantidad</text>
+<text x="873" y="349.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<rect x="556" y="356" width="328" height="22" fill="#f8fafc"/>
+<text x="595" y="371.5" font-size="12.5" fill="#0f172a">entradas</text>
+<text x="873" y="371.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<text x="595" y="393.5" font-size="12.5" fill="#0f172a">salidas</text>
+<text x="873" y="393.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<rect x="556" y="400" width="328" height="22" fill="#f8fafc"/>
+<text x="595" y="415.5" font-size="12.5" fill="#0f172a">stock_resultante</text>
+<text x="873" y="415.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<text x="595" y="437.5" font-size="12.5" fill="#0f172a">costo_unitario_movimiento</text>
+<text x="873" y="437.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<rect x="556" y="444" width="328" height="22" fill="#f8fafc"/>
+<text x="595" y="459.5" font-size="12.5" fill="#0f172a">valor_movimiento</text>
+<text x="873" y="459.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<rect x="555" y="529" width="330" height="200" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+<path d="M555,539 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#0f172a"/>
+<text x="569" y="554" font-size="14.5" font-weight="700" fill="#ffffff">fact_stock_saldo</text>
+<text x="871" y="554" font-size="11" fill="#e2e8f0" text-anchor="end">hecho</text>
+<rect x="565" y="571" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="577" y="582" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="595" y="582.5" font-size="12.5" fill="#0f172a" font-weight="600">fecha</text>
+<text x="873" y="582.5" font-size="11" fill="#7c5cff" font-weight="600" text-anchor="end">→ calendario</text>
+<rect x="556" y="589" width="328" height="22" fill="#f8fafc"/>
+<rect x="565" y="593" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="577" y="604" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="595" y="604.5" font-size="12.5" fill="#0f172a" font-weight="600">producto_id</text>
+<text x="873" y="604.5" font-size="11" fill="#d97706" font-weight="600" text-anchor="end">→ producto</text>
+<rect x="565" y="615" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="577" y="626" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="595" y="626.5" font-size="12.5" fill="#0f172a" font-weight="600">deposito_id</text>
+<text x="873" y="626.5" font-size="11" fill="#65a30d" font-weight="600" text-anchor="end">→ deposito</text>
+<rect x="556" y="633" width="328" height="22" fill="#f8fafc"/>
+<text x="595" y="648.5" font-size="12.5" fill="#0f172a">es_cierre_mes</text>
+<text x="873" y="648.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
+<text x="595" y="670.5" font-size="12.5" fill="#0f172a">es_saldo_actual</text>
+<text x="873" y="670.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
+<rect x="556" y="677" width="328" height="22" fill="#f8fafc"/>
+<text x="595" y="692.5" font-size="12.5" fill="#0f172a">stock_unidades</text>
+<text x="873" y="692.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<text x="595" y="714.5" font-size="12.5" fill="#0f172a">valor_stock</text>
+<text x="873" y="714.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<rect x="1070" y="120" width="330" height="266" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+<path d="M1070,130 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#d97706"/>
+<text x="1084" y="145" font-size="14.5" font-weight="700" fill="#ffffff">dim_producto</text>
+<text x="1386" y="145" font-size="11" fill="#e2e8f0" text-anchor="end">dimensión</text>
+<rect x="1080" y="162" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="1092" y="173" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="1110" y="173.5" font-size="12.5" fill="#0f172a" font-weight="600">producto_id</text>
+<text x="1388" y="173.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="1071" y="180" width="328" height="22" fill="#f8fafc"/>
+<text x="1110" y="195.5" font-size="12.5" fill="#0f172a">producto</text>
+<text x="1388" y="195.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<text x="1110" y="217.5" font-size="12.5" fill="#0f172a">unidad_negocio_id</text>
+<text x="1388" y="217.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="1071" y="224" width="328" height="22" fill="#f8fafc"/>
+<text x="1110" y="239.5" font-size="12.5" fill="#0f172a">unidad_negocio</text>
+<text x="1388" y="239.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<text x="1110" y="261.5" font-size="12.5" fill="#0f172a">tipo_unidad_negocio</text>
+<text x="1388" y="261.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="1071" y="268" width="328" height="22" fill="#f8fafc"/>
+<text x="1110" y="283.5" font-size="12.5" fill="#0f172a">unidad_medida</text>
+<text x="1388" y="283.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<text x="1110" y="305.5" font-size="12.5" fill="#0f172a">tipo_item</text>
+<text x="1388" y="305.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="1071" y="312" width="328" height="22" fill="#f8fafc"/>
+<text x="1110" y="327.5" font-size="12.5" fill="#0f172a">costo_actual</text>
+<text x="1388" y="327.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<text x="1110" y="349.5" font-size="12.5" fill="#0f172a">ultimo_costo</text>
+<text x="1388" y="349.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<rect x="1071" y="356" width="328" height="22" fill="#f8fafc"/>
+<text x="1110" y="371.5" font-size="12.5" fill="#0f172a">descontinuado</text>
+<text x="1388" y="371.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
+<rect x="1070" y="441" width="330" height="112" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+<path d="M1070,451 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#65a30d"/>
+<text x="1084" y="466" font-size="14.5" font-weight="700" fill="#ffffff">dim_deposito</text>
+<text x="1386" y="466" font-size="11" fill="#e2e8f0" text-anchor="end">dimensión</text>
+<rect x="1080" y="483" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="1092" y="494" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="1110" y="494.5" font-size="12.5" fill="#0f172a" font-weight="600">deposito_id</text>
+<text x="1388" y="494.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="1071" y="501" width="328" height="22" fill="#f8fafc"/>
+<text x="1110" y="516.5" font-size="12.5" fill="#0f172a">deposito</text>
+<text x="1388" y="516.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<text x="1110" y="538.5" font-size="12.5" fill="#0f172a">permite_facturar</text>
+<text x="1388" y="538.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
+<rect x="30" y="777" width="1380" height="70" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="44" y="790" width="24" height="14" rx="3" fill="#fef3c7"/><text x="56" y="801" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text><text x="74" y="801" font-size="12" fill="#334155">clave primaria: identifica cada fila</text>
+<rect x="290" y="790" width="24" height="14" rx="3" fill="#dbeafe"/><text x="302" y="801" font-size="9.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">FK</text><text x="320" y="801" font-size="12" fill="#334155">clave foránea: apunta a otra tabla (→ cuál)</text>
+<path d="M610,796 H670" stroke="#334155" stroke-width="1.6"/><path d="M622,796 L610,790 M622,796 L610,802" stroke="#334155" stroke-width="1.6" fill="none"/><path d="M659,790 V802 M663,790 V802" stroke="#334155" stroke-width="1.6"/>
+<text x="682" y="801" font-size="12" fill="#334155"><tspan font-weight="700">N : 1</tspan>  muchas filas del hecho apuntan a una sola fila de la dimensión</text>
+<text x="1396" y="830" font-size="12" fill="#64748b" text-anchor="end">No hay relaciones 1 : 1 ni N : N directas.</text>
 </svg>

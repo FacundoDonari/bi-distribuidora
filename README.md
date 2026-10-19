@@ -17,7 +17,7 @@ El dueño de una pyme distribuidora tiene los datos en el ERP, pero no las respu
 | ERP | webERP en Docker con 23 meses de operación simulada: 88.540 líneas de venta, 123 clientes, 1.460 productos y 15 proveedores, con contabilidad por partida doble | MariaDB, Docker, Python |
 | Extracción y carga | Las 145 tablas del ERP, el presupuesto 2026 en Excel y la inflación (INDEC) y el dólar MEP desde APIs públicas | Python, pandas, SQLAlchemy |
 | Data warehouse | Capas `raw` → `staging` → `marts` → `kpi`, con un modelo dimensional de 13 hechos y 8 dimensiones | PostgreSQL (Supabase) |
-| Calidad de datos | 55 controles en cuatro ejes y un veredicto antes de usar los indicadores | SQL |
+| Calidad de datos | 55 controles en cuatro preguntas y un aviso de qué tan confiable es cada dato | SQL |
 | Tablero | Seis pestañas pensadas para el dueño, en pesos de hoy, pesos históricos o dólares MEP | HTML, JavaScript, Chart.js |
 
 ![Arquitectura: ERP, warehouse en capas y tablero](docs/arquitectura.png)

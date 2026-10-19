@@ -15,7 +15,9 @@ Las 8 dimensiones son **compartidas**: el mismo cliente de una venta es el mismo
 
 ## El modelo completo, por área
 
-Cada diagrama muestra todas las tablas del área con todas sus columnas y tipos. **PK** es la clave primaria (lo que identifica cada fila) y **FK** una clave foránea (la columna que apunta a otra tabla). Las líneas continuas unen un hecho con sus dimensiones; las punteadas trazan un documento a través de los procesos (por ejemplo, de qué pedido salió una factura y qué cobro la canceló).
+Cada diagrama muestra todas las tablas del área con todas sus columnas y tipos.
+
+**Cómo leer los diagramas.** **PK** es la clave primaria (lo que identifica cada fila) y **FK** una clave foránea (la columna que apunta a otra tabla); al lado de cada FK dice a qué tabla apunta. Cada dimensión tiene una sola línea de su color que la une con todos los hechos que la usan. En las puntas se ve la cardinalidad: la pata de gallo (**N**) del lado del hecho y la doble raya (**1**) del lado de la dimensión. Todas las relaciones son de muchos a uno (**N:1**): muchas ventas son de un mismo cliente, pero cada venta tiene un solo cliente. No hay relaciones 1:1 ni de muchos a muchos directas: una relación de muchos a muchos, como la de clientes y productos, se resuelve a través de un hecho (`fact_ventas`). Las líneas grises punteadas siguen un mismo documento entre procesos, por ejemplo de qué pedido salió una factura y qué cobro la canceló.
 
 ### 1. Ventas y clientes
 

@@ -87,6 +87,6 @@
   <!-- Scripts -->
   <text x="30" y="372" class="k">CÓMO SE MUEVEN LOS DATOS</text>
   <text x="30" y="396" class="s">1. Un simulador en Python genera 23 meses de operación en webERP.</text>
-  <text x="30" y="416" class="s">2. Un solo comando carga ERP, Excel y APIs, recalcula staging, marts y kpi y corre la auditoría (se detiene si algo empeora).</text>
+  <text x="30" y="416" class="s">2. Un solo comando carga ERP, Excel y APIs, recalcula staging, marts y kpi y corre la auditoría (avisa si algo empeora).</text>
   <text x="30" y="436" class="s">3. El tablero se arma con los resultados de kpi y tiene sus propios cuadres y pruebas automáticas.</text>
 </svg>
