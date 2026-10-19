@@ -1249,7 +1249,7 @@ function tabEconomico(){
   const kidsG=GM.map(x=>[x[0],x[1]]).concat([['Amortizaciones',E.a]]), kidsI=GT.map(x=>[x[0],x[1]]).concat([['Impuesto a las Ganancias',E.ig]]);
   const ERMR=[['Ventas netas',S.v,0],['Costo de ventas',E.c,1,'cos',kidsC],['Utilidad bruta',sBru,2],['Gastos operativos',sOpG,1,'gop',kidsG],['Utilidad operativa',sOpe,2],['Gastos financieros',E.gf,1,'fin',kidsF],['Utilidad antes de impuestos',sAI,2],['Impuestos',sImt.map((x,i)=>x==null||E.ig[i]==null?null:x),1,'imp',kidsI],['Utilidad neta',sFin,2]];
   const ermHTML=()=>{
-    const i0=Math.max(0,n-ERMS.n), ix=[]; for(let i=i0;i<n;i++) ix.push(i);
+    const i0=Math.max(0,n-ERMS.n), ix=[]; for(let i=n-1;i>=i0;i--) ix.push(i);
     const cell=(s,i)=>s[i]==null?'':(ERMS.u==='p'?nf(100*s[i]/S.v[i],1)+'%':nf((+(s[i]/(UM?1e3:1e6)).toFixed(1))||0,1));
     const head=ix.map(i=>`<th${i===n-1?' class="cur"':''}>${esc(L[i])}</th>`).join('');
     const cells=(sr)=>ix.map(i=>`<td${i===n-1?' class="cur"':''}>${cell(sr,i)}</td>`).join('');
@@ -1261,7 +1261,7 @@ function tabEconomico(){
   const ermBar=`<div class="erm-bar"><span>Meses:</span>${[6,12,n].map(k=>`<button type="button" data-ermn="${k}">${k===n?'Todos':k}</button>`).join('')}<span class="erm-sp"></span><button type="button" data-ermu="m">${UM?'En miles de US$':'En millones de $'}</button><button type="button" data-ermu="p">En % de las ventas</button></div>`;
   const erCard2=`<div class="card s12">${ermBar}<div class="sc" id="erm-t"></div></div>`;
   const erBind2=()=>{ const t=document.getElementById('erm-t'); if(!t) return;
-    const draw=(keep)=>{ const sl=t.scrollLeft; t.innerHTML=ermHTML(); const sc=t; sc.scrollLeft=keep?sl:sc.scrollWidth;
+    const draw=(keep)=>{ const sl=t.scrollLeft; t.innerHTML=ermHTML(); const sc=t; sc.scrollLeft=keep?sl:0;
       document.querySelectorAll('[data-ermn]').forEach(b=>b.classList.toggle('on',+b.dataset.ermn===ERMS.n));
       document.querySelectorAll('[data-ermu]').forEach(b=>b.classList.toggle('on',b.dataset.ermu===ERMS.u)); };
     document.querySelectorAll('[data-ermn]').forEach(b=>b.addEventListener('click',()=>{ERMS.n=+b.dataset.ermn;draw()}));
@@ -1562,14 +1562,14 @@ function tabFinanciero(){
     const ffVis=`<div class="erv"><div class="erv-h">El negocio ${dejo>=0?'generó':'consumió'} <b>${usd(Math.abs(dejo))}</b> de caja y, después de cuotas y retiros, la caja ${varC>=0?'subió':'bajó'} <b>${usd(Math.abs(varC))}</b></div><div class="erv-s">«Antes» es ${l==='mes'?'el mismo mes del año anterior':'el mismo período del año anterior'}. Lo que sale va con signo menos. Caja generada = cobranzas − pagos a proveedores − gastos e impuestos.</div><div class="sc"><table class="tb erf"><thead><tr><th>Elemento</th><th>Monto</th><th>Antes</th></tr></thead><tbody>${fRows}</tbody></table></div></div>`;
     if(!state.ffm) state.ffm={n:6,u:'m'}; state.ffm.u='m';
     const FM=state.ffm;
-    const ffmHTML=()=>{ const i0=Math.max(0,n-FM.n), ix=[]; for(let i=i0;i<n;i++) ix.push(i);
+    const ffmHTML=()=>{ const i0=Math.max(0,n-FM.n), ix=[]; for(let i=n-1;i>=i0;i--) ix.push(i);
       const cell=(s,i,sg)=>s[i]==null?'':nf((+(sg*s[i]/(UM?1e3:1e6)).toFixed(1))||0,1);
       const head=ix.map(i=>`<th${i===n-1?' class="cur"':''}>${esc(L[i])}</th>`).join('');
       const body=FR.map(([nom,arr,ty],ri)=>`<tr class="t${ty}"><td class="erf-n">${esc(nom)}${(ty===2||ri===0)?`<span class="erm-dot" data-ffd="${ri}" tabindex="0" role="button" aria-label="Ver la evolución de ${esc(nom)}">●</span>`:''}</td>${ix.map(i=>`<td${i===n-1?' class="cur"':''}>${cell(arr,i,ty===1?-1:1)}</td>`).join('')}</tr>`).join('');
       return `<table class="tb erf erm"><thead><tr><th>Elemento</th>${head}</tr></thead><tbody>${body}</tbody></table>`; };
     const ffCard2=`<div class="card s12"><div class="erm-bar"><span>Meses:</span>${[6,12,n].map(k=>`<button type="button" data-ffn="${k}">${k===n?'Todos':k}</button>`).join('')}<span class="erm-sp"></span><small class="erm-u">${UM?'En miles de US$':'En millones de $'} · lo que sale va con signo menos</small></div><div class="sc" id="ffm-t"></div></div>`;
     const bind=()=>{ const t=document.getElementById('ffm-t'); if(!t) return;
-      const draw=keep=>{ const sl=t.scrollLeft; t.innerHTML=ffmHTML(); t.scrollLeft=keep?sl:t.scrollWidth;
+      const draw=keep=>{ const sl=t.scrollLeft; t.innerHTML=ffmHTML(); t.scrollLeft=keep?sl:0;
         document.querySelectorAll('[data-ffn]').forEach(b=>b.classList.toggle('on',+b.dataset.ffn===FM.n)); document.querySelectorAll('[data-ffu]').forEach(b=>b.classList.toggle('on',b.dataset.ffu===FM.u)); };
       document.querySelectorAll('[data-ffn]').forEach(b=>b.addEventListener('click',()=>{FM.n=+b.dataset.ffn;draw()})); document.querySelectorAll('[data-ffu]').forEach(b=>b.addEventListener('click',()=>{FM.u=b.dataset.ffu;draw()}));
       let pop=document.getElementById('erm-pop'); if(!pop){pop=document.createElement('div'); pop.id='erm-pop'; pop.innerHTML='<div class="erm-pt"></div><div class="erm-pb"><canvas id="erm-pc"></canvas></div>'; document.body.appendChild(pop);}
