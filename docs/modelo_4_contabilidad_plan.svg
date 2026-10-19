@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 924" width="1440" height="924" font-family="Inter, Segoe UI, Arial, sans-serif">
+<rect width="1440" height="924" fill="#f8fafc"/>
+<text x="40" y="48" font-size="22" font-weight="700" fill="#0f172a">4. Contabilidad y planificación</text>
+<text x="40" y="76" font-size="13.5" fill="#475569">El libro mayor (la referencia contra la que se controla todo) y lo presupuestado: rubros del presupuesto y metas por canal y vendedor.</text>
+<path d="M555,181.0 H533 V159.0 H370" fill="none" stroke="#7c5cff" stroke-width="1.6" stroke-opacity=".85" stroke-linejoin="round"/>
+<circle cx="555" cy="181.0" r="3.2" fill="#7c5cff"/>
+<rect x="366.5" y="155.5" width="7" height="7" fill="#7c5cff" transform="rotate(45 370 159.0)"/>
+<path d="M885,203.0 H907 V159.0 H1070" fill="none" stroke="#9333ea" stroke-width="1.6" stroke-opacity=".85" stroke-linejoin="round"/>
+<circle cx="885" cy="203.0" r="3.2" fill="#9333ea"/>
+<rect x="1066.5" y="155.5" width="7" height="7" fill="#9333ea" transform="rotate(45 1070 159.0)"/>
+<path d="M555,524.0 H524 V159.0 H370" fill="none" stroke="#7c5cff" stroke-width="1.6" stroke-opacity=".85" stroke-linejoin="round"/>
+<circle cx="555" cy="524.0" r="3.2" fill="#7c5cff"/>
+<rect x="366.5" y="155.5" width="7" height="7" fill="#7c5cff" transform="rotate(45 370 159.0)"/>
+<path d="M555,713.0 H515 V159.0 H370" fill="none" stroke="#7c5cff" stroke-width="1.6" stroke-opacity=".85" stroke-linejoin="round"/>
+<circle cx="555" cy="713.0" r="3.2" fill="#7c5cff"/>
+<rect x="366.5" y="155.5" width="7" height="7" fill="#7c5cff" transform="rotate(45 370 159.0)"/>
+<path d="M885,735.0 H916 V414.0 H1070" fill="none" stroke="#2563eb" stroke-width="1.6" stroke-opacity=".85" stroke-linejoin="round"/>
+<circle cx="885" cy="735.0" r="3.2" fill="#2563eb"/>
+<rect x="1066.5" y="410.5" width="7" height="7" fill="#2563eb" transform="rotate(45 1070 414.0)"/>
+<path d="M885,779.0 H925 V559.0 H1070" fill="none" stroke="#db2777" stroke-width="1.6" stroke-opacity=".85" stroke-linejoin="round"/>
+<circle cx="885" cy="779.0" r="3.2" fill="#db2777"/>
+<rect x="1066.5" y="555.5" width="7" height="7" fill="#db2777" transform="rotate(45 1070 559.0)"/>
+<rect x="40" y="110" width="330" height="354" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+<path d="M40,120 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#7c5cff"/>
+<text x="54" y="135" font-size="14.5" font-weight="700" fill="#ffffff">dim_calendario</text>
+<text x="356" y="135" font-size="11" fill="#e2e8f0" text-anchor="end">dimensión</text>
+<rect x="50" y="152" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="62" y="163" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="80" y="163.5" font-size="12.5" fill="#0f172a" font-weight="600">fecha</text>
+<text x="358" y="163.5" font-size="11.5" fill="#94a3b8" text-anchor="end">date</text>
+<rect x="41" y="170" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="185.5" font-size="12.5" fill="#0f172a">anio</text>
+<text x="358" y="185.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<text x="80" y="207.5" font-size="12.5" fill="#0f172a">trimestre</text>
+<text x="358" y="207.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<rect x="41" y="214" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="229.5" font-size="12.5" fill="#0f172a">mes</text>
+<text x="358" y="229.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<text x="80" y="251.5" font-size="12.5" fill="#0f172a">nombre_mes</text>
+<text x="358" y="251.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="41" y="258" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="273.5" font-size="12.5" fill="#0f172a">anio_mes</text>
+<text x="358" y="273.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<text x="80" y="295.5" font-size="12.5" fill="#0f172a">anio_mes_orden</text>
+<text x="358" y="295.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<rect x="41" y="302" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="317.5" font-size="12.5" fill="#0f172a">semana_iso</text>
+<text x="358" y="317.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<text x="80" y="339.5" font-size="12.5" fill="#0f172a">dia_del_anio</text>
+<text x="358" y="339.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<rect x="41" y="346" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="361.5" font-size="12.5" fill="#0f172a">dia_semana</text>
+<text x="358" y="361.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<text x="80" y="383.5" font-size="12.5" fill="#0f172a">nombre_dia</text>
+<text x="358" y="383.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="41" y="390" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="405.5" font-size="12.5" fill="#0f172a">es_fin_de_semana</text>
+<text x="358" y="405.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
+<text x="80" y="427.5" font-size="12.5" fill="#0f172a">es_mes_abierto</text>
+<text x="358" y="427.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
+<rect x="41" y="434" width="328" height="22" fill="#f8fafc"/>
+<text x="80" y="449.5" font-size="12.5" fill="#0f172a">es_hasta_corte</text>
+<text x="358" y="449.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
+<rect x="555" y="110" width="330" height="288" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+<path d="M555,120 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#0f172a"/>
+<text x="569" y="135" font-size="14.5" font-weight="700" fill="#ffffff">fact_mayor</text>
+<text x="871" y="135" font-size="11" fill="#e2e8f0" text-anchor="end">hecho</text>
+<rect x="565" y="152" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="577" y="163" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="595" y="163.5" font-size="12.5" fill="#0f172a" font-weight="600">asiento_linea_id</text>
+<text x="873" y="163.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<rect x="556" y="170" width="328" height="22" fill="#f8fafc"/>
+<rect x="565" y="174" width="24" height="14" rx="3" fill="#dbeafe"/>
+<text x="577" y="185" font-size="9.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">FK</text>
+<text x="595" y="185.5" font-size="12.5" fill="#0f172a">fecha</text>
+<text x="873" y="185.5" font-size="11.5" fill="#94a3b8" text-anchor="end">date</text>
+<rect x="565" y="196" width="24" height="14" rx="3" fill="#dbeafe"/>
+<text x="577" y="207" font-size="9.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">FK</text>
+<text x="595" y="207.5" font-size="12.5" fill="#0f172a">cuenta_id</text>
+<text x="873" y="207.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="556" y="214" width="328" height="22" fill="#f8fafc"/>
+<text x="595" y="229.5" font-size="12.5" fill="#0f172a">tipo_asiento_id</text>
+<text x="873" y="229.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<text x="595" y="251.5" font-size="12.5" fill="#0f172a">tipo_asiento</text>
+<text x="873" y="251.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="556" y="258" width="328" height="22" fill="#f8fafc"/>
+<text x="595" y="273.5" font-size="12.5" fill="#0f172a">numero_asiento</text>
+<text x="873" y="273.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<text x="595" y="295.5" font-size="12.5" fill="#0f172a">periodo</text>
+<text x="873" y="295.5" font-size="11.5" fill="#94a3b8" text-anchor="end">int</text>
+<rect x="556" y="302" width="328" height="22" fill="#f8fafc"/>
+<text x="595" y="317.5" font-size="12.5" fill="#0f172a">descripcion</text>
+<text x="873" y="317.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<text x="595" y="339.5" font-size="12.5" fill="#0f172a">debe</text>
+<text x="873" y="339.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<rect x="556" y="346" width="328" height="22" fill="#f8fafc"/>
+<text x="595" y="361.5" font-size="12.5" fill="#0f172a">haber</text>
+<text x="873" y="361.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<text x="595" y="383.5" font-size="12.5" fill="#0f172a">importe</text>
+<text x="873" y="383.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<rect x="555" y="453" width="330" height="134" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+<path d="M555,463 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#0f172a"/>
+<text x="569" y="478" font-size="14.5" font-weight="700" fill="#ffffff">fact_presupuesto</text>
+<text x="871" y="478" font-size="11" fill="#e2e8f0" text-anchor="end">hecho</text>
+<rect x="565" y="495" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="577" y="506" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="595" y="506.5" font-size="12.5" fill="#0f172a" font-weight="600">anio_mes</text>
+<text x="873" y="506.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="556" y="513" width="328" height="22" fill="#f8fafc"/>
+<rect x="565" y="517" width="24" height="14" rx="3" fill="#dbeafe"/>
+<text x="577" y="528" font-size="9.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">FK</text>
+<text x="595" y="528.5" font-size="12.5" fill="#0f172a">fecha_mes</text>
+<text x="873" y="528.5" font-size="11.5" fill="#94a3b8" text-anchor="end">date</text>
+<rect x="565" y="539" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="577" y="550" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="595" y="550.5" font-size="12.5" fill="#0f172a" font-weight="600">rubro</text>
+<text x="873" y="550.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="556" y="557" width="328" height="22" fill="#f8fafc"/>
+<text x="595" y="572.5" font-size="12.5" fill="#0f172a">importe</text>
+<text x="873" y="572.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<rect x="555" y="642" width="330" height="222" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+<path d="M555,652 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#0f172a"/>
+<text x="569" y="667" font-size="14.5" font-weight="700" fill="#ffffff">fact_metas_ventas</text>
+<text x="871" y="667" font-size="11" fill="#e2e8f0" text-anchor="end">hecho</text>
+<rect x="565" y="684" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="577" y="695" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="595" y="695.5" font-size="12.5" fill="#0f172a" font-weight="600">anio_mes</text>
+<text x="873" y="695.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="556" y="702" width="328" height="22" fill="#f8fafc"/>
+<rect x="565" y="706" width="24" height="14" rx="3" fill="#dbeafe"/>
+<text x="577" y="717" font-size="9.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">FK</text>
+<text x="595" y="717.5" font-size="12.5" fill="#0f172a">fecha_mes</text>
+<text x="873" y="717.5" font-size="11.5" fill="#94a3b8" text-anchor="end">date</text>
+<rect x="565" y="728" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="577" y="739" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="595" y="739.5" font-size="12.5" fill="#0f172a" font-weight="600">canal_id</text>
+<text x="873" y="739.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="556" y="746" width="328" height="22" fill="#f8fafc"/>
+<text x="595" y="761.5" font-size="12.5" fill="#0f172a">canal</text>
+<text x="873" y="761.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="565" y="772" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="577" y="783" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="595" y="783.5" font-size="12.5" fill="#0f172a" font-weight="600">vendedor_id</text>
+<text x="873" y="783.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="556" y="790" width="328" height="22" fill="#f8fafc"/>
+<text x="595" y="805.5" font-size="12.5" fill="#0f172a">vendedor</text>
+<text x="873" y="805.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<text x="595" y="827.5" font-size="12.5" fill="#0f172a">meta_importe</text>
+<text x="873" y="827.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<rect x="556" y="834" width="328" height="22" fill="#f8fafc"/>
+<text x="595" y="849.5" font-size="12.5" fill="#0f172a">meta_unidades</text>
+<text x="873" y="849.5" font-size="11.5" fill="#94a3b8" text-anchor="end">numeric</text>
+<rect x="1070" y="110" width="330" height="200" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+<path d="M1070,120 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#9333ea"/>
+<text x="1084" y="135" font-size="14.5" font-weight="700" fill="#ffffff">dim_cuenta</text>
+<text x="1386" y="135" font-size="11" fill="#e2e8f0" text-anchor="end">dimensión</text>
+<rect x="1080" y="152" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="1092" y="163" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="1110" y="163.5" font-size="12.5" fill="#0f172a" font-weight="600">cuenta_id</text>
+<text x="1388" y="163.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="1071" y="170" width="328" height="22" fill="#f8fafc"/>
+<text x="1110" y="185.5" font-size="12.5" fill="#0f172a">cuenta</text>
+<text x="1388" y="185.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<text x="1110" y="207.5" font-size="12.5" fill="#0f172a">grupo</text>
+<text x="1388" y="207.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="1071" y="214" width="328" height="22" fill="#f8fafc"/>
+<text x="1110" y="229.5" font-size="12.5" fill="#0f172a">grupo_padre</text>
+<text x="1388" y="229.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<text x="1110" y="251.5" font-size="12.5" fill="#0f172a">seccion</text>
+<text x="1388" y="251.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="1071" y="258" width="328" height="22" fill="#f8fafc"/>
+<text x="1110" y="273.5" font-size="12.5" fill="#0f172a">nivel_1</text>
+<text x="1388" y="273.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<text x="1110" y="295.5" font-size="12.5" fill="#0f172a">es_resultado</text>
+<text x="1388" y="295.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
+<rect x="1070" y="365" width="330" height="90" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+<path d="M1070,375 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#2563eb"/>
+<text x="1084" y="390" font-size="14.5" font-weight="700" fill="#ffffff">dim_canal</text>
+<text x="1386" y="390" font-size="11" fill="#e2e8f0" text-anchor="end">dimensión</text>
+<rect x="1080" y="407" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="1092" y="418" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="1110" y="418.5" font-size="12.5" fill="#0f172a" font-weight="600">canal_id</text>
+<text x="1388" y="418.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="1071" y="425" width="328" height="22" fill="#f8fafc"/>
+<text x="1110" y="440.5" font-size="12.5" fill="#0f172a">canal</text>
+<text x="1388" y="440.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="1070" y="510" width="330" height="112" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+<path d="M1070,520 a10,10 0 0 1 10,-10 h310 a10,10 0 0 1 10,10 v28 h-330 z" fill="#db2777"/>
+<text x="1084" y="535" font-size="14.5" font-weight="700" fill="#ffffff">dim_vendedor</text>
+<text x="1386" y="535" font-size="11" fill="#e2e8f0" text-anchor="end">dimensión</text>
+<rect x="1080" y="552" width="24" height="14" rx="3" fill="#fef3c7"/>
+<text x="1092" y="563" font-size="9.5" font-weight="700" fill="#b45309" text-anchor="middle">PK</text>
+<text x="1110" y="563.5" font-size="12.5" fill="#0f172a" font-weight="600">vendedor_id</text>
+<text x="1388" y="563.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<rect x="1071" y="570" width="328" height="22" fill="#f8fafc"/>
+<text x="1110" y="585.5" font-size="12.5" fill="#0f172a">vendedor</text>
+<text x="1388" y="585.5" font-size="11.5" fill="#94a3b8" text-anchor="end">text</text>
+<text x="1110" y="607.5" font-size="12.5" fill="#0f172a">activo</text>
+<text x="1388" y="607.5" font-size="11.5" fill="#94a3b8" text-anchor="end">bool</text>
+<text x="40" y="894" font-size="12" fill="#475569">PK clave primaria · FK clave foránea · ● origen ◆ destino · línea continua: relación con una dimensión (N:1) · línea punteada: traza entre hechos (por ejemplo, de qué pedido salió una factura)</text>
+</svg>

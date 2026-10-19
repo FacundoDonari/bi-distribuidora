@@ -1,70 +1,103 @@
 # Modelo de datos
 
-El warehouse sigue un modelo dimensional (Kimball): **13 tablas de hechos** que comparten **8 dimensiones conformadas**. Que las dimensiones sean las mismas para todos los hechos es lo que permite cruzar procesos distintos: por ejemplo, ventas y cobranzas del mismo cliente, o compras y stock del mismo producto, sin reconciliar a mano.
+El warehouse está modelado en **estrella** (modelo dimensional de Kimball):
 
-## Capas
+- **Hechos:** lo que pasa en el negocio y se puede medir. Una venta, un cobro, una compra, un movimiento de stock, un asiento contable. Hay 13.
+- **Dimensiones:** desde dónde se mira lo que pasó. Cuándo (calendario), a quién (cliente), qué (producto), por dónde (canal), quién vendió (vendedor), desde dónde (depósito), a quién se compró (proveedor) y en qué cuenta contable. Hay 8.
 
-| Capa | Rol | Qué se hace |
-| --- | --- | --- |
-| `raw` | Copia fiel del ERP | Las 145 tablas de webERP, sin transformar. Si algo se rompe más adelante, siempre se puede volver al dato original. |
-| `staging` | Limpieza | Nombres de negocio (factura, cobro, pedido, asiento), tipos correctos, signos normalizados y claves de negocio. |
-| `marts` | Modelo dimensional | Hechos y dimensiones listos para analizar. |
-| `kpi` | Lógica de negocio | Una vista por indicador, con meta, estado y causa. El tablero solo lee esta capa. |
-| `audit` | Calidad | Registro de cargas, controles, linaje y veredicto. |
+Las 8 dimensiones son **compartidas**: el mismo cliente de una venta es el mismo cliente de un cobro. Por eso se puede cruzar "cuánto le vendí" con "cuánto me pagó" sin conciliar a mano.
 
-Cada capa solo lee de la anterior. Así cualquier número del tablero se puede seguir hacia atrás hasta la fila del ERP que lo originó.
-
-## El proceso central: ventas
+## De un vistazo
 
 ![Modelo estrella de ventas](modelo_estrella_ventas.png)
 
+`fact_ventas` es el centro del modelo: una fila por cada línea de factura, conectada a sus seis dimensiones. Los otros doce hechos siguen la misma lógica.
+
+## El modelo completo, por área
+
+Cada diagrama muestra todas las tablas del área con todas sus columnas y tipos. **PK** es la clave primaria (lo que identifica cada fila) y **FK** una clave foránea (la columna que apunta a otra tabla). Las líneas continuas unen un hecho con sus dimensiones; las punteadas trazan un documento a través de los procesos (por ejemplo, de qué pedido salió una factura y qué cobro la canceló).
+
+### 1. Ventas y clientes
+
+Qué se vendió, qué se pidió, qué se debe y qué se cobró.
+
+![Ventas y clientes](modelo_1_ventas_clientes.png)
+
+### 2. Compras y proveedores
+
+Qué se pidió a cada proveedor, qué se recibió y facturó, qué se debe y qué se pagó.
+
+![Compras y proveedores](modelo_2_compras_proveedores.png)
+
+### 3. Stock
+
+Cada entrada y salida de mercadería, y la foto del stock al cierre de cada mes.
+
+![Stock](modelo_3_stock.png)
+
+### 4. Contabilidad y planificación
+
+El libro mayor, que es la referencia contra la que se controla todo, y lo presupuestado.
+
+![Contabilidad y planificación](modelo_4_contabilidad_plan.png)
+
+## Qué representa cada fila
+
+La decisión más importante de un hecho es su **grano**: qué es exactamente una fila. Define qué se puede sumar sin contar dos veces lo mismo.
+
+| Hecho | Una fila es… | Tipo |
+| --- | --- | --- |
+| `fact_ventas` | Una línea de factura de venta | Transaccional |
+| `fact_pedidos` | Una línea de pedido | Acumulativo: se completa al despachar y al facturar |
+| `fact_cuenta_corriente_cliente` | Una factura, con lo cobrado y lo que falta | Acumulativo |
+| `fact_cobranzas` | La aplicación de un cobro a una factura | Transaccional |
+| `fact_ordenes_compra` | Una línea de orden de compra | Acumulativo |
+| `fact_compras` | Una línea de factura de compra | Transaccional |
+| `fact_cuenta_corriente_proveedor` | Una factura de compra, con lo pagado y lo que falta | Acumulativo |
+| `fact_pagos_proveedor` | Un pago a un proveedor | Transaccional |
+| `fact_stock_movimiento` | Una entrada o salida de stock | Transaccional |
+| `fact_stock_saldo` | Producto × depósito × fecha de cierre | Foto periódica |
+| `fact_mayor` | Una línea de asiento contable | Transaccional |
+| `fact_presupuesto` | Mes × rubro del presupuesto | Plan |
+| `fact_metas_ventas` | Mes × canal × vendedor | Plan |
+
+**Transaccional:** cada fila es un evento que no cambia. **Acumulativo:** cada fila es un documento que se va completando a medida que avanza (un pedido se despacha, se factura y se cobra). **Foto periódica:** cada fila es el estado de algo a una fecha.
+
 ## Matriz de procesos y dimensiones
 
-Cada fila es un proceso del negocio (un hecho) y cada columna una dimensión. Una marca indica que ese hecho se puede analizar por esa dimensión.
+Qué dimensiones usa cada hecho. Es la forma rápida de ver qué preguntas se pueden responder cruzando procesos.
 
 | Hecho | Calendario | Cliente | Producto | Canal | Vendedor | Depósito | Proveedor | Cuenta |
 | --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | `fact_ventas` | ● | ● | ● | ● | ● | ● | | |
 | `fact_pedidos` | ● | ● | ● | ● | ● | ● | | |
-| `fact_cobranzas` | ● | ● | | | | | | |
 | `fact_cuenta_corriente_cliente` | ● | ● | | ● | ● | | | |
-| `fact_compras` | ● | | ● | | | ● | ● | |
+| `fact_cobranzas` | ● | ● | | | | | | |
 | `fact_ordenes_compra` | ● | | ● | | | ● | ● | |
-| `fact_pagos_proveedor` | ● | | | | | | ● | |
+| `fact_compras` | ● | | ● | | | ● | ● | |
 | `fact_cuenta_corriente_proveedor` | ● | | | | | | ● | |
+| `fact_pagos_proveedor` | ● | | | | | | ● | |
 | `fact_stock_movimiento` | ● | ● | ● | | | ● | | |
 | `fact_stock_saldo` | ● | | ● | | | ● | | |
 | `fact_mayor` | ● | | | | | | | ● |
 | `fact_presupuesto` | mes | | | | | | | |
 | `fact_metas_ventas` | mes | | | ● | ● | | | |
 
-## Hechos: grano y tipo
-
-El **grano** es la decisión más importante de cada hecho: define qué representa una fila y, por lo tanto, qué se puede sumar sin duplicar.
-
-| Hecho | Una fila es… | Tipo | Medidas principales |
-| --- | --- | --- | --- |
-| `fact_ventas` | Una línea de factura de venta | Transaccional | Cantidad, importe neto, costo, margen bruto |
-| `fact_pedidos` | Una línea de pedido | Snapshot acumulativo: se actualiza al despachar y facturar | Cantidad pedida y facturada, entrega a tiempo y completa, días de ciclo |
-| `fact_cobranzas` | La aplicación de un cobro a una factura | Transaccional | Importe aplicado, días desde la factura, días contra el vencimiento |
-| `fact_cuenta_corriente_cliente` | Una factura de venta con su estado de cobro | Snapshot acumulativo | Importe, cobrado, saldo, días vencida |
-| `fact_compras` | Una línea de factura de compra | Transaccional | Cantidad, importe neto |
-| `fact_ordenes_compra` | Una línea de orden de compra | Snapshot acumulativo | Cantidad ordenada, recibida y facturada, plazo de entrega |
-| `fact_pagos_proveedor` | Un pago a un proveedor | Transaccional | Importe |
-| `fact_cuenta_corriente_proveedor` | Una factura de compra con su estado de pago | Snapshot acumulativo | Importe, pagado, saldo, días vencida |
-| `fact_stock_movimiento` | Un movimiento de stock | Transaccional | Entradas, salidas, stock resultante, valor |
-| `fact_stock_saldo` | Producto × depósito × fecha de cierre | Snapshot periódico | Unidades y valor del stock |
-| `fact_mayor` | Una línea de asiento contable | Transaccional | Debe, haber, importe |
-| `fact_presupuesto` | Mes × rubro del presupuesto | Plan | Importe presupuestado |
-| `fact_metas_ventas` | Mes × canal × vendedor | Plan | Meta en pesos y en unidades |
-
 ## Decisiones de modelado
 
-- **Dimensiones conformadas.** Cliente, producto, canal, vendedor, depósito, proveedor, cuenta y calendario son una sola tabla cada una, compartida por todos los hechos.
-- **Calendario propio.** `dim_calendario` tiene una fila por día, con año, trimestre, mes, semana ISO y dos marcas que usan todos los indicadores: `es_mes_abierto` (el mes todavía no cerró) y `es_hasta_corte` (la fecha está dentro del período analizado). Comparar contra el mismo mes del año anterior o excluir el mes en curso es un filtro, no una fórmula.
-- **Dimensiones degeneradas.** El número de factura y el de pedido quedan en el hecho, sin tabla propia: no tienen atributos que valga la pena separar y sirven para trazar cada línea.
-- **Medidas calculadas en el hecho.** El margen bruto se calcula una sola vez, en `fact_ventas`, para que todas las vistas usen el mismo número.
-- **Saldos derivados de movimientos.** El stock y las cuentas corrientes se calculan desde los movimientos y no desde campos de saldo del ERP, que pueden quedar desactualizados. La auditoría verifica que ambos coincidan.
-- **El libro mayor como referencia.** `fact_mayor` permite cruzar cada cifra comercial contra la contabilidad: ventas contra la cuenta de ventas, deudores contra la cuenta Deudores por ventas, stock contra la cuenta Mercaderías.
-- **La lógica de negocio en `kpi`, no en el tablero.** El tablero no calcula nada: lee vistas que ya traen el indicador, su meta, su estado y su comparación. Si cambia una definición, se cambia en un solo lugar.
-- **Inflación como dimensión de análisis.** Las series de IPC y dólar MEP viven en `kpi` y se aplican al final, así el mismo modelo se puede leer en pesos de hoy, en pesos históricos o en dólares.
+- **Un calendario propio.** Una fila por día, con año, trimestre, mes, semana y dos marcas: si el mes ya cerró y si la fecha está dentro del período analizado. Así, comparar contra el mismo mes del año anterior o dejar afuera el mes en curso es un filtro y no una fórmula.
+- **Números de documento dentro del hecho.** El número de factura y el de pedido quedan en la fila (dimensiones degeneradas): no necesitan tabla propia y permiten seguir cada línea hasta su comprobante.
+- **El margen se calcula una sola vez.** Vive en `fact_ventas`, y todas las vistas usan ese mismo número.
+- **Saldos calculados desde los movimientos.** El stock y lo que debe cada cliente se calculan sumando movimientos, no copiando el saldo que guarda el ERP. Después se controla que los dos coincidan.
+- **El libro mayor como referencia.** Cada cifra comercial se puede comparar contra su cuenta contable: ventas contra Ventas, lo que te deben contra Deudores por ventas, el stock contra Mercaderías.
+- **La lógica de negocio en una sola capa.** Encima del modelo, la capa `kpi` tiene una vista por indicador, con su meta, su estado y su comparación. El tablero no calcula nada, solo lee esas vistas: si cambia una definición, se cambia en un solo lugar.
+
+## Las capas del warehouse
+
+| Capa | Qué tiene |
+| --- | --- |
+| `raw` | Copia exacta de las 145 tablas del ERP, sin tocar |
+| `staging` | Los mismos datos, limpios y con nombres de negocio |
+| `marts` | El modelo de esta página: hechos y dimensiones |
+| `kpi` | Una vista por indicador, lista para el tablero |
+| `audit` | Los controles de [calidad de datos](calidad_de_datos.md) |

@@ -24,9 +24,9 @@ El dueño de una pyme distribuidora tiene los datos en el ERP, pero no las respu
 
 ## Documentación
 
-- **[Modelo de datos](docs/modelo_datos.md):** capas, modelo estrella, matriz de procesos y dimensiones, grano de cada hecho y decisiones de modelado.
+- **[Modelo de datos](docs/modelo_datos.md):** el modelo estrella completo, con todas las tablas, columnas y relaciones, qué representa cada fila y las decisiones de modelado.
 - **[Indicadores](docs/indicadores.md):** qué pregunta del dueño responde cada indicador, su fórmula, su meta y por qué importa en una distribuidora.
-- **[Calidad de datos](docs/calidad_de_datos.md):** cómo se audita cada carga y cómo se verifica que los números cierren contra la contabilidad.
+- **[Calidad de datos](docs/calidad_de_datos.md):** cómo se revisa cada carga antes de publicar, con ejemplos.
 
 ## Lo que distingue al proyecto
 
