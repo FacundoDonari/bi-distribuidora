@@ -57,7 +57,7 @@
 
   <rect x="310" y="232" width="445" height="80" rx="12" fill="#fff8ec" stroke="#e8c98f"/>
   <text x="326" y="258" class="t">audit</text>
-  <text x="326" y="280" class="s">55 controles de calidad en 4 ejes, registro de cada carga,</text>
+  <text x="326" y="280" class="s">63 controles de calidad en 4 ejes, registro de cada carga,</text>
   <text x="326" y="298" class="s">linaje de columnas y veredicto antes de publicar</text>
 
   <!-- Tablero -->
