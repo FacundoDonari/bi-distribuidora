@@ -68,7 +68,7 @@
   <text x="981" y="140" class="s" style="fill:#e6f4f2">el dueño</text>
   <text x="981" y="162" class="s" style="fill:#e6f4f2">pesos de hoy, históricos</text>
   <text x="981" y="180" class="s" style="fill:#e6f4f2">y dólares MEP</text>
-  <text x="981" y="202" class="s" style="fill:#e6f4f2">+ pestaña Confiabilidad</text>
+  <text x="981" y="202" class="s" style="fill:#e6f4f2">+ origen de cada indicador</text>
 
   <rect x="965" y="240" width="190" height="64" rx="12" fill="#f4f6f8" stroke="#cfd6de" stroke-dasharray="5 4"/>
   <text x="981" y="266" class="t">IA (próximo paso)</text>

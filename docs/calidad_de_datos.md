@@ -1,6 +1,6 @@
 # Calidad de datos
 
-Antes de interpretar un número hay que saber cuánto vale el dato que lo sostiene. Cada vez que se cargan datos, el warehouse corre una **auditoría de 63 controles automáticos** y **da aviso** de qué parte del dato es confiable y qué hay que mirar con cuidado. El resultado se ve en la pestaña Confiabilidad del tablero.
+Antes de interpretar un número hay que saber cuánto vale el dato que lo sostiene. Cada vez que se cargan datos, el warehouse corre una **auditoría de 63 controles automáticos** y **da aviso** de qué parte del dato es confiable y qué hay que mirar con cuidado.
 
 **Resultado de la última auditoría: apto para interpretar los indicadores, con salvedades.**
 

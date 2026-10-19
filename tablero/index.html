@@ -372,7 +372,7 @@ footer{max-width:1320px;margin:0 auto;padding:0 1.2rem 2rem;color:var(--muted);f
   <div class="seg" id="mon" role="group" aria-label="Moneda"></div>
   <div class="seg" id="lens" role="group" aria-label="Período"></div>
   <span class="fecha" id="fecha"></span>
-  <button class="conf" id="tconf" role="tab" aria-selected="false" data-tab="confiabilidad">Confiabilidad</button>
+  <button class="conf" id="tconf" role="tab" aria-selected="false" data-tab="confiabilidad">Origen de los datos</button>
 </div></header>
 <main id="app"></main>
 <div id="tipbox" role="dialog" aria-live="polite"><button type="button" aria-label="Cerrar">×</button><b></b><span></span></div>
@@ -1175,12 +1175,12 @@ function tabEconomico(){
     const i0=Math.max(0,n-EST.n), ix=[]; for(let i=n-1;i>=i0;i--) ix.push(i);   // tabla: del mes más nuevo (izquierda) al más viejo (derecha)
     const row=r=>{ if(!erShown(r)) return '';
       const tg=r.grp?`<button type="button" class="er-o" data-eo="${r.k}" title="${EST.open[r.k]?'Cerrar':'Abrir'} el detalle" aria-expanded="${EST.open[r.k]}">${EST.open[r.k]?'−':'+'}</button>`:'';
-      return `<tr class="er-r${r.sub?' tot':''}${r.kid?' er-s':''}" data-er="${r.k}" tabindex="0" role="button" aria-expanded="false" title="Tocá para ver la evolución mes a mes"><td><span class="er-l" title="${esc(r.n)}">${tg}${r.neg&&!r.kid?'(−) ':''}${esc(r.n)}<span class="er-g">▾</span></span><button type="button" class="er-h" data-eh="${r.k}" title="Ocultar esta fila" aria-label="Ocultar ${esc(r.n)}">×</button></td>${ix.map(i=>`<td${isCur(i)?' class="cur"':''}>${r.s[i]==null?'':nf(r.s[i]/1000,0)}</td>`).join('')}</tr><tr class="er-x" id="er-x-${r.k}" hidden><td colspan="${ix.length+1}"><div class="er-w"><div class="ch"><canvas id="er-c-${r.k}"></canvas></div></div></td></tr>`
+      return `<tr class="er-r${r.sub?' tot':''}${r.kid?' er-s':''}" data-er="${r.k}" tabindex="0" role="button" aria-expanded="false" title="Tocá para ver la evolución mes a mes"><td><span class="er-l" title="${esc(r.n)}">${tg}${r.neg&&!r.kid?'(−) ':''}${esc(r.n)}<span class="er-g">▾</span></span><button type="button" class="er-h" data-eh="${r.k}" title="Ocultar esta fila" aria-label="Ocultar ${esc(r.n)}">×</button></td>${ix.map(i=>`<td${isCur(i)?' class="cur"':''}>${r.s[i]==null?'':nf(UM?r.s[i]:r.s[i]/1000,0)}</td>`).join('')}</tr><tr class="er-x" id="er-x-${r.k}" hidden><td colspan="${ix.length+1}"><div class="er-w"><div class="ch"><canvas id="er-c-${r.k}"></canvas></div></div></td></tr>`
       +((r.mg||r.pv)?`<tr class="er-pr${r.mg?' mg':''}"><td>${r.mg?esc(r.mg)+' · % de las ventas':'% de las ventas'}</td>${ix.map(i=>`<td${isCur(i)?' class="cur"':''}>${pct(r.s,i)==null?'':nf(pct(r.s,i),1)+'%'}</td>`).join('')}</tr>`:'')};
     return `<div class="sc" id="er-sc"><table class="tb er-t"><thead><tr><th></th>${ix.map(i=>`<th${isCur(i)?' class="cur"':''}>${esc(L[i])}</th>`).join('')}</tr></thead><tbody>${ER.map(row).join('')}</tbody></table></div>`;
   };
   const erChips=()=>{const h=ER.filter(r=>EST.hide.includes(r.k)); return h.length?`<span>Filas ocultas:</span>${h.map(r=>`<button type="button" class="er-chip" data-es="${r.k}" title="Volver a mostrar">+ ${esc(r.n)}</button>`).join('')}<button type="button" class="er-chip er-all" data-es="*">Mostrar todas</button>`:''};
-  const erBox=`<p class="er-n">Cifras en miles de pesos.</p>
+  const erBox=`<p class="er-n">Cifras en ${UM?'dólares MEP':'miles de pesos'}.</p>
    <div class="er-chips" id="er-chips"></div><div id="er-tab"></div>
    <div class="er-bar"><label for="er-rng">Meses a mostrar: <b id="er-nl"></b></label><input type="range" id="er-rng" min="3" max="${n}" step="1" value="${Math.min(EST.n,n)}" aria-label="Cantidad de meses"><span class="er-q"><button type="button" data-em="6">6</button><button type="button" data-em="12">12</button><button type="button" data-em="${n}">Todos</button></span></div>`;
   const rg=s=>{const p=s.map((_,i)=>pct(s,i)), ok=p.map((x,i)=>[x,i]).filter(a=>a[0]!=null), mn=ok.reduce((a,b)=>b[0]<a[0]?b:a), mx=ok.reduce((a,b)=>b[0]>a[0]?b:a); return {mn,mx}};
@@ -1250,7 +1250,7 @@ function tabEconomico(){
   const ERMR=[['Ventas netas',S.v,0],['Costo de ventas',E.c,1,'cos',kidsC],['Utilidad bruta',sBru,2],['Gastos operativos',sOpG,1,'gop',kidsG],['Utilidad operativa',sOpe,2],['Gastos financieros',E.gf,1,'fin',kidsF],['Utilidad antes de impuestos',sAI,2],['Impuestos',sImt.map((x,i)=>x==null||E.ig[i]==null?null:x),1,'imp',kidsI],['Utilidad neta',sFin,2]];
   const ermHTML=()=>{
     const i0=Math.max(0,n-ERMS.n), ix=[]; for(let i=i0;i<n;i++) ix.push(i);
-    const cell=(s,i)=>s[i]==null?'':(ERMS.u==='p'?nf(100*s[i]/S.v[i],1)+'%':nf(s[i]/1e6,1));
+    const cell=(s,i)=>s[i]==null?'':(ERMS.u==='p'?nf(100*s[i]/S.v[i],1)+'%':nf((+(s[i]/(UM?1e3:1e6)).toFixed(1))||0,1));
     const head=ix.map(i=>`<th${i===n-1?' class="cur"':''}>${esc(L[i])}</th>`).join('');
     const cells=(sr)=>ix.map(i=>`<td${i===n-1?' class="cur"':''}>${cell(sr,i)}</td>`).join('');
     const body=ERMR.map(([nom,sr,ty,key,kids],ri)=>{ const op=key&&ERMS.open[key]; const dot=(ty===2||ty===0)?`<span class="erm-dot" data-erd="${ri}" tabindex="0" role="button" aria-label="Ver la evolución de ${esc(nom)}">●</span>`:'';
@@ -1258,7 +1258,7 @@ function tabEconomico(){
       return `<tr class="t${ty}"><td class="erf-n">${tg}${esc(nom)}${dot}</td>${cells(sr)}</tr>`+(op?kids.map(k=>`<tr class="erm-k"><td class="erf-n">${esc(k[0])}</td>${cells(k[1])}</tr>`).join(''):'');}).join('');
     return `<table class="tb erf erm"><thead><tr><th>Elemento</th>${head}</tr></thead><tbody>${body}</tbody></table>`;
   };
-  const ermBar=`<div class="erm-bar"><span>Meses:</span>${[6,12,n].map(k=>`<button type="button" data-ermn="${k}">${k===n?'Todos':k}</button>`).join('')}<span class="erm-sp"></span><button type="button" data-ermu="m">En millones de $</button><button type="button" data-ermu="p">En % de las ventas</button></div>`;
+  const ermBar=`<div class="erm-bar"><span>Meses:</span>${[6,12,n].map(k=>`<button type="button" data-ermn="${k}">${k===n?'Todos':k}</button>`).join('')}<span class="erm-sp"></span><button type="button" data-ermu="m">${UM?'En miles de US$':'En millones de $'}</button><button type="button" data-ermu="p">En % de las ventas</button></div>`;
   const erCard2=`<div class="card s12">${ermBar}<div class="sc" id="erm-t"></div></div>`;
   const erBind2=()=>{ const t=document.getElementById('erm-t'); if(!t) return;
     const draw=(keep)=>{ const sl=t.scrollLeft; t.innerHTML=ermHTML(); const sc=t; sc.scrollLeft=keep?sl:sc.scrollWidth;
@@ -1272,8 +1272,8 @@ function tabEconomico(){
     if(!pop){pop=document.createElement('div'); pop.id='erm-pop'; pop.innerHTML='<div class="erm-pt"></div><div class="erm-pb"><canvas id="erm-pc"></canvas></div>'; document.body.appendChild(pop);}
     const hide=()=>{pop.classList.remove('on'); if(pop._c){try{pop._c.destroy()}catch(_){} pop._c=null}};
     const show=dot=>{ if(typeof Chart==='undefined') return; const [nom,sr,ty]=ERMR[+dot.dataset.erd], k0=Math.max(0,n-12), idx=[]; for(let i=k0;i<n;i++) idx.push(i);
-      const pc=ERMS.u==='p'&&ty!==0, vals=idx.map(i=>sr[i]==null?null:(pc?+(100*sr[i]/S.v[i]).toFixed(2):+(sr[i]/1e6).toFixed(2)));
-      hide(); pop.querySelector('.erm-pt').innerHTML=esc(nom)+'<small>'+(pc?'% de las ventas':'millones de $')+', últimos '+idx.length+' meses</small>'; pop.classList.add('on');
+      const pc=ERMS.u==='p'&&ty!==0, vals=idx.map(i=>sr[i]==null?null:(pc?+(100*sr[i]/S.v[i]).toFixed(2):+(sr[i]/(UM?1e3:1e6)).toFixed(2)));
+      hide(); pop.querySelector('.erm-pt').innerHTML=esc(nom)+'<small>'+(pc?'% de las ventas':(UM?'miles de US$':'millones de $'))+', últimos '+idx.length+' meses</small>'; pop.classList.add('on');
       const r=dot.getBoundingClientRect(), W=pop.offsetWidth, H=pop.offsetHeight; let x=r.right+10, y=r.top-H/2+8; if(x+W>window.innerWidth-8) x=Math.max(8,r.left-W-10); y=Math.min(Math.max(8,y),window.innerHeight-H-8); pop.style.left=x+'px'; pop.style.top=y+'px';
       const cc=css('--c1'), neg=css('--c4');
       pop._c=new Chart(document.getElementById('erm-pc'),{type:'bar',data:{labels:idx.map(i=>L[i]),datasets:[{data:vals,backgroundColor:vals.map((v,j)=>v!=null&&v<0?neg:(j===vals.length-1?cc:css('--c1s'))),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+nf(c.parsed.y,1)+(pc?'%':' M')}}},scales:{x:{grid:{display:false},border:{display:false},ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:6,font:{size:10}}},y:{grid:{color:css('--line')},border:{display:false},ticks:{font:{size:10},callback:v=>nf(v,pc?0:0)}}}}}); };
@@ -1470,12 +1470,12 @@ function tabFinanciero(){
     const i0=Math.max(0,n-FST.n), ix=[]; for(let i=n-1;i>=i0;i--) ix.push(i);   // tabla: del mes más nuevo (izquierda) al más viejo (derecha)
     const row=r=>{ if(r.sec) return `<tr class="ff-sec"><td colspan="${ix.length+1}">${esc(r.n)}</td></tr>`; if(!ffShown(r)) return '';
       const tg=r.grp?`<button type="button" class="ff-o" data-fo="${r.k}" title="${FST.open[r.k]?'Cerrar':'Abrir'} el detalle" aria-expanded="${FST.open[r.k]}">${FST.open[r.k]?'−':'+'}</button>`:'';
-      return `<tr class="ff-r${r.sub?' tot':''}${r.kid?' ff-s':''}" data-ff="${r.k}" tabindex="0" role="button" aria-expanded="false" title="Tocá para ver la evolución mes a mes"><td><span class="ff-l" title="${esc(r.n)}">${tg}${r.neg&&!r.kid?'(−) ':''}${esc(r.n)}<span class="ff-g">▾</span></span><button type="button" class="ff-h" data-fh="${r.k}" title="Ocultar esta fila" aria-label="Ocultar ${esc(r.n)}">×</button></td>${ix.map(i=>`<td${isCur(i)?' class="cur"':''}>${r.s[i]==null?'':nf(r.s[i]/1000,0)}</td>`).join('')}</tr><tr class="ff-x" id="ff-x-${r.k}" hidden><td colspan="${ix.length+1}"><div class="ff-w"><div class="ch"><canvas id="ff-c-${r.k}"></canvas></div></div></td></tr>`
+      return `<tr class="ff-r${r.sub?' tot':''}${r.kid?' ff-s':''}" data-ff="${r.k}" tabindex="0" role="button" aria-expanded="false" title="Tocá para ver la evolución mes a mes"><td><span class="ff-l" title="${esc(r.n)}">${tg}${r.neg&&!r.kid?'(−) ':''}${esc(r.n)}<span class="ff-g">▾</span></span><button type="button" class="ff-h" data-fh="${r.k}" title="Ocultar esta fila" aria-label="Ocultar ${esc(r.n)}">×</button></td>${ix.map(i=>`<td${isCur(i)?' class="cur"':''}>${r.s[i]==null?'':nf(UM?r.s[i]:r.s[i]/1000,0)}</td>`).join('')}</tr><tr class="ff-x" id="ff-x-${r.k}" hidden><td colspan="${ix.length+1}"><div class="ff-w"><div class="ch"><canvas id="ff-c-${r.k}"></canvas></div></div></td></tr>`
       +((r.mg||r.pv)?`<tr class="ff-pr${r.mg?' mg':''}"><td>${r.mg?esc(r.mg)+' · % de las cobranzas':'% de las cobranzas'}</td>${ix.map(i=>`<td${isCur(i)?' class="cur"':''}>${fpct(r.s,i)==null?'':nf(fpct(r.s,i),1)+'%'}</td>`).join('')}</tr>`:'')};
     return `<div class="sc" id="ff-sc"><table class="tb ff-t"><thead><tr><th></th>${ix.map(i=>`<th${isCur(i)?' class="cur"':''}>${esc(L[i])}</th>`).join('')}</tr></thead><tbody>${FF.map(row).join('')}</tbody></table></div>`;
   };
   const ffChips=()=>{const h=FF.filter(r=>FST.hide.includes(r.k)); return h.length?`<span>Filas ocultas:</span>${h.map(r=>`<button type="button" class="ff-chip" data-fs="${r.k}" title="Volver a mostrar">+ ${esc(r.n)}</button>`).join('')}<button type="button" class="ff-chip ff-all" data-fs="*">Mostrar todas</button>`:''};
-  const ffBox=`<p class="ff-n">Cifras en miles de pesos.</p>
+  const ffBox=`<p class="ff-n">Cifras en ${UM?'dólares MEP':'miles de pesos'}.</p>
    <div class="ff-chips" id="ff-chips"></div><div id="ff-tab"></div>
    <div class="ff-bar"><label for="ff-rng">Meses a mostrar: <b id="ff-nl"></b></label><input type="range" id="ff-rng" min="3" max="${n}" step="1" value="${Math.min(FST.n,n)}" aria-label="Cantidad de meses"><span class="ff-q"><button type="button" data-fm="6">6</button><button type="button" data-fm="12">12</button><button type="button" data-fm="${n}">Todos</button></span></div>`;
   const ffCard=cardI('s12','Estado de flujo de fondos mes a mes',ffBox,qFF,'');
@@ -1555,7 +1555,7 @@ function tabFinanciero(){
     const sumI=(arr,ix)=>ix.reduce((a,i)=>a+(arr[i]||0),0);
     const FR=[['Cobranzas de clientes',K.cob,0,'s'],['Pagos a proveedores',K.pag,1,'s'],['Gastos e impuestos pagados',K.gas,1,'s'],['Caja generada por el negocio',fOpf,2,'s'],['Cuotas del préstamo',fCuo,1,'s'],
       ...(K.apo.some(x=>x)?[['Aportes de los socios',K.apo,0,'s']]:[]),['Retiros de los socios',K.ret,1,'s'],
-      ...(fInf?[[real9?'Efecto de la inflación sobre la caja':'Otros movimientos',fRes,0,'s']]:[]),['Variación de la caja',fVar,2,'s'],['Caja al cierre',K.sal,2,'p']];
+      ...(fInf?[[real9?(UM?'Efecto del tipo de cambio sobre la caja':'Efecto de la inflación sobre la caja'):'Otros movimientos',fRes,0,'s']]:[]),['Variación de la caja',fVar,2,'s'],['Caja al cierre',K.sal,2,'p']];
     const fRows=FR.map(([nom,arr,ty,k])=>{const sg=ty===1?-1:1, a=sg*(k==='p'?arr[idxP[idxP.length-1]]:sumI(arr,idxP)), b=sg*(k==='p'?arr[idxY[idxY.length-1]]:sumI(arr,idxY));
       return `<tr class="t${ty}"><td class="erf-n">${esc(nom)}</td><td class="erf-m"><b${a<0?' class="neg"':''}>${usd(a)}</b></td><td class="erf-p0">${usd(b)}</td></tr>`}).join('');
     const dejo=sumI(fOpf,idxP), varC=sumI(fVar,idxP);
@@ -1563,11 +1563,11 @@ function tabFinanciero(){
     if(!state.ffm) state.ffm={n:6,u:'m'}; state.ffm.u='m';
     const FM=state.ffm;
     const ffmHTML=()=>{ const i0=Math.max(0,n-FM.n), ix=[]; for(let i=i0;i<n;i++) ix.push(i);
-      const cell=(s,i,sg)=>s[i]==null?'':nf(sg*s[i]/1e6,1);
+      const cell=(s,i,sg)=>s[i]==null?'':nf((+(sg*s[i]/(UM?1e3:1e6)).toFixed(1))||0,1);
       const head=ix.map(i=>`<th${i===n-1?' class="cur"':''}>${esc(L[i])}</th>`).join('');
       const body=FR.map(([nom,arr,ty],ri)=>`<tr class="t${ty}"><td class="erf-n">${esc(nom)}${(ty===2||ri===0)?`<span class="erm-dot" data-ffd="${ri}" tabindex="0" role="button" aria-label="Ver la evolución de ${esc(nom)}">●</span>`:''}</td>${ix.map(i=>`<td${i===n-1?' class="cur"':''}>${cell(arr,i,ty===1?-1:1)}</td>`).join('')}</tr>`).join('');
       return `<table class="tb erf erm"><thead><tr><th>Elemento</th>${head}</tr></thead><tbody>${body}</tbody></table>`; };
-    const ffCard2=`<div class="card s12"><div class="erm-bar"><span>Meses:</span>${[6,12,n].map(k=>`<button type="button" data-ffn="${k}">${k===n?'Todos':k}</button>`).join('')}<span class="erm-sp"></span><small class="erm-u">En millones de $ · lo que sale va con signo menos</small></div><div class="sc" id="ffm-t"></div></div>`;
+    const ffCard2=`<div class="card s12"><div class="erm-bar"><span>Meses:</span>${[6,12,n].map(k=>`<button type="button" data-ffn="${k}">${k===n?'Todos':k}</button>`).join('')}<span class="erm-sp"></span><small class="erm-u">${UM?'En miles de US$':'En millones de $'} · lo que sale va con signo menos</small></div><div class="sc" id="ffm-t"></div></div>`;
     const bind=()=>{ const t=document.getElementById('ffm-t'); if(!t) return;
       const draw=keep=>{ const sl=t.scrollLeft; t.innerHTML=ffmHTML(); t.scrollLeft=keep?sl:t.scrollWidth;
         document.querySelectorAll('[data-ffn]').forEach(b=>b.classList.toggle('on',+b.dataset.ffn===FM.n)); document.querySelectorAll('[data-ffu]').forEach(b=>b.classList.toggle('on',b.dataset.ffu===FM.u)); };
@@ -1575,8 +1575,8 @@ function tabFinanciero(){
       let pop=document.getElementById('erm-pop'); if(!pop){pop=document.createElement('div'); pop.id='erm-pop'; pop.innerHTML='<div class="erm-pt"></div><div class="erm-pb"><canvas id="erm-pc"></canvas></div>'; document.body.appendChild(pop);}
       const hide=()=>{pop.classList.remove('on'); if(pop._c){try{pop._c.destroy()}catch(_){} pop._c=null}};
       const show=dot=>{ if(typeof Chart==='undefined') return; const [nom,arr,ty]=FR[+dot.dataset.ffd], k0=Math.max(0,n-12), idx=[]; for(let i=k0;i<n;i++) idx.push(i);
-        const pc=false, vals=idx.map(i=>arr[i]==null?null:+(arr[i]/1e6).toFixed(2));
-        hide(); pop.querySelector('.erm-pt').innerHTML=esc(nom)+'<small>'+(pc?'% de las cobranzas':'millones de $')+', últimos '+idx.length+' meses</small>'; pop.classList.add('on');
+        const pc=false, vals=idx.map(i=>arr[i]==null?null:+(arr[i]/(UM?1e3:1e6)).toFixed(2));
+        hide(); pop.querySelector('.erm-pt').innerHTML=esc(nom)+'<small>'+(pc?'% de las cobranzas':(UM?'miles de US$':'millones de $'))+', últimos '+idx.length+' meses</small>'; pop.classList.add('on');
         const r=dot.getBoundingClientRect(), W=pop.offsetWidth, H_=pop.offsetHeight; let x=r.right+10, y=r.top-H_/2+8; if(x+W>window.innerWidth-8) x=Math.max(8,r.left-W-10); y=Math.min(Math.max(8,y),window.innerHeight-H_-8); pop.style.left=x+'px'; pop.style.top=y+'px';
         const cc=css('--c1'), neg=css('--c4');
         pop._c=new Chart(document.getElementById('erm-pc'),{type:'bar',data:{labels:idx.map(i=>L[i]),datasets:[{data:vals,backgroundColor:vals.map((v,j)=>v!=null&&v<0?neg:(j===vals.length-1?cc:css('--c1s'))),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+nf(c.parsed.y,1)+(pc?'%':' M')}}},scales:{x:{grid:{display:false},border:{display:false},ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:6,font:{size:10}}},y:{grid:{color:css('--line')},border:{display:false},ticks:{font:{size:10},callback:v=>nf(v,0)}}}}}); };
@@ -1658,15 +1658,15 @@ function tabFinanciero(){
   if(!chartsSetup()) return;
   const cc={c1:css('--c1'),c2:css('--c2'),c3:css('--c3'),c4:css('--c4')};
   ffBind();finV.bind();
-  ch('c-fl1',{type:'bar',data:{labels:WL,datasets:[{label:'Cobros que vencen',data:ing,backgroundColor:cc.c1,stack:'in',borderRadius:3},{label:'Proveedores que vencen',data:egP,backgroundColor:cc.c2,stack:'out',borderRadius:3},{label:'Sueldos, cuota del préstamo e impuestos (en su fecha)',data:FX,backgroundColor:'#BFA98A',stack:'out',borderRadius:3}]},options:baseOpts({legend:1,noskip:1,stack:1,yf:v=>nf(v/1e6,0)+' M',tip:{label:x=>' '+x.dataset.label+': '+usd(x.parsed.y)}})});
-  ch('c-fl2',{type:'bar',data:{labels:['Hoy',...WL],datasets:[{label:'Caja al final de la semana',data:[cajaH,...cpr],backgroundColor:[cajaH,...cpr].map((v,i)=>i===0?css('--muted'):v<0?cc.c4:cc.c1),borderRadius:3}]},options:baseOpts({legend:0,noskip:1,yf:v=>nf(v/1e6,0)+' M',tip:{label:x=>' '+x.dataset.label+': '+usd(x.parsed.y)}})});
+  ch('c-fl1',{type:'bar',data:{labels:WL,datasets:[{label:'Cobros que vencen',data:ing,backgroundColor:cc.c1,stack:'in',borderRadius:3},{label:'Proveedores que vencen',data:egP,backgroundColor:cc.c2,stack:'out',borderRadius:3},{label:'Sueldos, cuota del préstamo e impuestos (en su fecha)',data:FX,backgroundColor:'#BFA98A',stack:'out',borderRadius:3}]},options:baseOpts({legend:1,noskip:1,stack:1,yf:yK,tip:{label:x=>' '+x.dataset.label+': '+usd(x.parsed.y)}})});
+  ch('c-fl2',{type:'bar',data:{labels:['Hoy',...WL],datasets:[{label:'Caja al final de la semana',data:[cajaH,...cpr],backgroundColor:[cajaH,...cpr].map((v,i)=>i===0?css('--muted'):v<0?cc.c4:cc.c1),borderRadius:3}]},options:baseOpts({legend:0,noskip:1,yf:yK,tip:{label:x=>' '+x.dataset.label+': '+usd(x.parsed.y)}})});
   waterfall('c-c12',stepsC);
   ch('c-fj',{type:'bar',data:{labels:L,datasets:[{label:'Cobranzas',data:K.cob,backgroundColor:cc.c1,stack:'a',borderRadius:2},{label:'Cuotas del préstamo',data:K.pre,backgroundColor:css('--c6'),stack:'a',borderRadius:2},{label:'Pagos a proveedores',data:K.pag.map(x=>-x),backgroundColor:cc.c4,stack:'a',borderRadius:2},{label:'Gastos e impuestos',data:K.gas.map(x=>-x),backgroundColor:cc.c2,stack:'a',borderRadius:2},{label:'Retiros de los socios',data:K.ret.map(x=>-x),backgroundColor:css('--c5'),stack:'a',borderRadius:2},{type:'line',label:'Saldo de caja',data:K.sal,borderColor:css('--ink'),backgroundColor:css('--ink'),borderWidth:2.5,pointRadius:0,tension:.3}]},options:baseOpts({legend:1,stack:1,yf:yK,tip:{label:x=>' '+x.dataset.label+': '+usd(Math.abs(x.parsed.y))}})});
   const s3=a=>a.slice(3),L3=L.slice(3);
   ch('c-deu',{type:'bar',data:{labels:Lc,datasets:[{label:'No vencido',data:cs.map(x=>x.tot-x.venc),backgroundColor:cc.c1,stack:'a',borderRadius:2},{label:'Vencido hasta 30 días',data:cs.map(x=>x.venc-x.v30),backgroundColor:'#E9B24F',stack:'a',borderRadius:2},{label:'Vencido más de 30 días',data:cs.map(x=>x.v30),backgroundColor:cc.c4,stack:'a',borderRadius:2}]},options:baseOpts({legend:1,stack:1,yf:yK,tip:{label:x=>' '+x.dataset.label+': '+usd(x.parsed.y)}})});
   ch('c-dsoz',{type:'line',data:{labels:Lc,datasets:[{label:'Días que tardan en pagarte',data:dsoS,borderColor:cc.c4,backgroundColor:cc.c4,borderWidth:2.5,pointRadius:0,tension:.3},{label:'Días que tardás en pagar',data:S.dpo.slice(n-13),borderColor:cc.c1,backgroundColor:cc.c1,borderWidth:2.5,pointRadius:0,tension:.3}]},options:baseOpts({legend:1,yf:v=>v+' d',tip:{label:x=>' '+x.dataset.label+': '+nf(x.parsed.y,0)+' días'}})});
   window.cobRender(); window.pgRender();
-  ch('c-tes',{type:'bar',data:{labels:WL,datasets:[{type:'bar',label:'Cobros que vencen',data:ing,backgroundColor:cc.c1,stack:'i',borderRadius:2,yAxisID:'y'},{type:'bar',label:'Proveedores que vencen',data:egP.map(x=>-x),backgroundColor:cc.c2,stack:'e',borderRadius:2,yAxisID:'y'},{type:'bar',label:'Sueldos, cuota del préstamo e impuestos (en su fecha)',data:FX.map(x=>-x),backgroundColor:'#BFA98A',stack:'e',borderRadius:2,yAxisID:'y'},{type:'line',label:'Caja si todo se cumple en fecha',data:cpr,borderColor:cc.c3,backgroundColor:cc.c3,borderWidth:2.5,pointRadius:2,tension:.2,yAxisID:'y'}]},options:baseOpts({legend:1,noskip:1,stack:1,yf:v=>nf(v/1e6,0)+' M',tip:{label:x=>' '+x.dataset.label+': '+usd(Math.abs(x.parsed.y))}})});
+  ch('c-tes',{type:'bar',data:{labels:WL,datasets:[{type:'bar',label:'Cobros que vencen',data:ing,backgroundColor:cc.c1,stack:'i',borderRadius:2,yAxisID:'y'},{type:'bar',label:'Proveedores que vencen',data:egP.map(x=>-x),backgroundColor:cc.c2,stack:'e',borderRadius:2,yAxisID:'y'},{type:'bar',label:'Sueldos, cuota del préstamo e impuestos (en su fecha)',data:FX.map(x=>-x),backgroundColor:'#BFA98A',stack:'e',borderRadius:2,yAxisID:'y'},{type:'line',label:'Caja si todo se cumple en fecha',data:cpr,borderColor:cc.c3,backgroundColor:cc.c3,borderWidth:2.5,pointRadius:2,tension:.2,yAxisID:'y'}]},options:baseOpts({legend:1,noskip:1,stack:1,yf:yK,tip:{label:x=>' '+x.dataset.label+': '+usd(Math.abs(x.parsed.y))}})});
   ch('c-dso',{type:'line',data:{labels:L3,datasets:[{label:'Días que tardan en pagarte',data:s3(S.dso),borderColor:cc.c1,backgroundColor:cc.c1,borderWidth:2.5,pointRadius:0,tension:.3},{label:'Días que tardás en pagar',data:s3(S.dpo),borderColor:cc.c2,backgroundColor:cc.c2,borderWidth:2.5,pointRadius:0,tension:.3}]},options:baseOpts({legend:1,yf:v=>v+' d',tip:{label:x=>' '+x.dataset.label+': '+nf(x.parsed.y,0)+' días'}})});
 }
 
@@ -1768,13 +1768,8 @@ function tabConfiabilidad(){
   const det=(x)=>`<details data-q="${esc((x[1]+' '+x[2]).toLowerCase())}"><summary>${esc(fixAcc(x[1]))}</summary><div class="bd"><p>${esc(fixAcc(x[2]))}</p><div class="chips"><code>kpi.${esc(x[3].split(' + ').join('</code><code>kpi.'))}</code></div><div class="chips">${x[4].split(', ').map(m=>`<code>marts.${esc(m)}</code>`).join('')}</div><div class="chips">${mr(x[4]).map(r=>`<code>raw.${esc(r)}</code>`).join('')}</div>${x[5]?`<p>${esc(fixAcc(x[5]))}</p>`:''}</div></details>`;
   const expl=grupos.map(g=>`<div class="gx">${g}</div>`+DATA.cat.filter(x=>x[0]===g).map(det).join('')).join('');
   const m=DATA.meta;
-  const nct=e=>DATA.ctl.filter(c=>c[0].startsWith(e)&&!c[3]).length;
   $('#app').innerHTML=`<div class="cf">
-   <div class="g"><div class="card s12"><div style="display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;justify-content:space-between"><div><h2 style="margin:0 0 .3rem">Confiabilidad del dato</h2><p>Auditoría n.º ${m.auditoria} · ${fDate(m.audFecha)} · ${DATA.ctl.length} controles automáticos sobre el ERP, el modelo y los indicadores</p></div><span class="veredicto">${esc(DATA.veredicto)}</span></div>
-   <div class="gg" style="margin-top:.8rem">${ejes.map(e=>gauge(e[3],100,col(e[3]),e[1]+' · '+bnd(e[3]),nf(e[3],1))).join('')}</div>
-   <p style="margin:.9rem 0 0">Antes de interpretar un número hay que saber cuánto vale el dato que lo sostiene. Cada control se califica de 0 a 100 y la nota de cada eje es el promedio de sus controles. El tablero analiza hasta el ${fDate(m.corte)}; la última carga fue el ${fDate(m.carga)}.</p></div></div>
-   <div class="g">${ejes.map(e=>`<div class="card s3 eje"><div class="ek">${e[0]} · ${nct(e[0])} controles</div><h3>${e[1]}<span style="color:${col(e[3])}">${nf(e[3],1)}</span></h3><p class="eq"><i>${e[4]}</i></p><p>${esc(DATA.que[e[0]])}</p>${DATA.ojo[e[0]].length?`<div class="em"><b>A tener en cuenta</b><ul>${DATA.ojo[e[0]].map(o=>`<li><b style="color:${col(o[0])}">${o[0]}</b> · ${esc(o[1])}</li>`).join('')}</ul></div>`:''}</div>`).join('')}</div>
-   <div class="g"><div class="card s12"><h2>¿De dónde sale cada indicador?</h2><input class="srch" id="q" type="search" placeholder="Buscar un indicador" aria-label="Buscar un indicador">${expl}</div></div></div>`;
+   <div class="g"><div class="card s12"><h2>¿De dónde sale cada indicador?</h2><p>Cada indicador del tablero, con su definición y las tablas de las que sale: la vista de indicadores (<code>kpi</code>), el modelo (<code>marts</code>) y las tablas originales del ERP (<code>raw</code>).</p><input class="srch" id="q" type="search" placeholder="Buscar un indicador" aria-label="Buscar un indicador">${expl}</div></div></div>`;
   $('#q').addEventListener('input',e=>{const t=e.target.value.trim().toLowerCase();document.querySelectorAll('.cf details').forEach(d=>{d.style.display=!t||d.dataset.q.includes(t)?'':'none'})});
 }
 
@@ -1786,7 +1781,7 @@ function balOff(sv){if(!sv)return;DATA.per.hoy=sv.per;Object.keys(sv.map).forEac
 function renderKeep(){const y=window.scrollY, ap=document.getElementById('app'), h=ap.offsetHeight; ap.style.minHeight=h+'px'; state.keepY=1; try{render()}finally{state.keepY=0} window.scrollTo({top:y,behavior:'auto'}); const fix=()=>window.scrollTo({top:y,behavior:'auto'}); requestAnimationFrame(fix); setTimeout(()=>{fix(); ap.style.minHeight=''},700)}
 function render(){const sv=state.tab==='patrimonial'?balOn():null;try{render0()}finally{balOff(sv)}}
 /* guia */
-const GUIA='<div class="guia" style="position:relative;margin:0 0 1rem;padding:.9rem 2.4rem .9rem 1rem;border:1px solid var(--line2);border-radius:12px;background:var(--bg);font-size:.92rem;line-height:1.5"><button aria-label="Cerrar" onclick="state.guiaOff=1;this.parentElement.remove()" style="position:absolute;top:.4rem;right:.6rem;border:0;background:none;font-size:1.3rem;cursor:pointer;color:inherit">×</button><b>Datos simulados de una distribuidora, al cierre de agosto de 2026.</b> Cómo leerlo en un minuto: <b>1)</b> el diagnóstico dice qué pasó; <b>2)</b> <i>Qué hacer primero</i> ordena las acciones por plata en juego; <b>3)</b> cada pestaña (Comercial, Económico, Financiero, Patrimonial, Presupuesto) muestra solo 4 indicadores de esa perspectiva. Confiabilidad muestra los controles de calidad de los datos.</div>';
+const GUIA='<div class="guia" style="position:relative;margin:0 0 1rem;padding:.9rem 2.4rem .9rem 1rem;border:1px solid var(--line2);border-radius:12px;background:var(--bg);font-size:.92rem;line-height:1.5"><button aria-label="Cerrar" onclick="state.guiaOff=1;this.parentElement.remove()" style="position:absolute;top:.4rem;right:.6rem;border:0;background:none;font-size:1.3rem;cursor:pointer;color:inherit">×</button><b>Datos simulados de una distribuidora, al cierre de agosto de 2026.</b> Cómo leerlo en un minuto: <b>1)</b> el diagnóstico dice qué pasó; <b>2)</b> <i>Qué hacer primero</i> ordena las acciones por plata en juego; <b>3)</b> cada pestaña (Comercial, Económico, Financiero, Patrimonial, Presupuesto) muestra solo 4 indicadores de esa perspectiva. Origen de los datos muestra de dónde sale cada indicador.</div>';
 function render0(){ try{render0b()}finally{ if(UM) usdFix(); } }
 function usdFix(){ const w=document.createTreeWalker(document.getElementById('app'),NodeFilter.SHOW_TEXT); let n; while(n=w.nextNode()){ if(n.nodeValue.indexOf('$')>=0) n.nodeValue=n.nodeValue.replace(/(^|[^S])\$(?=[\s\u00a0]*\d)/g,'$1US$$'); } }
 function render0b(){
@@ -1804,7 +1799,7 @@ function render0b(){
   const usaLente=['comercial','economico','financiero'].includes(state.tab)||(state.tab==='claves'&&state.horizonte==='mes');
   $('#lens').style.display=usaLente?'':'none';
   document.querySelector('.hd').classList.remove('open'); $('#bset').setAttribute('aria-expanded','false');
-  $('#bset').innerHTML=state.tab==='confiabilidad'?'<span>Confiabilidad</span><i>▾</i>':`<span>${[usaLente?(state.lens==='anio'?'Este año':'Este mes'):'',state.mon==='nom'?'pesos históricos':state.mon==='usd'?'dólares MEP':''].filter(Boolean).join(' · ')||'Vista'}</span><i>▾</i>`;
+  $('#bset').innerHTML=state.tab==='confiabilidad'?'<span>Origen de los datos</span><i>▾</i>':`<span>${[usaLente?(state.lens==='anio'?'Este año':'Este mes'):'',state.mon==='nom'?'pesos históricos':state.mon==='usd'?'dólares MEP':''].filter(Boolean).join(' · ')||'Vista'}</span><i>▾</i>`;
   document.querySelectorAll('#lens button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lens===state.lens?'true':'false'));
   history.replaceState(null,'','#'+state.tab+(usaLente?'/'+state.lens:''));
   if(!state.keepY) window.scrollTo({top:0,behavior:'auto'});
