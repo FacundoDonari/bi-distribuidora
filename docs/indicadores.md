@@ -42,5 +42,5 @@ Son los que el dueño debería mirar todos los meses. Cada uno tiene una meta, u
 
 - **Pesos de hoy, pesos históricos y dólares.** Con inflación, comparar pesos de distintos meses engaña. La vista principal reexpresa cada mes a pesos de agosto de 2026 con el IPC del INDEC. La vista histórica sirve para conciliar con el banco y los impuestos, y la de dólares usa el MEP del último día hábil de cada mes.
 - **Comparaciones.** Cada número se compara con el mes anterior y con el mismo mes del año anterior. Los indicadores que ya son porcentajes se comparan en puntos, los de días en días y la caja generada en pesos.
-- **Metas.** Ventas, ganancia y margen salen del presupuesto 2026 en Excel. El resto son parámetros del negocio guardados en `kpi.parametros`, con su descripción y quién los aprobó.
+- **Metas.** Ventas, ganancia y margen salen del presupuesto 2026 en Excel. El resto son parámetros del negocio guardados en `kpi.parametros`, con su descripción.
 - **Estados.** Un indicador está en orden si cumple la meta, en alerta si queda a menos de 10% de cumplirla y en crítico si queda más lejos.
