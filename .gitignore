@@ -1,0 +1,16 @@
+# Credenciales: nunca se suben.
+.env
+.env.*
+*.pem
+*.key
+
+# Archivos locales y temporales
+backup_erp_*/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.bak
+*.tmp

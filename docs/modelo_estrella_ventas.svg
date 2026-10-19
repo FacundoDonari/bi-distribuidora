@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" font-family="Inter, Segoe UI, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<path d="M430,250 L340,184" stroke="#5f6b7a" stroke-width="1.5" fill="none"/>
+<text x="391.0" y="213.0" font-size="11" fill="#5f6b7a">N : 1</text>
+<path d="M600.0,250 L600.0,184" stroke="#5f6b7a" stroke-width="1.5" fill="none"/>
+<text x="606.0" y="213.0" font-size="11" fill="#5f6b7a">N : 1</text>
+<path d="M770,250 L860,184" stroke="#5f6b7a" stroke-width="1.5" fill="none"/>
+<text x="821.0" y="213.0" font-size="11" fill="#5f6b7a">N : 1</text>
+<path d="M400,424 L360,562.0" stroke="#5f6b7a" stroke-width="1.5" fill="none"/>
+<text x="386.0" y="489.0" font-size="11" fill="#5f6b7a">N : 1</text>
+<path d="M600.0,454 L600.0,560" stroke="#5f6b7a" stroke-width="1.5" fill="none"/>
+<text x="606.0" y="503.0" font-size="11" fill="#5f6b7a">N : 1</text>
+<path d="M800,424 L840,572.0" stroke="#5f6b7a" stroke-width="1.5" fill="none"/>
+<text x="826.0" y="494.0" font-size="11" fill="#5f6b7a">N : 1</text>
+<rect x="40" y="40" width="320" height="144" rx="12" fill="#ffffff" stroke="#9fd0cb" stroke-width="1.5"/>
+<text x="56" y="64" font-size="15" font-weight="700" fill="#16202b">dim_calendario</text>
+<line x1="40" y1="74" x2="360" y2="74" stroke="#9fd0cb"/>
+<text x="56" y="94" font-size="12.5" fill="#4b5563" font-weight="600">fecha  PK</text>
+<text x="56" y="114" font-size="12.5" fill="#4b5563">anio · trimestre · mes</text>
+<text x="56" y="134" font-size="12.5" fill="#4b5563">anio_mes · semana_iso</text>
+<text x="56" y="154" font-size="12.5" fill="#4b5563">dia_semana · es_fin_de_semana</text>
+<text x="56" y="174" font-size="12.5" fill="#4b5563">es_mes_abierto · es_hasta_corte</text>
+<rect x="440" y="40" width="320" height="144" rx="12" fill="#ffffff" stroke="#9fd0cb" stroke-width="1.5"/>
+<text x="456" y="64" font-size="15" font-weight="700" fill="#16202b">dim_cliente</text>
+<line x1="440" y1="74" x2="760" y2="74" stroke="#9fd0cb"/>
+<text x="456" y="94" font-size="12.5" fill="#4b5563" font-weight="600">cliente_id  PK</text>
+<text x="456" y="114" font-size="12.5" fill="#4b5563">cliente</text>
+<text x="456" y="134" font-size="12.5" fill="#4b5563">canal_id  FK</text>
+<text x="456" y="154" font-size="12.5" fill="#4b5563">condicion_pago · dias_vencimiento</text>
+<text x="456" y="174" font-size="12.5" fill="#4b5563">limite_credito · fecha_alta</text>
+<rect x="840" y="40" width="320" height="144" rx="12" fill="#ffffff" stroke="#9fd0cb" stroke-width="1.5"/>
+<text x="856" y="64" font-size="15" font-weight="700" fill="#16202b">dim_producto</text>
+<line x1="840" y1="74" x2="1160" y2="74" stroke="#9fd0cb"/>
+<text x="856" y="94" font-size="12.5" fill="#4b5563" font-weight="600">producto_id  PK</text>
+<text x="856" y="114" font-size="12.5" fill="#4b5563">producto</text>
+<text x="856" y="134" font-size="12.5" fill="#4b5563">unidad_negocio (categoría)</text>
+<text x="856" y="154" font-size="12.5" fill="#4b5563">unidad_medida · tipo_item</text>
+<text x="856" y="174" font-size="12.5" fill="#4b5563">costo_actual · ultimo_costo</text>
+<rect x="40" y="520" width="320" height="84" rx="12" fill="#ffffff" stroke="#9fd0cb" stroke-width="1.5"/>
+<text x="56" y="544" font-size="15" font-weight="700" fill="#16202b">dim_canal</text>
+<line x1="40" y1="554" x2="360" y2="554" stroke="#9fd0cb"/>
+<text x="56" y="574" font-size="12.5" fill="#4b5563" font-weight="600">canal_id  PK</text>
+<text x="56" y="594" font-size="12.5" fill="#4b5563">canal</text>
+<rect x="440" y="560" width="320" height="104" rx="12" fill="#ffffff" stroke="#9fd0cb" stroke-width="1.5"/>
+<text x="456" y="584" font-size="15" font-weight="700" fill="#16202b">dim_vendedor</text>
+<line x1="440" y1="594" x2="760" y2="594" stroke="#9fd0cb"/>
+<text x="456" y="614" font-size="12.5" fill="#4b5563" font-weight="600">vendedor_id  PK</text>
+<text x="456" y="634" font-size="12.5" fill="#4b5563">vendedor</text>
+<text x="456" y="654" font-size="12.5" fill="#4b5563">activo</text>
+<rect x="840" y="520" width="320" height="104" rx="12" fill="#ffffff" stroke="#9fd0cb" stroke-width="1.5"/>
+<text x="856" y="544" font-size="15" font-weight="700" fill="#16202b">dim_deposito</text>
+<line x1="840" y1="554" x2="1160" y2="554" stroke="#9fd0cb"/>
+<text x="856" y="574" font-size="12.5" fill="#4b5563" font-weight="600">deposito_id  PK</text>
+<text x="856" y="594" font-size="12.5" fill="#4b5563">deposito</text>
+<text x="856" y="614" font-size="12.5" fill="#4b5563">permite_facturar</text>
+<rect x="400" y="250" width="400" height="204" rx="12" fill="#0b7a75" stroke="#0b7a75" stroke-width="1.5"/>
+<text x="416" y="274" font-size="15" font-weight="700" fill="#ffffff">fact_ventas</text>
+<line x1="400" y1="284" x2="800" y2="284" stroke="#3a9690"/>
+<text x="416" y="304" font-size="12.5" fill="#e6f4f2" font-weight="600">movimiento_id  PK (línea de factura)</text>
+<text x="416" y="324" font-size="12.5" fill="#e6f4f2">fecha  FK → calendario</text>
+<text x="416" y="344" font-size="12.5" fill="#e6f4f2">cliente_id  FK · producto_id  FK</text>
+<text x="416" y="364" font-size="12.5" fill="#e6f4f2">canal_id  FK · vendedor_id  FK · deposito_id  FK</text>
+<text x="416" y="384" font-size="12.5" fill="#e6f4f2">factura_id · pedido_id  (degeneradas)</text>
+<text x="416" y="404" font-size="12.5" fill="#e6f4f2">cantidad · precio_unitario · descuento_pct</text>
+<text x="416" y="424" font-size="12.5" fill="#e6f4f2">importe_bruto · importe_descuento · importe_neto</text>
+<text x="416" y="444" font-size="12.5" fill="#e6f4f2">costo_unitario · costo_total · margen_bruto</text>
+<text x="40" y="736" font-size="12.5" fill="#4b5563">Grano: una fila por línea de factura de venta. Las medidas son aditivas; el margen bruto se calcula en el hecho para que todas las vistas usen el mismo.</text>
+</svg>

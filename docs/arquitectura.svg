@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 460" width="1180" height="460" font-family="Inter, Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5f6b7a"/>
+    </marker>
+    <style>
+      .t{font-size:15px;font-weight:700;fill:#16202b}
+      .s{font-size:12px;fill:#4b5563}
+      .k{font-size:11px;font-weight:700;letter-spacing:.06em;fill:#0b7a75}
+      .l{stroke:#5f6b7a;stroke-width:1.6;fill:none}
+    </style>
+  </defs>
+  <rect width="1180" height="460" fill="#ffffff"/>
+
+  <!-- Fuentes -->
+  <text x="30" y="34" class="k">FUENTES</text>
+  <rect x="30" y="50" width="200" height="86" rx="12" fill="#f4f6f8" stroke="#cfd6de"/>
+  <text x="46" y="78" class="t">webERP</text>
+  <text x="46" y="98" class="s">MariaDB en Docker local</text>
+  <text x="46" y="116" class="s">ventas, compras, stock, mayor</text>
+
+  <rect x="30" y="152" width="200" height="70" rx="12" fill="#f4f6f8" stroke="#cfd6de"/>
+  <text x="46" y="180" class="t">Presupuesto 2026</text>
+  <text x="46" y="200" class="s">Excel: rubros y metas</text>
+
+  <rect x="30" y="238" width="200" height="70" rx="12" fill="#f4f6f8" stroke="#cfd6de"/>
+  <text x="46" y="266" class="t">APIs públicas</text>
+  <text x="46" y="286" class="s">IPC del INDEC y dólar MEP</text>
+
+  <!-- Warehouse -->
+  <text x="300" y="34" class="k">DATA WAREHOUSE · SUPABASE (POSTGRES)</text>
+  <rect x="290" y="46" width="640" height="300" rx="16" fill="#eef7f6" stroke="#9fd0cb"/>
+
+  <rect x="310" y="96" width="135" height="120" rx="12" fill="#ffffff" stroke="#9fd0cb"/>
+  <text x="326" y="124" class="t">raw</text>
+  <text x="326" y="146" class="s">copia fiel del ERP</text>
+  <text x="326" y="164" class="s">145 tablas</text>
+  <text x="326" y="182" class="s">+ presupuesto</text>
+
+  <rect x="465" y="96" width="135" height="120" rx="12" fill="#ffffff" stroke="#9fd0cb"/>
+  <text x="481" y="124" class="t">staging</text>
+  <text x="481" y="146" class="s">limpieza y nombres</text>
+  <text x="481" y="164" class="s">de negocio</text>
+  <text x="481" y="182" class="s">22 tablas</text>
+
+  <rect x="620" y="96" width="135" height="120" rx="12" fill="#ffffff" stroke="#9fd0cb"/>
+  <text x="636" y="124" class="t">marts</text>
+  <text x="636" y="146" class="s">modelo estrella:</text>
+  <text x="636" y="164" class="s">hechos y</text>
+  <text x="636" y="182" class="s">dimensiones</text>
+
+  <rect x="775" y="96" width="135" height="120" rx="12" fill="#ffffff" stroke="#9fd0cb"/>
+  <text x="791" y="124" class="t">kpi</text>
+  <text x="791" y="146" class="s">73 vistas de</text>
+  <text x="791" y="164" class="s">indicadores, metas</text>
+  <text x="791" y="182" class="s">y series IPC / MEP</text>
+
+  <rect x="310" y="232" width="445" height="80" rx="12" fill="#fff8ec" stroke="#e8c98f"/>
+  <text x="326" y="258" class="t">audit</text>
+  <text x="326" y="280" class="s">55 controles de calidad en 4 ejes, registro de cada carga,</text>
+  <text x="326" y="298" class="s">linaje de columnas y veredicto antes de publicar</text>
+
+  <!-- Tablero -->
+  <text x="975" y="34" class="k">CONSUMO</text>
+  <rect x="965" y="70" width="190" height="150" rx="12" fill="#0b7a75"/>
+  <text x="981" y="100" class="t" fill="#ffffff" style="fill:#fff">Tablero</text>
+  <text x="981" y="122" class="s" style="fill:#e6f4f2">6 pestañas para</text>
+  <text x="981" y="140" class="s" style="fill:#e6f4f2">el dueño</text>
+  <text x="981" y="162" class="s" style="fill:#e6f4f2">pesos de hoy, históricos</text>
+  <text x="981" y="180" class="s" style="fill:#e6f4f2">y dólares MEP</text>
+  <text x="981" y="202" class="s" style="fill:#e6f4f2">+ pestaña Confiabilidad</text>
+
+  <rect x="965" y="240" width="190" height="64" rx="12" fill="#f4f6f8" stroke="#cfd6de" stroke-dasharray="5 4"/>
+  <text x="981" y="266" class="t">IA (próximo paso)</text>
+  <text x="981" y="286" class="s">rol de solo lectura</text>
+
+  <!-- Flechas -->
+  <path class="l" d="M230,93 C262,93 270,140 308,140" marker-end="url(#f)"/>
+  <path class="l" d="M230,187 C262,187 270,160 308,160" marker-end="url(#f)"/>
+  <path class="l" d="M230,273 C262,273 262,330 300,330 L830,330 C842,330 842,320 842,218" marker-end="url(#f)"/>
+  <path class="l" d="M445,156 L463,156" marker-end="url(#f)"/>
+  <path class="l" d="M600,156 L618,156" marker-end="url(#f)"/>
+  <path class="l" d="M755,156 L773,156" marker-end="url(#f)"/>
+  <path class="l" d="M910,145 L963,145" marker-end="url(#f)"/>
+  <path class="l" d="M910,195 C940,195 935,272 963,272" marker-end="url(#f)"/>
+
+  <!-- Scripts -->
+  <text x="30" y="372" class="k">CÓMO SE MUEVEN LOS DATOS</text>
+  <text x="30" y="396" class="s">1. Un simulador en Python genera 23 meses de operación en webERP.</text>
+  <text x="30" y="416" class="s">2. Un solo comando carga ERP, Excel y APIs, recalcula staging, marts y kpi y corre la auditoría (se detiene si algo empeora).</text>
+  <text x="30" y="436" class="s">3. El tablero se arma con los resultados de kpi y tiene sus propios cuadres y pruebas automáticas.</text>
+</svg>
