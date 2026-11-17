@@ -979,7 +979,7 @@ function claveRow(k){
     <details class="clv-det"><summary>Por qué</summary>${p.causa}</details></div></details>`;
 }
 
-const CL_GO={ventas:{tab:'comercial',sx:'ventas',p:'Comercial',l:'Ver ventas por mes'},clientes:{tab:'comercial',sx:'clientes',p:'Comercial',l:'Ver clientes que dejaron de comprar'},margen:{tab:'economico',sx:'ganancia',p:'Económico',l:'Ver los márgenes mes a mes'},resultado:{tab:'economico',sx:'estado',p:'Económico',l:'Ver estado de resultados'},caja:{tab:'financiero',sx:'ciclo',p:'Financiero',l:'Ver el ciclo de la plata'},cobranza:{tab:'financiero',sx:'detalle',p:'Financiero',l:'Ver qué clientes tienen facturas vencidas'},stock:{tab:'comercial',sx:'stock',p:'Comercial',l:'Ver qué productos se venden lento'},cajahoy:{tab:'financiero',sx:'ciclo',p:'Financiero',l:'Ver el ciclo de la plata'},pagar30:{tab:'financiero',sx:'detalle',p:'Financiero',l:'Ver a quién le pagás primero'}};
+const CL_GO={ventas:{tab:'comercial',sx:'ventas',p:'Comercial',l:'Ver ventas por mes'},clientes:{tab:'comercial',sx:'clientes',p:'Comercial',l:'Ver clientes que dejaron de comprar'},margen:{tab:'economico',sx:'ganancia',p:'Económico',l:'Ver los márgenes mes a mes'},resultado:{tab:'economico',sx:'estado',p:'Económico',l:'Ver estado de resultados'},caja:{tab:'financiero',sx:'ciclo',p:'Financiero',l:'Ver el ciclo de la plata'},cobranza:{tab:'financiero',sx:'detalle',p:'Financiero',l:'Ver qué clientes tienen facturas vencidas'},stock:{tab:'comercial',sx:'stock',p:'Comercial',l:'Ver el stock: qué sobra y qué falta'},cajahoy:{tab:'financiero',sx:'ciclo',p:'Financiero',l:'Ver el ciclo de la plata'},pagar30:{tab:'financiero',sx:'detalle',p:'Financiero',l:'Ver a quién le pagás primero'}};
 function claveCard8(k,nogo){
   const p=claveParts(k);
   return `<div class="card kpi clv s3"><span class="bar" style="background:${p.col}"></span>
@@ -992,7 +992,7 @@ function tabClaves(){
   const K=DATA.claves[state.lens], g=id=>K.find(x=>x[0]===id).slice();
   const cob=g('cobranza'); cob[1]='Facturas vencidas sin cobrar';
   const [caja,pagar]=clavesExtra();
-  const L=[g('ventas'),g('margen'),g('resultado'),g('entrega'),cob,caja,pagar];
+  const L=[g('ventas'),g('margen'),g('resultado'),g('entrega'),g('stock'),cob,caja,pagar];
   $('#app').innerHTML=`<div class="g">${L.map(k=>claveCard8(k)).join('')}</div>`;
 }
 function clavesExtra(){

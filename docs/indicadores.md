@@ -19,7 +19,7 @@ Cada indicador responde una pregunta concreta del dueño. Salen de las vistas de
 
 Los porcentajes, los días y las unidades dan igual en las dos monedas. El tablero muestra la tabla de inflación y de dólar MEP usada mes por mes.
 
-## Claves: los 7 indicadores del mes
+## Claves: los 8 indicadores del mes
 
 | Indicador | Pregunta del dueño | Cómo se calcula | Por qué importa en una distribuidora |
 | --- | --- | --- | --- |
@@ -27,6 +27,7 @@ Los porcentajes, los días y las unidades dan igual en las dos monedas. El table
 | Margen bruto | ¿Cuánto me queda de cada venta? | (Ventas − costo de la mercadería vendida) ÷ ventas | Un punto de margen es una parte grande de la ganancia final. |
 | Ganancia final | ¿Estoy ganando plata? | Ventas − costo − gastos − amortizaciones − intereses − impuestos | Es el resultado de todo lo anterior. |
 | Entregas en tiempo y forma | ¿Cumplo con lo que prometo? | Pedidos despachados a tiempo y completos ÷ pedidos despachados | En distribución, la entrega es el servicio. Fallar se paga con clientes que se van. |
+| Días de stock | ¿Tengo plata parada en el depósito? | Stock promedio del mes ÷ costo de lo vendido por día | El stock es plata inmovilizada y riesgo de vencimiento. La tarjeta lleva a la sección Stock de Comercial. |
 | Facturas vencidas sin cobrar | ¿Me pagan a tiempo? | Saldo a cobrar ya vencido ÷ saldo total a cobrar | Vender con plazo es financiar al cliente; lo vencido es financiamiento que no se pactó. |
 | Caja y bancos hoy | ¿Cuánta plata tengo? | Saldo de las cuentas de caja y bancos del mayor al 31/08/2026 | Es lo que sostiene los pagos si los clientes se atrasan. |
 | A pagar a proveedores en 30 días | ¿Cuánto tengo que pagar en el próximo mes? | Facturas de proveedores que vencen hasta el 30/09/2026, más las ya vencidas sin pagar | Comparado con la caja, muestra si alcanza la plata para cumplir. |

@@ -37,7 +37,7 @@ Arriba de cada pestaña hay un desplegable con la tabla de inflación y de dóla
 
 | Pestaña | Qué responde | Qué muestra |
 | --- | --- | --- |
-| **Claves** | ¿Cómo estoy este mes? | 7 tarjetas: ventas, margen bruto, ganancia final, entregas en tiempo y forma, facturas vencidas sin cobrar, caja y bancos hoy, y lo que hay que pagar a proveedores en 30 días. Cada una lleva a la pestaña donde está el detalle. |
+| **Claves** | ¿Cómo estoy este mes? | 8 tarjetas: ventas, margen bruto, ganancia final, entregas en tiempo y forma, días de stock, facturas vencidas sin cobrar, caja y bancos hoy, y lo que hay que pagar a proveedores en 30 días. Cada una lleva a la pestaña donde está el detalle. |
 | **Comercial** | ¿Cuánto vendo, qué deja cada categoría y cómo está el stock? | Ventas por mes (en plata o en unidades), ventas, unidades y margen por categoría, clientes que dejaron de comprar, y stock: días de stock mes a mes, mercadería que sobra (con un ejemplo de cómo se calcula) y productos que faltan o se están por terminar. |
 | **Económico** | ¿Cuánto gano y dónde se va la ganancia? | Márgenes bruto, operativo y neto mes a mes, punto de equilibrio y estado de resultados mes a mes (3, 6, 9, 12 meses o todos), con el detalle de cada renglón. |
 | **Financiero** | ¿Cuántos días está mi plata afuera? ¿A quién le cobro y a quién le pago primero? | Ciclo de la plata en una línea de tiempo (días de stock + días de cobro − días de pago), y el detalle de lo vencido de cada cliente y de lo que vence con cada proveedor. |
