@@ -362,7 +362,7 @@ footer{max-width:1320px;margin:0 auto;padding:0 1.2rem 2rem;color:var(--muted);f
  .g{gap:.8rem;margin-bottom:.8rem}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
-details.calc{border-top:0;padding:0}details.calc>summary{font-size:.95rem}details.calc>summary::before{color:var(--brand);font-size:1.1rem}</style>
+details.calc{border-top:0;padding:0}details.calc>summary{font-size:.95rem}details.calc>summary::before{color:var(--brand);font-size:1.1rem}.cmp .fxb{margin:.3rem 0 0;padding:.7rem 1rem .7rem 1.8rem;background:var(--card);border-radius:12px;font-size:.84rem;color:var(--muted);line-height:1.5;margin-top:.5rem}</style>
 </head>
 <body>
 <header class="hd"><div class="in">
@@ -914,7 +914,15 @@ function cmpNote(){
   L.push('Los saldos (caja, lo que te deben, stock, deudas) son al <b>31/08/2026</b> y se comparan con el <b>31/07/2026</b> (cierre del mes anterior) y con el <b>31/08/2025</b> (la misma fecha del año anterior).');
   L.push(state.mon==='usd'?'Los montos están en <b>dólares MEP</b>: cada mes se convierte al dólar MEP de ese mes y los saldos al del cierre. Las comparaciones mezclan lo que pasó con el negocio y lo que pasó con el tipo de cambio.':state.mon!=='nom'?'Los montos están en <b>pesos de hoy</b>: los meses anteriores se ajustan por inflación, así las comparaciones muestran el crecimiento real.':'Los montos están en <b>pesos históricos</b>, sin ajustar por inflación: las comparaciones incluyen la suba de precios.');
   L.push('Los cambios se muestran en %, en puntos o en días, según el indicador: ▲ sube, ▼ baja. Verde es bueno para el negocio y rojo es malo.');
-  return `<details class="cmp"><summary><span class="tip">i</span>¿Contra qué se compara cada número?</summary><ul>${L.map(x=>`<li>${x}</li>`).join('')}</ul></details>`;
+  return `<details class="cmp"><summary><span class="tip">i</span>¿Contra qué se compara cada número?</summary><ul>${L.map(x=>`<li>${x}</li>`).join('')}</ul></details>`+fxNote();
+}
+function fxNote(){
+  const I=DATASETS.real.ipc, mep=I.mep, M=I.m;
+  const rows=M.map((m,i)=>[m,I.pi[i],I.f[i],mep[i]]).reverse();
+  const tb=`<div class="sc fxb" style="max-height:22rem;overflow:auto"><table class="tb"><thead><tr><th>Mes</th><th>Inflación del mes</th><th>Factor a pesos de hoy</th><th>Dólar MEP</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${(t=>t[0].toUpperCase()+t.slice(1))(mNom(r[0]))}</td><td>${nf(r[1],1)}%</td><td>${nf(r[2],4)}</td><td>$\u00a0${nf(r[3],2)}</td></tr>`).join('')}</tbody></table></div>`;
+  return `<details class="cmp"><summary><span class="tip">i</span>Dólar e inflación que se usaron</summary><ul>
+   <li><b>Pesos de hoy:</b> cada mes se lleva a pesos de agosto de 2026 con el IPC nacional mensual del INDEC (nivel general). Por ejemplo, $\u00a0100 de agosto de 2025 equivalen a $\u00a0${nf(100*I.f[M.indexOf('2025-08')],0)} de hoy.</li>
+   <li><b>Dólares MEP:</b> cada mes se divide por el dólar MEP (venta) del último día hábil de ese mes. Los saldos al 31/08/2026 usan $\u00a0${nf(mep[mep.length-1],2)}.</li></ul>${tb}</details>`;
 }
 function claveParts(k){
   const [id,nombre,pregunta,eje,u,dir,tipo,act,meta,brecha,estado,va,vt,tend,accion,diag,vb]=k;
@@ -1840,10 +1848,10 @@ async function loadData(){ return DATA; }   // modo en vivo: consultar kpi.compa
 
 function init(){
   $('#tabs').innerHTML=TABS.map(([id,t])=>`<button role="tab" aria-selected="false" data-tab="${id}">${t}</button>`).join('');
-  $('#lens').innerHTML='<button data-lens="mes" aria-pressed="true">Este mes</button><button data-lens="anio" aria-pressed="false">Este año</button>';
+  $('#lens').innerHTML='<button data-lens="mes" aria-pressed="true" style="cursor:default">'+(t=>t[0].toUpperCase()+t.slice(1))(mNom(DATA.s.m[DATA.s.m.length-1]))+'</button>';
   $('#fecha').textContent='Datos al '+fDate(DATA.meta.corte);
   $('#foot').innerHTML='Datos al '+fDate(DATA.meta.corte)+' · Distribuidora Ejemplo · datos de demostración';
-  $('#mon').innerHTML='<button data-mon="real" aria-pressed="true">Pesos de hoy</button><button data-mon="nom" aria-pressed="false">Pesos históricos</button><button data-mon="usd" aria-pressed="false">Dólares MEP</button>';
+  $('#mon').innerHTML='<button data-mon="real" aria-pressed="true">Pesos de hoy</button><button data-mon="usd" aria-pressed="false">Dólares MEP</button>';
   document.addEventListener('click',e=>{
     const t=e.target.closest('[data-tab]'); if(t){state.tab=t.dataset.tab;render();return}
     const pgb=e.target.closest('[data-pgb]'); if(pgb){state.pg=state.pg||{};state.pg.band=pgb.dataset.pgb;state.pg.all=false;state.pg.open=null;window.pgRender&&pgRender();return}
@@ -1861,7 +1869,7 @@ function init(){
     const v=e.target.closest('[data-vend]'); if(v){state.vend=v.dataset.vend||null;render();return}
     const h=e.target.closest('[data-hor]'); if(h){state.horizonte=h.dataset.hor;render()}
   });
-  const h=location.hash.replace('#','').split('/'); if(RENDER[h[0]]) state.tab=h[0]; if(h[1]==='anio') state.lens='anio';
+  const h=location.hash.replace('#','').split('/'); if(RENDER[h[0]]) state.tab=h[0]; 
   render();
 }
 loadData().then(d=>{Object.assign(DATA,d);init()}).catch(e=>{console.error(e);document.body.insertAdjacentHTML('afterbegin','<p style="padding:1rem">No se pudieron cargar los datos.</p>')});
