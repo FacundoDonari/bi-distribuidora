@@ -537,6 +537,11 @@ function baseOpts(o={}){
    scales:Object.assign({x:{grid:{display:false},border:{display:false},ticks:{maxRotation:0,autoSkip:o.noskip?false:true,maxTicksLimit:8,font:o.noskip?(c=>({size:c.chart.width<460?9:11})):undefined},stacked:!!o.stack},y:{grid:{color:css('--line')},border:{display:false},ticks:{callback:o.yf||(v=>nf(v))},stacked:!!o.stack}},o.scales||{})};
 }
 function chartsSetup(){ if(typeof Chart==='undefined')return false; Chart.defaults.font.family=F();Chart.defaults.font.size=12;Chart.defaults.color=css('--muted');return true}
+let VT_U=false;
+const vtD=S=>VT_U?[S.u,S.u.map((_,i)=>i>=12?S.u[i-12]:null)]:[S.v,S.vpy];
+const vtF=v=>VT_U?nf(v,0)+' bultos':usd(v);
+function vtSet(u){VT_U=!!u;document.querySelectorAll('#vt-u button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.u==(u?'1':'0'))));
+  const c=Chart.getChart(document.getElementById('c-v'));if(!c)return;const d=vtD(DATA.s);c.data.datasets[0].data=d[0];c.data.datasets[1].data=d[1];c.update();}
 const yK=v=>v===0?'0':(Math.abs(v)>=1e6?nf(v/1e6,0)+' M':Math.abs(v)>=1000?nf(v/1000,0)+' mil':nf(v));
 function narrowRot(o,n){if(n&&o.scales&&o.scales.x){o.scales.x.ticks=Object.assign({},o.scales.x.ticks,{maxRotation:90,minRotation:90,autoSkip:false,font:{size:10}})}return o}
 function waterfall(id,steps,base){
@@ -1079,7 +1084,7 @@ function tabComercial(){
     return cardI('s12','Cuánto de tu stock se vende rápido y cuánto sobra',bar+leyenda,q,'')+card('s12','Los productos que más sobran',lista)+card('s12','',`<details class="calc"><summary>Cómo se calcula lo que sobra, con un ejemplo</summary><div style="margin-top:.7rem">${ejemplo}</div></details>`);
   })();
   const SX=secciones([
-   {id:'ventas',t:'Ventas',q:'¿Cuánto vendemos?',st:secSt(['ventas']),body:cardI('s12','Ventas por mes',cv('c-v','lg'),q1,h1)},
+   {id:'ventas',t:'Ventas',q:'¿Cuánto vendemos?',st:secSt(['ventas']),body:cardI('s12','Ventas por mes',`<div class="seg" id="vt-u" style="width:max-content;margin:.2rem 0 .6rem"><button data-u="0" aria-pressed="${!VT_U}" onclick="vtSet(0)">En plata</button><button data-u="1" aria-pressed="${VT_U}" onclick="vtSet(1)">En unidades</button></div>`+cv('c-v','lg'),q1,h1)},
    {id:'margen',t:'Margen por categoría',q:'¿Cuánto deja cada cosa que vendemos?',st:secSt(['margen']),body:cardI('s12','Cuánto deja cada categoría',tablaU,q3,h3)},
    {id:'clientes',t:'Clientes',q:'¿Estamos perdiendo clientes?',st:secSt(['clientes']),body:cardI('s12','Clientes que dejaron de comprar',bars(rk.map(r=>({l:r[0]+' · hace '+r[1]+' d',t:usd(r[2])+' al año',w:r[2],c:'var(--c4)'}))),q4,h4)},
    {id:'stock',t:'Stock',q:'¿Qué mercadería se vende rápido y cuál sobra?',body:stockSec},
@@ -1088,7 +1093,7 @@ function tabComercial(){
   $('#app').innerHTML=kp+SX.html;
   if(!chartsSetup()) return;
   const cc={c1:css('--c1'),c2:css('--c2'),c3:css('--c3'),c4:css('--c4'),c5:css('--c5'),c6:css('--c6'),s:css('--c1s')};
-  ch('c-v',{type:'bar',data:{labels:L,datasets:[{label:'Ventas del mes',data:S.v,backgroundColor:S.v.map((_,i)=>i===n-1?cc.s:cc.c1),borderRadius:5,order:2},{type:'line',label:'Mismo mes del año anterior',data:S.vpy,borderColor:cc.c2,borderDash:[5,4],borderWidth:2,pointRadius:0,tension:.3,spanGaps:false,order:1}]},options:baseOpts({legend:1,yf:yK,tip:{label:x=>' '+x.dataset.label+': '+usd(x.parsed.y)}})});
+  ch('c-v',{type:'bar',data:{labels:L,datasets:[{label:'Ventas del mes',data:vtD(S)[0],backgroundColor:S.v.map((_,i)=>i===n-1?cc.s:cc.c1),borderRadius:5,order:2},{type:'line',label:'Mismo mes del año anterior',data:vtD(S)[1],borderColor:cc.c2,borderDash:[5,4],borderWidth:2,pointRadius:0,tension:.3,spanGaps:false,order:1}]},options:baseOpts({legend:1,yf:yK,tip:{label:x=>' '+x.dataset.label+': '+vtF(x.parsed.y)}})});
   donut('c-conc',['10 mayores','Resto'],[c10,100-c10],[cc.c1,css('--line')],nf(c10,0)+'%','de las ventas del año');
   ch('c-ent',{type:'bar',data:{labels:L,datasets:[{label:'Días de pedido a entrega',data:S.ciclo,backgroundColor:cc.s,borderRadius:4,yAxisID:'y1'},{type:'line',label:'A tiempo y completas (%)',data:S.otif,borderColor:cc.c1,backgroundColor:cc.c1,borderWidth:2.5,pointRadius:2,tension:.3,yAxisID:'y'}]},options:baseOpts({legend:1,scales:{y:{min:70,max:100,grid:{color:css('--line')},border:{display:false},ticks:{callback:v=>v+'%'}},y1:{position:'right',min:0,max:4,grid:{display:false},border:{display:false},ticks:{callback:v=>v+' d'}}}})});
 }
