@@ -362,7 +362,13 @@ footer{max-width:1320px;margin:0 auto;padding:0 1.2rem 2rem;color:var(--muted);f
  .g{gap:.8rem;margin-bottom:.8rem}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
-details.calc{border-top:0;padding:0}details.calc>summary{font-size:.95rem}details.calc>summary::before{color:var(--brand);font-size:1.1rem}.cmp .fxb{margin:.3rem 0 0;padding:.7rem 1rem .7rem 1.8rem;background:var(--card);border-radius:12px;font-size:.84rem;color:var(--muted);line-height:1.5;margin-top:.5rem}.rsl ul{list-style:none;margin:.4rem 0 0;padding:0}.rsl li{border-top:1px solid var(--line)}.rsl li:first-child{border-top:0}.rsl button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:.4rem;align-items:baseline;width:100%;padding:.6rem .2rem;line-height:1.45}.rsl button:hover{background:var(--bg)}.rsl button b{white-space:nowrap;color:var(--brand)}.rsl button span{flex:1}.rsl button i{font-style:normal;color:var(--brand);font-weight:700}</style>
+details.calc{border-top:0;padding:0}details.calc>summary{font-size:.95rem}details.calc>summary::before{color:var(--brand);font-size:1.1rem}.cmp .fxb{margin:.3rem 0 0;padding:.7rem 1rem .7rem 1.8rem;background:var(--card);border-radius:12px;font-size:.84rem;color:var(--muted);line-height:1.5;margin-top:.5rem}.rsl ul{list-style:none;margin:.4rem 0 0;padding:0}.rsl li{border-top:1px solid var(--line)}.rsl li:first-child{border-top:0}.rsl button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:.4rem;align-items:baseline;width:100%;padding:.6rem .2rem;line-height:1.45}.rsl button:hover{background:var(--bg)}.rsl button b{white-space:nowrap;color:var(--brand)}.rsl button span{flex:1}.rsl button i{font-style:normal;color:var(--brand);font-weight:700}.erm tr.t2 td,.erm tr.t2 td.erf-n{background:var(--card)!important;color:var(--ink)!important;font-weight:700!important;border-top:1.5px solid var(--line2)}.erm tr.t0 td{font-weight:700}.erm tr.t1 td,.erm tr.t1 td.erf-n,.erm tr.t1 td.cur{font-weight:400!important;color:var(--ink)}.cy2-big{display:flex;gap:1rem;align-items:center;margin:.3rem 0 1.2rem}.cy2-big b{font-size:2.4rem;line-height:1;white-space:nowrap}.cy2-big p{margin:0;color:var(--muted)}.cy2-big .up{color:var(--c1)}.cy2-big .dn{color:var(--c4)}
+.cy2-tl{position:relative;margin:0 0 1rem}.cy2-lab{font-size:.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:.5rem 0 .25rem}
+.cy2-row{position:relative;height:2.1rem}.cy2-b{position:absolute;top:0;bottom:0;border-radius:6px;display:flex;align-items:center;overflow:hidden;border:2px solid var(--card);box-sizing:border-box}.cy2-b span{padding:0 .5rem;font-size:.78rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cy2-b[style*="--c1s"] span{color:var(--ink)}
+.cy2-ks{position:relative;height:1.4rem}.cy2-k{position:absolute;top:0;transform:translateX(-50%);font-size:.75rem;color:var(--ink);font-weight:600;white-space:nowrap}.cy2-k[style^="left:0"]{transform:none}.cy2-k[style^="left:100"]{transform:translateX(-100%)}
+.cy2-l{list-style:none;padding:0;margin:0;border-top:1px solid var(--line)}.cy2-l li{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;padding:.45rem 0;border-bottom:1px solid var(--line);font-size:.86rem}.cy2-l li>span{width:.7rem;height:.7rem;border-radius:3px}.cy2-l li.t{font-weight:600}
+@media(max-width:600px){.cy2-big{flex-direction:column;align-items:flex-start;gap:.3rem}.cy2-b span{font-size:.68rem;padding:0 .3rem}}</style>
 </head>
 <body>
 <header class="hd"><div class="in">
@@ -1315,7 +1321,7 @@ function tabEconomico(){
      <div class="eqB-lg"><span><i style="background:var(--c4)"></i>Consume caja</span><span><i style="background:var(--warn)"></i>Pérdida, pero se pagan los gastos</span><span><i style="background:var(--c1)"></i>Ganancia</span></div>
      <div class="eqB-c">Mes a mes: lo que se vendió contra el mínimo</div>${cv('c-eq','lg')}</div>`;
   })();
-  const qTr2=`En ${mNom(S.m[n-1])}, el margen bruto fue ${nf(mgS[n-1],1)}% (el mismo mes del año anterior, ${nf(mgS[n-13],1)}%) y el margen operativo, ${nf(opS[n-1],1)}% (antes, ${nf(opS[n-13],1)}%).`;
+  const qTr2=`En ${mNom(S.m[n-1])}, el margen bruto fue ${nf(mgS[n-1],1)}% (el mismo mes del año anterior, ${nf(mgS[n-13],1)}%) el margen operativo, ${nf(opS[n-1],1)}% (antes, ${nf(opS[n-13],1)}%) y el margen neto, ${nf(100*E.r[n-1]/S.v[n-1],1)}% (antes, ${nf(100*E.r[n-13]/S.v[n-13],1)}%).`;
   if(!state.erm) state.erm={n:6,u:'m',open:{}};  if(!state.erm.open) state.erm.open={};
   const ERMS=state.erm, sOpG=sGop.map((x,i)=>x==null?null:x+E.a[i]), sAI=rest(sOpe,E.gf);
   const kidsC=S.cc.map(x=>[x[0],x[1]]).sort((a,b)=>b[1].reduce((q,y)=>q+(y||0),0)-a[1].reduce((q,y)=>q+(y||0),0)), kidsF=[['Intereses del préstamo',E.gf]];
@@ -1392,7 +1398,7 @@ function tabEconomico(){
   erBind();erBind2();
   const cc={c1:css('--c1'),c4:css('--c4'),s:css('--c1s')};
   if(document.getElementById('c-wf')) waterfall('c-wf',[{l:'Ventas',v:v.a,t:1},{l:['Costo de','ventas'],s:'Costo',v:-c.a},{l:['Ganancia','bruta'],s:'Bruta',v:bruto,t:1},{l:['Gastos y','amortiz.'],s:'Gastos',v:-(gs.a+am.a)},{l:['Ganancia','operativa'],s:'Oper.',v:oper,t:1},{l:'Intereses',s:'Int.',v:-gf.a},{l:['Impuestos','y tasas'],s:'Imp.',v:-(im.a+imt.a)},{l:['Ganancia','final'],s:'Final',v:neto,t:1}],v.a);
-  ch('c-tr',{type:'line',data:{labels:L.slice(L.length-12),datasets:[{label:'Margen bruto',data:mgS.slice(n-12),borderColor:css('--c3'),backgroundColor:css('--c3'),borderWidth:2.5,pointRadius:0,tension:.3},{label:'Margen operativo',data:opS.slice(n-12),borderColor:cc.c1,backgroundColor:cc.c1,borderWidth:2.5,pointRadius:0,tension:.3}]},options:baseOpts({legend:1,yf:v=>nf(v,0)+'%',tip:{label:x=>' '+x.dataset.label+': '+nf(x.parsed.y,1)+'%'}})});
+  ch('c-tr',{type:'line',data:{labels:L.slice(L.length-12),datasets:[{label:'Margen bruto',data:mgS.slice(n-12),borderColor:css('--c3'),backgroundColor:css('--c3'),borderWidth:2.5,pointRadius:0,tension:.3},{label:'Margen operativo',data:opS.slice(n-12),borderColor:cc.c1,backgroundColor:cc.c1,borderWidth:2.5,pointRadius:0,tension:.3},{label:'Margen neto',data:S.v.map((x,i)=>100*E.r[i]/x).slice(n-12),borderColor:css('--c2'),backgroundColor:css('--c2'),borderWidth:2.5,pointRadius:0,tension:.3}]},options:baseOpts({legend:1,yf:v=>nf(v,0)+'%',tip:{label:x=>' '+x.dataset.label+': '+nf(x.parsed.y,1)+'%'}})});
   ch('c-eq',{type:'line',data:{labels:L,datasets:[{label:'Ventas',data:S.v,borderColor:cc.c1,backgroundColor:cc.s,fill:true,borderWidth:2.5,pointRadius:0,tension:.3,order:2},{order:1,label:'Mínimo para no perder',data:S.v.map((x,i)=>Math.round((E.g[i]-E.gv[i]+E.a[i])/(1-(E.c[i]+E.gv[i])/x))),borderColor:cc.c4,borderDash:[5,4],borderWidth:2,pointRadius:0,tension:.3},{order:1,label:'Mínimo para no consumir caja',data:S.v.map((x,i)=>Math.round((E.g[i]-E.gv[i])/(1-(E.c[i]+E.gv[i])/x))),borderColor:css('--warn'),borderDash:[2,3],borderWidth:2,pointRadius:0,tension:.3}]},options:baseOpts({legend:1,yf:yK,tip:{label:x=>' '+x.dataset.label+': '+usd(x.parsed.y)}})});
 }
 
@@ -1661,10 +1667,23 @@ function tabFinanciero(){
     const dinN=S.dinv[n-1], cyc=[
       ['La mercadería está en el depósito',dinN,S.dinv[n-2],S.dinv[n-13],false,'var(--c3)','+','Días de stock: el stock promedio del mes dividido por el costo de lo vendido por día.'],
       ['Tus clientes te pagan',dsoN,S.dso[n-2],S.dso[n-13],false,'var(--c5)','+','Días de cobro: cuánto tardan los clientes en pagarte, en promedio.'],
-      ['Le pagás a tus proveedores',dpoN,S.dpo[n-2],S.dpo[n-13],true,'var(--c2)','−','Días de pago: cuánto tardás en pagarles a tus proveedores, en promedio.']];
+      ['Le pagás a tus proveedores',dpoN,S.dpo[n-2],S.dpo[n-13],true,'var(--c1s)','−','Días de pago: cuánto tardás en pagarles a tus proveedores, en promedio.']];
     const cmxd0=0, cmxd=Math.max(...cyc.map(r=>r[1]),cic9.a), rotT=d=>d>0?nf(365/d,1):'—';
-    const cicloV=`<div class="cyc">${cyc.map(r=>`<div class="cyc-r"><div class="cyc-l"><b>${r[6]} ${r[0]}</b><small>Rota ${rotT(r[1])} veces por año</small></div><div class="cyc-bar"><i style="width:${Math.max(3,100*r[1]/cmxd)}%;background:${r[5]}"></i></div><div class="cyc-v"><b>${nf(r[1],1)} días</b>${twoH(r[1],r[2],r[3],r[4],'d')}</div></div>`).join('')}
-      <div class="cyc-r cyc-t"><div class="cyc-l"><b>= Días que la plata está afuera</b><small>Stock + cobro − pago</small></div><div class="cyc-bar"><i style="width:${Math.max(3,100*cic9.a/cmxd)}%;background:var(--ink,#222)"></i></div><div class="cyc-v"><b>${nf(cic9.a,1)} días</b>${twoH(cic9.a,cic9.ca,cic9.cb,false,'d')}</div></div></div>`;
+    const cicloV=(()=>{
+      const T=dinN+dsoN, P=x=>(100*x/T).toFixed(2)+'%', d0=x=>nf(x,0);
+      const bar=(l,w,c,t)=>`<div class="cy2-b" style="left:${P(l)};width:${P(w)};background:${c}"><span>${t}</span></div>`;
+      const tick=(x,t,up)=>`<div class="cy2-k ${up?'up':'dn'}" style="left:${P(x)}"><span>${t}</span></div>`;
+      const big=`<div class="cy2-big"><b>${nf(cic9.a,0)} días</b><p>tarda en volver tu plata: desde que le pagás al proveedor hasta que te paga el cliente.<br><span class="${cic9.a<=cic9.cb?'up':'dn'}">Hace un año eran ${nf(cic9.cb,0)} días${cic9.a<cic9.cb?' (mejoró)':cic9.a>cic9.cb?' (empeoró)':''}.</span></p></div>`;
+      const tl=`<div class="cy2-tl">
+        <div class="cy2-ks">${tick(0,'Comprás',1)}${tick(dinN,'Vendés',1)}${tick(T,'Cobrás',1)}</div>
+        <div class="cy2-lab">La mercadería</div>
+        <div class="cy2-row">${bar(0,dinN,'var(--c3)','En el depósito · '+d0(dinN)+' días')}${bar(dinN,dsoN,'var(--c5)','Esperás que te paguen · '+d0(dsoN)+' días')}</div>
+        <div class="cy2-lab">Tu plata</div>
+        <div class="cy2-row">${bar(0,dpoN,'var(--c1s)','Todavía no pagaste · '+d0(dpoN)+' días')}${bar(dpoN,T-dpoN,'var(--c4)','Tu plata afuera · '+d0(T-dpoN)+' días')}</div>
+        <div class="cy2-ks">${tick(dpoN,'Le pagás al proveedor',0)}</div></div>`;
+      const ley=`<ul class="cy2-l">${cyc.map(r=>`<li><span style="background:${r[5]}"></span><b>${r[6]} ${nf(r[1],0)} días</b> ${r[0].toLowerCase()}${twoH(r[1],r[2],r[3],r[4],'d')}</li>`).join('')}<li class="t"><span style="background:var(--c4)"></span><b>= ${nf(cic9.a,0)} días</b> que la plata está afuera${twoH(cic9.a,cic9.ca,cic9.cb,false,'d')}</li></ul>`;
+      return big+tl+ley;
+    })();
     const qCi=`Tardás ${nf(dsoN,1)} días en cobrar y ${nf(dpoN,1)} en pagar: ${dsoN>dpoN?`financiás a tus clientes ${nf(dsoN-dpoN,1)} días`:`te financian los proveedores ${nf(dpoN-dsoN,1)} días`}. Sumando los ${nf(dinN,1)} días que la mercadería tarda en venderse, tu plata está afuera ${nf(cic9.a,1)} días (hace un año, ${nf(cic9.cb,1)}). Cuanto más baja ese número, menos caja necesitás para sostener el negocio. La rotación es 365 ÷ días.`;
     return {cards,cicloV,qCi,ffVis,ffCard2,bind};
   })();
