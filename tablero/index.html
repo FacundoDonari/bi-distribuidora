@@ -829,11 +829,12 @@ function finResumen(){
   const veredicto=P30>cj?`Para pagar a proveedores lo que vence en 30 días necesitás ${usd(P30)} y tenés ${usd(cj)}: faltan ${usd(P30-cj)}. Te deben ${usd(venc)} ya vencidos, que es donde hay que ir a buscar la plata.`:`La caja de hoy (${usd(cj)}) cubre lo que vence con proveedores en 30 días (${usd(P30)}).`;
   const G=id=>MAP[l][id], vtot=H.saldo_por_cobrar.a, pV=100*venc/vtot, pV0=100*H.saldo_vencido.cb/H.saldo_por_cobrar.cb, cic=H.ciclo_caja;
   const fo=G('flujo_operativo').a, gn=G('resultado_neto').a, rt=G('retiros_socios').a, perT=l==='mes'?'Este mes':'En lo que va del año';
+  const sob=H.stock_sobrestock.a, stv=H.stock_valor.a;
   const dx=[
-   ['Caja',`Tenés ${usd(cj)} en caja y bancos: alcanza para ${nf(kc[7],0)} días de gastos (meta: ${nf(kc[8],0)}). ${P30>cj?`En los próximos 30 días vencen ${usd(P30)} con proveedores: faltan ${usd(P30-cj)}.`:`Alcanza para lo que vence con proveedores en 30 días (${usd(P30)}).`}`,P30>cj?'critico':kc[10]],
-   ['Cobranza',`Te deben ${usd(vtot)} y ${usd(venc)} (${nf(pV,1)}%) ya está vencido; hace un año era el ${nf(pV0,1)}% (meta: menos de ${nf(kb[8],0)}%).${tD>0?` Lo que te deben ${real?'(en '+monLbl()+') ':''}subió ${usd(tD)} en el año.`:''}`,kb[10]],
    ['Plazos',dsoH>dpoH?`Cobrás en ${nf(dsoH,0)} días y pagás en ${nf(dpoH,0)}: financiás a tus clientes. La plata está afuera ${nf(cic.a,0)} días (hace un año, ${nf(cic.cb,0)}).`:`Cobrás en ${nf(dsoH,0)} días y pagás en ${nf(dpoH,0)}: te financian los proveedores. La plata está afuera ${nf(cic.a,0)} días (hace un año, ${nf(cic.cb,0)}).`,dsoH>dpoH?'alerta':'cumple'],
-   ['Generación de caja',`${perT} el negocio generó ${usd(fo)} de caja y la ganancia fue ${usd(gn)}${fo<gn?': no toda la ganancia se convierte en plata':(l==='mes'&&H.saldo_por_cobrar.ca-vtot>0.3*(fo-gn)?`: la diferencia es que cobraste deuda de meses anteriores (lo que te deben bajó ${usd(H.saldo_por_cobrar.ca-vtot)} en el mes)`:'')}. Los socios retiraron ${usd(rt)}.`,fo<0?'critico':(fo<gn?'alerta':'cumple')]];
+   ['Clientes',`Te deben ${usd(vtot)} y ${usd(venc)} (${nf(pV,1)}%) ya está vencido; hace un año era el ${nf(pV0,1)}% (meta: menos de ${nf(kb[8],0)}%).`,kb[10]],
+   ['Proveedores',`Les debés ${usd(prov)}; en los próximos 30 días vencen ${usd(P30)}${P0>0?`, de los que ${usd(P0)} ya están vencidos`:''}. Tenés ${usd(cj)} en caja y bancos.`,P30>cj?'alerta':'cumple'],
+   ['Stock',`Tenés ${usd(stv)} de mercadería y ${usd(sob)} es de más (más de 90 días de cobertura o sin ventas en 90 días).`,sob>0.3*stv?'alerta':'cumple']];
   return `<section class="concl"><h2>En resumen</h2><ul class="dxl">${dx.map(([t,x,st])=>`<li style="--hc:${estColor(st)}"><b>${t}.</b> ${esc(x)}</li>`).join('')}</ul></section>`;
 }
 
@@ -875,7 +876,7 @@ function conclusion(){
   const t=state.tab, l=state.lens, M=MAP[l], H=MAP.hoy, per=l==='mes'?'este mes':'en lo que va del año', yi=l==='mes'?6:5, yk=l==='mes'?'cb':'ca';
   const row=(D,id)=>D.rows[l].find(r=>r[0]===id);
   if(t==='claves') return clavesDx();
-  if(t==='financiero') return '';
+  if(t==='financiero') return finResumen();
   if(t==='patrimonial') return patResumen();
   let x='';
   if(t==='comercial'){
@@ -911,12 +912,12 @@ function cmpNote(){
   const P=DATA.per, t=state.tab, L=[];
   if(t==='claves'&&state.horizonte!=='mes') return '';
   if(t!=='patrimonial'){
-    if(state.lens==='mes') L.push(`Los números del mes se comparan con <b>el mes anterior</b> (${esc(P.mes.ca)}) y con <b>el mismo mes del año anterior</b> (${esc(P.mes.cb)}). Es un mes completo: el análisis es el cierre de agosto.`);
-    else L.push(`Los números del año se comparan con <b>el mismo período del año anterior</b> (${esc(P.anio.ca)}).`);
+    if(state.lens==='mes') L.push('Los números del mes son de <b>agosto de 2026</b> y se comparan con <b>julio de 2026</b> (el mes anterior) y con <b>agosto de 2025</b> (el mismo mes del año anterior).');
+    else L.push('Los números del año son de <b>enero a agosto de 2026</b> y se comparan con <b>enero a agosto de 2025</b>.');
   }
-  L.push(`Los saldos a una fecha (caja, lo que te deben, stock, deudas) se comparan con <b>el cierre del mes anterior</b> (${esc(P.hoy.ca)}) y con <b>la misma fecha del año anterior</b> (${esc(P.hoy.cb)}).`);
+  L.push('Los saldos (caja, lo que te deben, stock, deudas) son al <b>31/08/2026</b> y se comparan con el <b>31/07/2026</b> (cierre del mes anterior) y con el <b>31/08/2025</b> (la misma fecha del año anterior).');
   L.push(state.mon==='usd'?'Los montos están en <b>dólares MEP</b>: cada mes se convierte al dólar MEP de ese mes y los saldos al del cierre. Las comparaciones mezclan lo que pasó con el negocio y lo que pasó con el tipo de cambio.':state.mon!=='nom'?'Los montos están en <b>pesos de hoy</b>: los meses anteriores se ajustan por inflación, así las comparaciones muestran el crecimiento real.':'Los montos están en <b>pesos históricos</b>, sin ajustar por inflación: las comparaciones incluyen la suba de precios.');
-  L.push('Los cambios están en porcentaje: ▲ sube, ▼ baja. Verde es bueno para el negocio y rojo es malo.');
+  L.push('Los cambios se muestran en %, en puntos o en días, según el indicador: ▲ sube, ▼ baja. Verde es bueno para el negocio y rojo es malo.');
   if(t==='claves') L.push('La meta de cada indicador es la rayita sobre la barra.');
   return `<details class="cmp"><summary><span class="tip">i</span>¿Contra qué se compara cada número?</summary><ul>${L.map(x=>`<li>${x}</li>`).join('')}</ul></details>`;
 }
@@ -1772,14 +1773,14 @@ function tabConfiabilidad(){
 }
 
 /* ---------- navegación ---------- */
-const TABS=[['claves','Claves'],['comercial','Comercial'],['economico','Económico'],['financiero','Financiero'],['presupuesto','Presupuesto']];
+const TABS=[['claves','Claves'],['comercial','Comercial'],['economico','Económico'],['financiero','Financiero']];
 const RENDER={claves:tabClaves,comercial:tabComercial,economico:tabEconomico,financiero:tabFinanciero,patrimonial:tabPatrimonial,presupuesto:tabPresupuesto,confiabilidad:tabConfiabilidad};
 function balOn(){const sv={per:DATA.per.hoy,map:{}};DATA.per.hoy=DATA.bal.per;Object.keys(MAPB).forEach(id=>{sv.map[id]=MAP.hoy[id];MAP.hoy[id]=MAPB[id]});return sv}
 function balOff(sv){if(!sv)return;DATA.per.hoy=sv.per;Object.keys(sv.map).forEach(id=>{MAP.hoy[id]=sv.map[id]})}
 function renderKeep(){const y=window.scrollY, ap=document.getElementById('app'), h=ap.offsetHeight; ap.style.minHeight=h+'px'; state.keepY=1; try{render()}finally{state.keepY=0} window.scrollTo({top:y,behavior:'auto'}); const fix=()=>window.scrollTo({top:y,behavior:'auto'}); requestAnimationFrame(fix); setTimeout(()=>{fix(); ap.style.minHeight=''},700)}
 function render(){const sv=state.tab==='patrimonial'?balOn():null;try{render0()}finally{balOff(sv)}}
 /* guia */
-const GUIA='<div class="guia" style="position:relative;margin:0 0 1rem;padding:.9rem 2.4rem .9rem 1rem;border:1px solid var(--line2);border-radius:12px;background:var(--bg);font-size:.92rem;line-height:1.5"><button aria-label="Cerrar" onclick="state.guiaOff=1;this.parentElement.remove()" style="position:absolute;top:.4rem;right:.6rem;border:0;background:none;font-size:1.3rem;cursor:pointer;color:inherit">×</button><b>Datos simulados de una distribuidora, al cierre de agosto de 2026.</b> Cómo leerlo en un minuto: <b>1)</b> el diagnóstico dice qué pasó; <b>2)</b> <i>Qué hacer primero</i> ordena las acciones por plata en juego; <b>3)</b> cada pestaña (Comercial, Económico, Financiero y Presupuesto) responde una pregunta del negocio. Origen de los datos muestra de dónde sale cada indicador.</div>';
+const GUIA='<div class="guia" style="position:relative;margin:0 0 1rem;padding:.9rem 2.4rem .9rem 1rem;border:1px solid var(--line2);border-radius:12px;background:var(--bg);font-size:.92rem;line-height:1.5"><button aria-label="Cerrar" onclick="state.guiaOff=1;this.parentElement.remove()" style="position:absolute;top:.4rem;right:.6rem;border:0;background:none;font-size:1.3rem;cursor:pointer;color:inherit">×</button><b>Datos simulados de una distribuidora, al cierre de agosto de 2026.</b> Cómo leerlo en un minuto: <b>1)</b> el diagnóstico dice qué pasó; <b>2)</b> <i>Qué hacer primero</i> ordena las acciones por plata en juego; <b>3)</b> cada pestaña (Comercial, Económico y Financiero) responde una pregunta del negocio. Origen de los datos muestra de dónde sale cada indicador.</div>';
 function render0(){ try{render0b()}finally{ if(UM) usdFix(); } }
 function usdFix(){ const w=document.createTreeWalker(document.getElementById('app'),NodeFilter.SHOW_TEXT); let n; while(n=w.nextNode()){ if(n.nodeValue.indexOf('$')>=0) n.nodeValue=n.nodeValue.replace(/(^|[^S])\$(?=[\s\u00a0]*\d)/g,'$1US$$'); } }
 function render0b(){
@@ -1871,6 +1872,7 @@ loadData().then(d=>{Object.assign(DATA,d);init()}).catch(e=>{console.error(e);do
 .bia-f button.stop{background:var(--neg,#c0392b)}
 .bia-n{padding:0 1rem .6rem;font-size:.7rem;opacity:.6;line-height:1.35}
 @media(max-width:760px){.bia-fab .bia-t{display:none}.bia{right:.7rem;left:.7rem;width:auto;top:.7rem;height:calc(100vh - 1.4rem)}}
+#bia-fab,#bia{display:none!important}
 </style>
 <button type="button" class="bia-fab" id="bia-fab" aria-label="Preguntale al tablero">💬<span class="bia-t"> Preguntale al tablero</span></button>
 <div class="bia" id="bia" role="dialog" aria-label="Asistente del tablero">
