@@ -562,6 +562,8 @@ const ESTB={cumple:['Cumple','ok'],alerta:['Alerta','wn'],critico:['Crítico','b
 const estColor=e=>'var(--brand)';
 const DIAGU={margen:'pp',entrega:'n'};
 const DEF={
+ cajahoy:'Plata en caja y en las cuentas bancarias al 31/08/2026.',
+ pagar30:'Facturas de proveedores que vencen entre el 31/08/2026 y el 30/09/2026, más las que ya están vencidas sin pagar.',
  resultado_pct:'Ganancia operativa sobre ventas: lo que queda de cada $ 100 vendidos después de costos y gastos del negocio, antes de intereses e impuestos. Es el margen que mide la gestión.',
  punto_equilibrio:'Ventas mínimas del período para no perder plata: costos fijos divididos por la contribución de cada peso vendido (ventas menos costos variables).',
  margen_seguridad_pct:'Cuánto pueden caer las ventas antes de empezar a perder plata. Más bajo, más riesgo.',
@@ -871,7 +873,7 @@ function clavesDx(){
 function conclusion(){
   const t=state.tab, l=state.lens, M=MAP[l], H=MAP.hoy, per=l==='mes'?'este mes':'en lo que va del año', yi=l==='mes'?6:5, yk=l==='mes'?'cb':'ca';
   const row=(D,id)=>D.rows[l].find(r=>r[0]===id);
-  if(t==='claves') return clavesDx();
+  if(t==='claves') return '';
   if(t==='financiero') return finResumen();
   if(t==='patrimonial') return patResumen();
   let x='';
@@ -969,7 +971,7 @@ function claveRow(k){
     <details class="clv-det"><summary>Por qué</summary>${p.causa}</details></div></details>`;
 }
 
-const CL_GO={ventas:{tab:'comercial',sx:'ventas',p:'Comercial',l:'Ver ventas por mes'},clientes:{tab:'comercial',sx:'clientes',p:'Comercial',l:'Ver clientes que dejaron de comprar'},entrega:{tab:'comercial',sx:'',p:'Comercial',l:'Ver entregas completas y a tiempo'},margen:{tab:'economico',sx:'ganancia',p:'Económica',l:'Ver de las ventas a la ganancia'},resultado:{tab:'economico',sx:'estado',p:'Económica',l:'Ver estado de resultados'},caja:{tab:'financiero',sx:'ciclo',p:'Financiera',l:'Ver el ciclo de la plata'},cobranza:{tab:'financiero',sx:'detalle',p:'Financiera',l:'Ver quién te debe'},stock:{tab:'comercial',sx:'stock',p:'Comercial',l:'Ver qué productos se venden lento'}};
+const CL_GO={ventas:{tab:'comercial',sx:'ventas',p:'Comercial',l:'Ver ventas por mes'},clientes:{tab:'comercial',sx:'clientes',p:'Comercial',l:'Ver clientes que dejaron de comprar'},entrega:{tab:'comercial',sx:'',p:'Comercial',l:'Ver entregas completas y a tiempo'},margen:{tab:'economico',sx:'ganancia',p:'Económica',l:'Ver de las ventas a la ganancia'},resultado:{tab:'economico',sx:'estado',p:'Económica',l:'Ver estado de resultados'},caja:{tab:'financiero',sx:'ciclo',p:'Financiera',l:'Ver el ciclo de la plata'},cobranza:{tab:'financiero',sx:'detalle',p:'Financiera',l:'Ver qué clientes tienen facturas vencidas'},stock:{tab:'comercial',sx:'stock',p:'Comercial',l:'Ver qué productos se venden lento'},cajahoy:{tab:'financiero',sx:'ciclo',p:'Financiera',l:'Ver el ciclo de la plata'},pagar30:{tab:'financiero',sx:'detalle',p:'Financiera',l:'Ver a quién le pagás primero'}};
 function claveCard8(k,nogo){
   const p=claveParts(k);
   return `<div class="card kpi clv s3"><span class="bar" style="background:${p.col}"></span>
@@ -979,8 +981,15 @@ function claveCard8(k,nogo){
    ${(()=>{const g=CL_GO[k[0]];return g&&!nogo?`<div style="flex:1;min-height:.6rem"></div><button type="button" class="clv-go" data-gx="${g.tab}:${g.sx||''}"><span class="clv-p">${g.p}</span><span class="clv-l">${esc(g.l)} →</span></button>`:''})()}</div>`;
 }
 function tabClaves(){
-  const K=DATA.claves[state.lens], ord=K.slice().sort((a,b)=>PRI[a[10]]-PRI[b[10]]);
-  $('#app').innerHTML=`<div class="g">${ord.filter(k=>k[0]!=='reposicion').map(k=>claveCard8(k)).join('')}</div>`;
+  const K=DATA.claves[state.lens], g=id=>K.find(x=>x[0]===id).slice(), H=MAP.hoy;
+  const cob=g('cobranza'); cob[1]='Facturas vencidas sin cobrar';
+  const cj=H.caja_bancos;
+  const C0=Date.UTC(2026,7,31), p30=DATA.prov.i.filter(r=>Math.round((Date.UTC(2026,+r[2].slice(0,2)-1,+r[2].slice(3,5))-C0)/864e5)<=30).reduce((q,r)=>q+r[3],0);
+  //        id        nombre                                pregunta eje u  dir    tipo    act  meta brecha estado va  vt   tend accion diag vb
+  const caja=['cajahoy','Caja y bancos hoy','','', '$','mas','fecha',cj.a,null,0,'cumple',cj.va,'pct',cj.va>0?'mejora':cj.va<0?'empeora':'','',[],cj.vb];
+  const pagar=['pagar30','A pagar a proveedores en 30 días','','','$','menos','fecha',p30,null,0,'cumple',null,'pct','','',[],null];
+  const L=[g('ventas'),g('margen'),g('resultado'),g('entrega'),cob,caja,pagar];
+  $('#app').innerHTML=`<div class="g">${L.map(k=>claveCard8(k)).join('')}</div>`;
 }
 
 /* ---------- pestaña COMERCIAL ---------- */
