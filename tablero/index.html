@@ -562,6 +562,7 @@ const ESTB={cumple:['Cumple','ok'],alerta:['Alerta','wn'],critico:['Crítico','b
 const estColor=e=>'var(--brand)';
 const DIAGU={margen:'pp',entrega:'n'};
 const DEF={
+ ciclo:'Días que pasan desde que pagás la mercadería hasta que la cobrás: días de cobro + días de stock − días de pago. Menos días es mejor.',
  cajahoy:'Plata en caja y en las cuentas bancarias al 31/08/2026.',
  pagar30:'Facturas de proveedores que vencen entre el 31/08/2026 y el 30/09/2026, más las que ya están vencidas sin pagar.',
  resultado_pct:'Ganancia operativa sobre ventas: lo que queda de cada $ 100 vendidos después de costos y gastos del negocio, antes de intereses e impuestos. Es el margen que mide la gestión.',
@@ -874,6 +875,7 @@ function conclusion(){
   const t=state.tab, l=state.lens, M=MAP[l], H=MAP.hoy, per=l==='mes'?'este mes':'en lo que va del año', yi=l==='mes'?6:5, yk=l==='mes'?'cb':'ca';
   const row=(D,id)=>D.rows[l].find(r=>r[0]===id);
   if(t==='claves') return '';
+  if(['comercial','economico','financiero'].includes(t)) return '';
   if(t==='financiero') return finResumen();
   if(t==='patrimonial') return patResumen();
   let x='';
@@ -981,15 +983,24 @@ function claveCard8(k,nogo){
    ${(()=>{const g=CL_GO[k[0]];return g&&!nogo?`<div style="flex:1;min-height:.6rem"></div><button type="button" class="clv-go" data-gx="${g.tab}:${g.sx||''}"><span class="clv-p">${g.p}</span><span class="clv-l">${esc(g.l)} →</span></button>`:''})()}</div>`;
 }
 function tabClaves(){
-  const K=DATA.claves[state.lens], g=id=>K.find(x=>x[0]===id).slice(), H=MAP.hoy;
+  const K=DATA.claves[state.lens], g=id=>K.find(x=>x[0]===id).slice();
   const cob=g('cobranza'); cob[1]='Facturas vencidas sin cobrar';
-  const cj=H.caja_bancos;
-  const C0=Date.UTC(2026,7,31), p30=DATA.prov.i.filter(r=>Math.round((Date.UTC(2026,+r[2].slice(0,2)-1,+r[2].slice(3,5))-C0)/864e5)<=30).reduce((q,r)=>q+r[3],0);
-  //        id        nombre                                pregunta eje u  dir    tipo    act  meta brecha estado va  vt   tend accion diag vb
-  const caja=['cajahoy','Caja y bancos hoy','','', '$','mas','fecha',cj.a,null,0,'cumple',cj.va,'pct',cj.va>0?'mejora':cj.va<0?'empeora':'','',[],cj.vb];
-  const pagar=['pagar30','A pagar a proveedores en 30 días','','','$','menos','fecha',p30,null,0,'cumple',null,'pct','','',[],null];
+  const [caja,pagar]=clavesExtra();
   const L=[g('ventas'),g('margen'),g('resultado'),g('entrega'),cob,caja,pagar];
   $('#app').innerHTML=`<div class="g">${L.map(k=>claveCard8(k)).join('')}</div>`;
+}
+function clavesExtra(){
+  const H=MAP.hoy, cj=H.caja_bancos, cc=H.ciclo_caja;
+  const C0=Date.UTC(2026,7,31), p30=DATA.prov.i.filter(r=>Math.round((Date.UTC(2026,+r[2].slice(0,2)-1,+r[2].slice(3,5))-C0)/864e5)<=30).reduce((q,r)=>q+r[3],0);
+  //        id        nombre                          preg eje u   dir    tipo    act  meta brecha estado va  vt  tend accion diag vb
+  const caja=['cajahoy','Caja y bancos hoy','','','$','mas','fecha',cj.a,null,0,'cumple',cj.va,'pct',cj.va>0?'mejora':cj.va<0?'empeora':'','',[],cj.vb];
+  const pagar=['pagar30','A pagar a proveedores en 30 días','','','$','menos','fecha',p30,null,0,'cumple',null,'pct','','',[],null];
+  const cic=['ciclo','Días que la plata está afuera','','','días','menos','fecha',cc.a,null,0,'cumple',cc.a-cc.ca,'dias',cc.a<cc.ca?'mejora':cc.a>cc.ca?'empeora':'','',[],cc.a-cc.cb];
+  return [caja,pagar,cic];
+}
+function finCards(){
+  const [caja,pagar,cic]=clavesExtra(), cob=DATA.claves[state.lens].find(x=>x[0]==='cobranza').slice(); cob[1]='Facturas vencidas sin cobrar';
+  return `<div class="g">${[cic,cob,caja,pagar].map(k=>claveCard8(k,1)).join('')}</div>`;
 }
 
 /* ---------- pestaña COMERCIAL ---------- */
@@ -1686,7 +1697,7 @@ function tabFinanciero(){
    {id:'ciclo',o:5,t:'Stock parado',q:'¿Hay plata inmovilizada en el depósito?',st:secSt(['ciclo']),body:cicloHTML},
 
   ]);
-  $('#app').innerHTML=SX2.html;
+  $('#app').innerHTML=finCards()+SX2.html;
   const upd=()=>{let t=0;['s-dso','s-inv','s-dpo'].forEach(id=>{const e=document.getElementById(id);if(!e)return;const v=+e.value,x=v*+e.dataset.d;t+=x;document.getElementById(id+'-v').textContent=v;document.getElementById(id+'-o').textContent=usd(x)});const o=document.getElementById('s-tot');if(o)o.textContent=usd(t)};
   document.querySelectorAll('.simu input').forEach(e=>e.addEventListener('input',upd));
   if(!chartsSetup()) return;
