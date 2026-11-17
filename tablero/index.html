@@ -833,12 +833,12 @@ function finResumen(){
    ['¿Quién me debe y cuánto se atrasó?',usd(venc)+' vencido',`1–15 días: ${usd(AG.v15)} · 16–30 días: ${usd(AG.v30)} · más de 30 días: ${usd(AG.v60+AG.v60p)}. El que más debe vencido: ${topC[0]} (${usd(topC[1])})`,kb[10],'cobranza'],
    ['¿Estamos calzados en plazos?',`${nf(dsoH,0)} d cobro · ${nf(dpoH,0)} d pago`,dsoH>dpoH?`Cobrás ${nf(dsoH-dpoH,0)} ${Math.round(dsoH-dpoH)===1?'día':'días'} más tarde de lo que pagás: financiás vos a tus clientes`:`Pagás ${nf(dpoH-dsoH,0)} ${Math.round(dpoH-dsoH)===1?'día':'días'} más tarde de lo que cobrás: te financian los proveedores`,dsoH>dpoH?'alerta':'cumple','deuda']];
   const veredicto=P30>cj?`Para pagar a proveedores lo que vence en 30 días necesitás ${usd(P30)} y tenés ${usd(cj)}: faltan ${usd(P30-cj)}. Te deben ${usd(venc)} ya vencidos, que es donde hay que ir a buscar la plata.`:`La caja de hoy (${usd(cj)}) cubre lo que vence con proveedores en 30 días (${usd(P30)}).`;
-  const G=id=>MAP[l][id], vtot=H.saldo_por_cobrar.a, pV=100*venc/vtot, pV0=100*H.saldo_vencido.cb/H.saldo_por_cobrar.cb, cic=H.ciclo_caja;
+  const G=id=>MAP[l][id], vtot=H.saldo_por_cobrar.a, vencH=H.saldo_vencido.a, pV=100*vencH/vtot, pV0=100*H.saldo_vencido.cb/H.saldo_por_cobrar.cb, cic=H.ciclo_caja;
   const fo=G('flujo_operativo').a, gn=G('resultado_neto').a, rt=G('retiros_socios').a, perT=l==='mes'?'Este mes':'En lo que va del año';
   const sob=H.stock_sobrestock.a, stv=H.stock_valor.a;
   const dx=[
    ['Plazos',dsoH>dpoH?`Cobrás en ${nf(dsoH,0)} días y pagás en ${nf(dpoH,0)}: financiás a tus clientes. La plata está afuera ${nf(cic.a,0)} días (hace un año, ${nf(cic.cb,0)}).`:`Cobrás en ${nf(dsoH,0)} días y pagás en ${nf(dpoH,0)}: te financian los proveedores. La plata está afuera ${nf(cic.a,0)} días (hace un año, ${nf(cic.cb,0)}).`,dsoH>dpoH?'alerta':'cumple'],
-   ['Clientes',`Te deben ${usd(vtot)} y ${usd(venc)} (${nf(pV,1)}%) ya está vencido; hace un año era el ${nf(pV0,1)}%.`,kb[10]],
+   ['Clientes',`Te deben ${usd(vtot)} y ${usd(vencH)} (${nf(pV,1)}%) ya está vencido; hace un año era el ${nf(pV0,1)}%.`,kb[10]],
    ['Proveedores',`Les debés ${usd(prov)}; en los próximos 30 días vencen ${usd(P30)}${P0>0?`, de los que ${usd(P0)} ya están vencidos`:''}. Tenés ${usd(cj)} en caja y bancos.`,P30>cj?'alerta':'cumple']];
   return `<section class="concl"><h2>En resumen</h2><ul class="dxl">${dx.map(([t,x,st])=>`<li style="--hc:${estColor(st)}"><b>${t}.</b> ${esc(x)}</li>`).join('')}</ul></section>`;
 }
@@ -860,12 +860,11 @@ function patResumen(){
 function clavesDx(){
   const l=state.lens, K=DATA.claves[l].filter(k=>k[0]!=='reposicion'), g=id=>K.find(x=>x[0]===id);
   const v=g('ventas'), r=g('resultado'), c=g('caja'), b=g('cobranza'), cl=g('clientes'), e=g('entrega'), m=g('margen'), st=g('stock');
-  const mes=mNom(DATA.s.m[DATA.s.m.length-1]), H=MAP.hoy, nCli=H.clientes_en_riesgo.a;
-  const vs=(x,u,d=1)=>x==null||Math.abs(x)<0.05?'igual que en julio':`${nf(Math.abs(x),d)}${u} ${x>0?'más':'menos'} que ${u===' días'?'a fin de julio':'en julio'}`;
-  const dx=[
-   ['Ventas y ganancia',`En ${mes} vendiste ${usd(v[7])}, ${vs(v[11],'%')}. Después de pagar la mercadería, los gastos y los impuestos, te quedó una ganancia de ${usd(r[7])}. De cada $ 100 que vendiste, te quedaron $ ${nf(m[7],1)} después de pagar la mercadería (${vs(m[11],' puntos')}).`],
-   ['La plata',`Con la caja que tenés podés pagar ${nf(c[7],0)} días de gastos y proveedores (${vs(c[11],' días',0)}). De lo que te deben los clientes, el ${nf(b[7],1)}% ya está vencido.${st?` La mercadería que tenés alcanza para ${nf(st[7],0)} días de ventas.`:''}`],
-   ['Clientes y entregas',`${nCli===1?'Hay 1 cliente que no compra':`Hay ${nCli} clientes que no compran`} hace más de 90 días (el ${nf(cl[7],1)}% del total). El ${nf(e[7],1)}% de los pedidos se entregó a tiempo y completo.`]];
+  // resumen de cada pestaña: se toma el mismo "En resumen" que muestra cada una
+  const grab=t=>{const o=state.tab;let h='';state.tab=t;try{h=conclusion()||''}finally{state.tab=o}
+    const d=document.createElement('div');d.innerHTML=h;d.querySelectorAll('h1,h2,h3,h4').forEach(x=>x.remove());
+    const it=[...d.querySelectorAll('li')];it.forEach(x=>{const b=x.querySelector('b');if(b&&/\.\s*$/.test(b.textContent)&&x.textContent.trim().startsWith(b.textContent.trim()))b.remove()});return (it.length?it.map(x=>x.textContent.trim()).join(' '):d.textContent).replace(/\s+/g,' ').trim()};
+  const dx=[['Comercial',grab('comercial')],['Económico',grab('economico')],['Financiero',grab('financiero')]];
   return `<section class="concl dgx"><h2>Diagnóstico general</h2>
    <ul class="dxl">${dx.map(([t,x])=>`<li style="--hc:var(--brand)"><b>${t}.</b> ${esc(x)}</li>`).join('')}</ul></section>`;
 }
