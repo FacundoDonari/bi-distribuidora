@@ -362,7 +362,7 @@ footer{max-width:1320px;margin:0 auto;padding:0 1.2rem 2rem;color:var(--muted);f
  .g{gap:.8rem;margin-bottom:.8rem}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
-</style>
+details.calc{border-top:0;padding:0}details.calc>summary{font-size:.95rem}details.calc>summary::before{color:var(--brand);font-size:1.1rem}</style>
 </head>
 <body>
 <header class="hd"><div class="in">
@@ -1076,7 +1076,7 @@ function tabComercial(){
       paso('3. Cuánto sobra','Para cubrir 3 meses (90 días) alcanzan 474 cajas (5,3 × 90). Hay 559, así que <b>sobran 85 cajas</b>.')+
       paso('4. Cuánto vale lo que sobra',`Cada caja cuesta ${usd(14887*fx)}: 85 × ${usd(14887*fx)} = <b>${usd(1265432*fx)} de más</b>.`)+
       `</ol><p style="margin:.6rem 0 0;color:var(--muted)">Si un producto no se vendió en los últimos 90 días, sobra todo su stock. Sumando lo que sobra de cada producto se llega al total de ${usd(sob)}.</p>`;
-    return cardI('s12','Cuánto de tu stock se vende rápido y cuánto sobra',bar+leyenda,q,'')+card('s12','Los productos que más sobran',lista)+card('s12','Cómo se calcula lo que sobra, con un ejemplo',ejemplo);
+    return cardI('s12','Cuánto de tu stock se vende rápido y cuánto sobra',bar+leyenda,q,'')+card('s12','Los productos que más sobran',lista)+card('s12','',`<details class="calc"><summary>Cómo se calcula lo que sobra, con un ejemplo</summary><div style="margin-top:.7rem">${ejemplo}</div></details>`);
   })();
   const SX=secciones([
    {id:'ventas',t:'Ventas',q:'¿Cuánto vendemos?',st:secSt(['ventas']),body:cardI('s12','Ventas por mes',cv('c-v','lg'),q1,h1)},
