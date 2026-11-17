@@ -1038,7 +1038,7 @@ function resLineas(t){
     L=[['ventas','Ventas',`${usd(v.a)}, ${pc(v.va)} que julio y ${pc(v.vb)} que agosto 2025.`],
        ['margen','Margen por categoría',`El margen bruto es ${nf(M.margen_bruto_pct.a,1)}%. ${w[0]} es la que más bajó en un año (de ${nf(w[4],1)}% a ${nf(w[3],1)}%).`],
        ['clientes','Clientes',`${nr===1?'1 cliente no compra':nr+' clientes no compran'} hace más de 90 días${rk.length?`; el más grande es ${rk[0][0]}`:''}.`],
-       ['stock','Stock',`Tenés ${usd(stv)} de mercadería; sobran ${usd(sob)} (${nf(100*sob/stv,0)}%) que van a tardar más de 3 meses en venderse.`]];
+       ['stock','Stock',`Alcanza para ${nf(S.dinv[n-1],0)} días de venta (hace un año, ${nf(S.dinv[n-13],0)}). Sobran ${usd(sob)} (${nf(100*sob/stv,0)}%) que van a tardar más de 3 meses en venderse y hay ${H.faltantes_criticos.a} productos sin stock.`]];
   } else if(t==='economico'){
     const v=M.ventas_contables.a, pe=M.punto_equilibrio.a;
     L=[['ganancia','Cuánto ganás',`Ganaste ${usd(M.resultado_neto.a)}: de cada $ 100 vendidos quedaron $ ${nf(M.margen_neto_pct.a,1)}. El margen bruto es ${nf(M.margen_bruto_contable_pct.a,1)}% y el operativo ${nf(M.resultado_pct.a,1)}%.`],
@@ -1145,19 +1145,31 @@ function tabComercial(){
       paso('3. Cuánto sobra','Para cubrir 3 meses (90 días) alcanzan 474 cajas (5,3 × 90). Hay 559, así que <b>sobran 85 cajas</b>.')+
       paso('4. Cuánto vale lo que sobra',`Cada caja cuesta ${usd(14887*fx)}: 85 × ${usd(14887*fx)} = <b>${usd(1265432*fx)} de más</b>.`)+
       `</ol><p style="margin:.6rem 0 0;color:var(--muted)">Si un producto no se vendió en los últimos 90 días, sobra todo su stock. Sumando lo que sobra de cada producto se llega al total de ${usd(sob)}.</p>`;
-    return cardI('s12','Cuánto de tu stock se vende rápido y cuánto sobra',bar+leyenda,q,'')+card('s12','Los productos que más sobran',lista)+card('s12','',`<details class="calc"><summary>Cómo se calcula lo que sobra, con un ejemplo</summary><div style="margin-top:.7rem">${ejemplo}</div></details>`);
+    // lo que falta: stock al 31/08/2026 y venta de agosto (marts.fact_stock_saldo y marts.fact_ventas)
+    const SIN=[['Agua saborizada Aurora 3 L x4',29909],['Galletitas dulces Brisa 5 kg x4',26257],['Desodorante aerosol Norte x48',19072],['Cerveza rubia Delta 1,5 L x6',16182],['Papas fritas Don Mateo x48',10346]];
+    const POCO=[['Gaseosa cola 2,25 L x6',475,1132,15753363],['Aceite de girasol 1,5 L x12',636,1691,14695893],['Galletitas surtidas x24',458,1128,12636658],['Lavandina 2 L x8',213,537,11022454],['Fideos secos 500 g x20',493,1111,10041594],['Agua mineral 2 L x6',161,403,10053685],['Yerba mate 1 kg x10',269,695,9124543],['Arroz largo fino 1 kg x10',369,972,8540463]].sort((a,b)=>b[3]-a[3]);
+    const nSin=H.faltantes_criticos.a, fxv=DATA.sobretop[0][1]/1265432;
+    const listaP=bars(POCO.map(x=>({l:`${x[0]} · quedan ${nf(x[1],0)} cajas, se venden ${nf(x[2]/30,0)} por día`,t:`para ${nf(x[1]*30/x[2],0)} días`,w:x[3],c:'var(--c5)'})));
+    const sinH=`<p style="margin:.2rem 0 .5rem"><b>Sin stock (${nSin} productos).</b> <span style="color:var(--muted)">Se vendieron en agosto y hoy no hay: ${SIN.map(x=>esc(x[0])).join(', ')}. Son productos de poca venta (${usd(SIN.reduce((a,x)=>a+x[1],0)*fxv)} entre todos en el mes).</span></p><p style="margin:1rem 0 .3rem"><b>Se terminan en menos de 15 días.</b> <span style="color:var(--muted)">Los que más se venden. La barra es cuánto venden por mes.</span></p>`;
+    const qF=`Hay ${nSin} productos sin stock, todos de poca venta. Lo que hay que mirar son los más vendidos que tienen stock para menos de 15 días: ${POCO[0][0]} alcanza para ${nf(POCO[0][1]*30/POCO[0][2],0)} días y vende ${usd(POCO[0][3]*fxv)} por mes. Si no llega la reposición a tiempo, esa venta se pierde.`;
+    const faltaC=cardI('s12','Lo que falta o se está por terminar',sinH+listaP,qF,'');
+    const dS=DATA.s.dinv, nS=dS.length;
+    const qE=`Al 31/08/2026 el stock alcanza para ${nf(dS[nS-1],0)} días de venta. Hace un año alcanzaba para ${nf(dS[nS-13],0)} días: ${dS[nS-1]<dS[nS-13]?'hoy tenés menos mercadería parada por cada peso que vendés':'hoy tenés más mercadería parada por cada peso que vendés'}.`;
+    const evoC=cardI('s12','Para cuántos días de venta alcanza el stock, mes a mes',cv('c-dinv','sm'),qE,'');
+    return evoC+cardI('s12','Cuánto de tu stock se vende rápido y cuánto sobra',bar+leyenda,q,'')+card('s12','Los productos que más sobran',lista)+card('s12','',`<details class="calc"><summary>Cómo se calcula lo que sobra, con un ejemplo</summary><div style="margin-top:.7rem">${ejemplo}</div></details>`)+faltaC;
   })();
   const SX=secciones([
    {id:'ventas',t:'Ventas',q:'¿Cuánto vendemos?',st:secSt(['ventas']),body:cardI('s12','Ventas por mes',`<div class="seg" id="vt-u" style="width:max-content;margin:.2rem 0 .6rem"><button data-u="0" aria-pressed="${!VT_U}" onclick="vtSet(0)">En plata</button><button data-u="1" aria-pressed="${VT_U}" onclick="vtSet(1)">En unidades</button></div>`+cv('c-v','lg'),q1,h1)},
    {id:'margen',t:'Margen por categoría',q:'¿Cuánto deja cada cosa que vendemos?',st:secSt(['margen']),body:cardI('s12','Cuánto deja cada categoría',tablaU,q3,h3)},
    {id:'clientes',t:'Clientes',q:'¿Estamos perdiendo clientes?',st:secSt(['clientes']),body:cardI('s12','Clientes que dejaron de comprar',bars(rk.map(r=>({l:r[0]+' · hace '+r[1]+' d',t:usd(r[2])+' al año',w:r[2],c:'var(--c4)'}))),q4,h4)},
-   {id:'stock',t:'Stock',q:'¿Qué mercadería se vende rápido y cuál sobra?',body:stockSec},
+   {id:'stock',t:'Stock',q:'¿Cómo viene el stock, qué sobra y qué falta?',body:stockSec},
 
   ]);
   $('#app').innerHTML=resLineas(state.tab)+SX.html;
   if(!chartsSetup()) return;
   const cc={c1:css('--c1'),c2:css('--c2'),c3:css('--c3'),c4:css('--c4'),c5:css('--c5'),c6:css('--c6'),s:css('--c1s')};
   ch('c-v',{type:'bar',data:{labels:L,datasets:[{label:'Ventas del mes',data:vtD(S)[0],backgroundColor:S.v.map((_,i)=>i===n-1?cc.s:cc.c1),borderRadius:5,order:2},{type:'line',label:'Mismo mes del año anterior',data:vtD(S)[1],borderColor:cc.c2,borderDash:[5,4],borderWidth:2,pointRadius:0,tension:.3,spanGaps:false,order:1}]},options:baseOpts({legend:1,yf:yK,tip:{label:x=>' '+x.dataset.label+': '+vtF(x.parsed.y)}})});
+  {const dS=S.dinv; ch('c-dinv',{type:'line',data:{labels:L,datasets:[{label:'Días de stock',data:dS,borderColor:cc.c1,backgroundColor:cc.s,fill:true,borderWidth:2.5,pointRadius:0,tension:.3}]},options:baseOpts({legend:0,yf:v=>nf(v,0)+' d',tip:{label:x=>' '+nf(x.parsed.y,0)+' días'}})});}
   donut('c-conc',['10 mayores','Resto'],[c10,100-c10],[cc.c1,css('--line')],nf(c10,0)+'%','de las ventas del año');
   ch('c-ent',{type:'bar',data:{labels:L,datasets:[{label:'Días de pedido a entrega',data:S.ciclo,backgroundColor:cc.s,borderRadius:4,yAxisID:'y1'},{type:'line',label:'A tiempo y completas (%)',data:S.otif,borderColor:cc.c1,backgroundColor:cc.c1,borderWidth:2.5,pointRadius:2,tension:.3,yAxisID:'y'}]},options:baseOpts({legend:1,scales:{y:{min:70,max:100,grid:{color:css('--line')},border:{display:false},ticks:{callback:v=>v+'%'}},y1:{position:'right',min:0,max:4,grid:{display:false},border:{display:false},ticks:{callback:v=>v+' d'}}}})});
 }
@@ -1863,7 +1875,8 @@ function tabConfiabilidad(){
    ['Comercial','Ventas, unidades y margen por categoría','Ventas, cajas vendidas y margen bruto de cada categoría de artículo en el mes, con el margen del mes anterior y del mismo mes del año anterior.','comparativo_unidad','fact_ventas, dim_producto','Categoría = categoría del artículo en el sistema (stockcategory).'],
    ['Comercial','Entregas en tiempo y forma','Pedidos con todas sus líneas despachadas a tiempo (despacho <= fecha prometida) y completas (facturado >= pedido) / pedidos despachados.','comparativo_entregas + ciclo_otif','fact_pedidos','Los pedidos abiertos quedan afuera hasta que se despachen. La variación se expresa en puntos porcentuales.'],
    ['Comercial','Clientes que dejaron de comprar','Fecha de corte - fecha de la última compra del cliente. Un cliente está en riesgo si no compra hace más de 90 días.','fidelizacion_dias_sin_comprar + comparativo_hoy_clientes','fact_ventas, dim_cliente',''],
-   ['Comercial','Stock: días de venta y mercadería que sobra','Días de stock = stock / venta diaria promedio de los últimos 90 días. Sobra = lo que excede los 90 días de venta de cada producto (todo su stock si no se vendió en 90 días).','stock_sobrestock + stock_dias_cobertura + comparativo_hoy_stock','fact_stock_saldo, fact_ventas, dim_producto','Valuado al costo. El ejemplo de cómo se calcula está al final de la sección Stock.'],
+   ['Comercial','Stock: días de venta y mercadería que sobra','Días de stock (gráfico mes a mes) = stock promedio del mes / costo de lo vendido por día. Por producto = stock / venta diaria promedio de los últimos 90 días. Sobra = lo que excede los 90 días de venta de cada producto (todo su stock si no se vendió en 90 días).','stock_sobrestock + stock_dias_cobertura + comparativo_hoy_stock','fact_stock_saldo, fact_ventas, dim_producto','Valuado al costo. El ejemplo de cómo se calcula está en la sección Stock.'],
+   ['Comercial','Stock: lo que falta','Sin stock = productos que se vendieron en agosto y al 31/08/2026 tienen stock cero. Se terminan en menos de 15 días = stock / venta diaria de agosto menor a 15.','stock_faltantes_criticos + comparativo_hoy_stock','fact_stock_saldo, fact_ventas, dim_producto','La lista muestra los 8 de más venta.'],
    ['Económico','Estado de resultados y márgenes','Ventas - costo de ventas = utilidad bruta; - gastos operativos y amortizaciones = utilidad operativa; - gastos financieros = utilidad antes de impuestos; - impuestos y tasas e Impuesto a las Ganancias = utilidad neta. Margen bruto, operativo y neto = cada utilidad / ventas.','comparativo_economico + economico_mensual','fact_mayor, dim_cuenta','Cada renglón suma las cuentas de su rubro en el mayor.'],
    ['Económico','Detalle de cada renglón','Al abrir un renglón del estado de resultados: el costo de ventas por categoría y los gastos e impuestos por cuenta del mayor.','economico_gastos','fact_mayor, dim_cuenta, fact_ventas, dim_producto',''],
    ['Económico','Punto de equilibrio','Ventas mínimas para no perder plata = costos fijos / (1 - costos variables / ventas). Costos variables = costo de ventas y gastos que se mueven con la venta; fijos = el resto de los gastos y las amortizaciones.','comparativo_economico','fact_mayor, dim_cuenta',''],
