@@ -2,6 +2,8 @@
 
 Antes de interpretar un número hay que saber cuánto vale el dato que lo sostiene. Cada vez que se cargan datos, el warehouse corre una **auditoría de 63 controles automáticos** y **da aviso** de qué parte del dato es confiable y qué hay que mirar con cuidado.
 
+Esta auditoría vive en el warehouse (esquema `audit`). En el tablero, la sección **Origen de los datos** muestra de qué tablas sale cada indicador.
+
 **Resultado de la última auditoría: apto para interpretar los indicadores, con salvedades.**
 
 ## Sobre qué datos se hace
@@ -44,5 +46,5 @@ Si un eje queda en Crítico (25 puntos o menos), avisa que los indicadores que d
 
 - **La carga llegó 29 días después del último movimiento.** Alcanza para el análisis mensual, no para decidir la cobranza del día.
 - **Se usa un solo depósito de los cuatro.** No es un error.
-- **El ERP no registra recepciones, conciliación bancaria ni presupuesto.** El presupuesto viene de un Excel aparte.
+- **El ERP no registra recepciones, conciliación bancaria ni presupuesto.** El presupuesto 2026 se carga desde un Excel aparte (el tablero no lo muestra).
 - **286 artículos activos no se vendieron en el último año.** Conviene depurar el catálogo.

@@ -1333,7 +1333,7 @@ function tabEconomico(){
      <div class="eqB-lg"><span><i style="background:var(--c4)"></i>Consume caja</span><span><i style="background:var(--warn)"></i>Pérdida, pero se pagan los gastos</span><span><i style="background:var(--c1)"></i>Ganancia</span></div>
      <div class="eqB-c">Mes a mes: lo que se vendió contra el mínimo</div>${cv('c-eq','lg')}</div>`;
   })();
-  const qTr2=`En ${mNom(S.m[n-1])}, el margen bruto fue ${nf(mgS[n-1],1)}% (el mismo mes del año anterior, ${nf(mgS[n-13],1)}%) el margen operativo, ${nf(opS[n-1],1)}% (antes, ${nf(opS[n-13],1)}%) y el margen neto, ${nf(100*E.r[n-1]/S.v[n-1],1)}% (antes, ${nf(100*E.r[n-13]/S.v[n-13],1)}%).`;
+  const qTr2=`En ${mNom(S.m[n-1])}, el margen bruto fue ${nf(mgS[n-1],1)}% (el mismo mes del año anterior, ${nf(mgS[n-13],1)}%), el margen operativo, ${nf(opS[n-1],1)}% (antes, ${nf(opS[n-13],1)}%) y el margen neto, ${nf(100*E.r[n-1]/S.v[n-1],1)}% (antes, ${nf(100*E.r[n-13]/S.v[n-13],1)}%).`;
   if(!state.erm) state.erm={n:6,u:'m',open:{}};  if(!state.erm.open) state.erm.open={};
   const ERMS=state.erm, sOpG=sGop.map((x,i)=>x==null?null:x+E.a[i]), sAI=rest(sOpe,E.gf);
   const kidsC=S.cc.map(x=>[x[0],x[1]]).sort((a,b)=>b[1].reduce((q,y)=>q+(y||0),0)-a[1].reduce((q,y)=>q+(y||0),0)), kidsF=[['Intereses del préstamo',E.gf]];

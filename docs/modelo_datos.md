@@ -92,7 +92,7 @@ Qué dimensiones usa cada hecho. Es la forma rápida de ver qué preguntas se pu
 - **El margen se calcula una sola vez.** Vive en `fact_ventas`, y todas las vistas usan ese mismo número.
 - **Saldos calculados desde los movimientos.** El stock y lo que debe cada cliente se calculan sumando movimientos, no copiando el saldo que guarda el ERP. Después se controla que los dos coincidan.
 - **El libro mayor como referencia.** Cada cifra comercial se puede comparar contra su cuenta contable: ventas contra Ventas, lo que te deben contra Deudores por ventas, el stock contra Mercaderías.
-- **La lógica de negocio en una sola capa.** Encima del modelo, la capa `kpi` tiene una vista por indicador, con su meta, su estado y su comparación. El tablero no calcula nada, solo lee esas vistas: si cambia una definición, se cambia en un solo lugar.
+- **La lógica de negocio en una sola capa.** Encima del modelo, la capa `kpi` tiene una vista por indicador, con su comparación contra el mes anterior y el año anterior. El tablero toma sus números de esas vistas: si cambia una definición, se cambia en un solo lugar. Algunos cortes puntuales del tablero (unidades y margen por categoría del mes anterior, productos que faltan y el ejemplo de stock) se consultaron directo sobre `marts` con los mismos criterios.
 
 ## Las capas del warehouse
 
