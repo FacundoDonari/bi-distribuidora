@@ -2,7 +2,7 @@
 
 Proyecto de Business Intelligence de punta a punta para el dueño de una distribuidora mayorista de consumo masivo. Arranca en un ERP con 23 meses de operación y termina en un tablero que responde las preguntas que el dueño se hace todos los meses. En el medio hay un data warehouse en capas, un modelo dimensional y una auditoría de calidad de datos.
 
-**[Ver el tablero](https://claude.ai/artifact/UZ83beL8ZhC7Tk1EoA757A)**
+**[Ver el tablero](https://claude.ai/artifact/UZ83beL8ZhC7Tk1EoA757A)** · **[Leer la documentación completa](https://claude.ai/artifact/Dtcbgk8PiNAUyae2pfuXWJ)**
 
 ![Pestaña Claves del tablero](docs/capturas/1_claves.png)
 
