@@ -362,7 +362,7 @@ footer{max-width:1320px;margin:0 auto;padding:0 1.2rem 2rem;color:var(--muted);f
  .g{gap:.8rem;margin-bottom:.8rem}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
-details.calc{border-top:0;padding:0}details.calc>summary{font-size:.95rem}details.calc>summary::before{color:var(--brand);font-size:1.1rem}.cmp .fxb{margin:.3rem 0 0;padding:.7rem 1rem .7rem 1.8rem;background:var(--card);border-radius:12px;font-size:.84rem;color:var(--muted);line-height:1.5;margin-top:.5rem}</style>
+details.calc{border-top:0;padding:0}details.calc>summary{font-size:.95rem}details.calc>summary::before{color:var(--brand);font-size:1.1rem}.cmp .fxb{margin:.3rem 0 0;padding:.7rem 1rem .7rem 1.8rem;background:var(--card);border-radius:12px;font-size:.84rem;color:var(--muted);line-height:1.5;margin-top:.5rem}.rsl ul{list-style:none;margin:.4rem 0 0;padding:0}.rsl li{border-top:1px solid var(--line)}.rsl li:first-child{border-top:0}.rsl button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:.4rem;align-items:baseline;width:100%;padding:.6rem .2rem;line-height:1.45}.rsl button:hover{background:var(--bg)}.rsl button b{white-space:nowrap;color:var(--brand)}.rsl button span{flex:1}.rsl button i{font-style:normal;color:var(--brand);font-weight:700}</style>
 </head>
 <body>
 <header class="hd"><div class="in">
@@ -1021,6 +1021,32 @@ const ins=(que,hacer)=>`<div class="ins"><p><b>Qué pasó.</b> ${esc(que)}</p></
 const cardI=(cls,title,body,que,hacer)=>card(cls,title,body+ins(que,hacer));
 const pctS=(x,d=1)=>(x>=0?'+':'−')+nf(Math.abs(x),d)+'%';
 
+
+/* ---------- resumen arriba de cada pestaña: una línea por gráfico, se toca y baja ---------- */
+function resLineas(t){
+  const M=MAP.mes, H=MAP.hoy, S=DATA.s, n=S.m.length, pc=(x,d=1)=>`${nf(Math.abs(x),d)}% ${x>=0?'más':'menos'}`;
+  let L=[];
+  if(t==='comercial'){
+    const v=M.ventas_netas, U=DATA.unidad.mes, w=U.slice().sort((a,b)=>(a[3]-a[4])-(b[3]-b[4]))[0];
+    const rk=DATA.riesgo.slice().sort((a,b)=>b[2]-a[2]), nr=H.clientes_en_riesgo.a, sob=H.stock_sobrestock.a, stv=H.stock_valor.a;
+    L=[['ventas','Ventas',`${usd(v.a)}, ${pc(v.va)} que julio y ${pc(v.vb)} que agosto 2025.`],
+       ['margen','Margen por categoría',`El margen bruto es ${nf(M.margen_bruto_pct.a,1)}%. ${w[0]} es la que más bajó en un año (de ${nf(w[4],1)}% a ${nf(w[3],1)}%).`],
+       ['clientes','Clientes',`${nr===1?'1 cliente no compra':nr+' clientes no compran'} hace más de 90 días${rk.length?`; el más grande es ${rk[0][0]}`:''}.`],
+       ['stock','Stock',`Tenés ${usd(stv)} de mercadería; sobran ${usd(sob)} (${nf(100*sob/stv,0)}%) que van a tardar más de 3 meses en venderse.`]];
+  } else if(t==='economico'){
+    const v=M.ventas_contables.a, pe=M.punto_equilibrio.a;
+    L=[['ganancia','Cuánto ganás',`Ganaste ${usd(M.resultado_neto.a)}: de cada $ 100 vendidos quedaron $ ${nf(M.margen_neto_pct.a,1)}. El margen bruto es ${nf(M.margen_bruto_contable_pct.a,1)}% y el operativo ${nf(M.resultado_pct.a,1)}%.`],
+       ['equilibrio','Punto de equilibrio',`Para no perder plata hay que vender ${usd(pe)} por mes. Vendiste ${usd(v)}, ${nf(100*(v/pe-1),0)}% arriba.`],
+       ['estado','Estado de resultados',`De ${usd(v)} de ventas quedan ${usd(M.resultado_bruto.a)} después de la mercadería, ${usd(M.resultado_periodo.a)} después de los gastos y ${usd(M.resultado_neto.a)} al final.`]];
+  } else if(t==='financiero'){
+    const cc=H.ciclo_caja, dso=S.dso[n-1], dpo=S.dpo[n-1];
+    const C0=Date.UTC(2026,7,31), p30=DATA.prov.i.filter(r=>Math.round((Date.UTC(2026,+r[2].slice(0,2)-1,+r[2].slice(3,5))-C0)/864e5)<=30).reduce((q,r)=>q+r[3],0);
+    L=[['ciclo','Ciclo de la plata',`La plata está afuera ${nf(cc.a,0)} días (hace un año, ${nf(cc.cb,0)}): cobrás en ${nf(dso,0)} días y pagás en ${nf(dpo,0)}.`],
+       ['detalle','Clientes y proveedores',`Los clientes te deben ${usd(H.saldo_por_cobrar.a)} y ${usd(H.saldo_vencido.a)} ya está vencido. A proveedores les tenés que pagar ${usd(p30)} en 30 días y tenés ${usd(H.caja_bancos.a)} en caja y bancos.`]];
+  }
+  if(!L.length) return '';
+  return `<section class="concl rsl"><h2>Resumen</h2><ul>${L.map(([id,t,x])=>`<li><button type="button" data-sx="${id}"><b>${t}.</b> <span>${esc(x)}</span><i>↓</i></button></li>`).join('')}</ul></section>`;
+}
 /* ---------- pestaña COMERCIAL ---------- */
 function tabComercial(){
   const S=DATA.s, l=state.lens, L=S.m.map(mLab), n=L.length, RD=state.mon==='nom'?DATASETS.real:DATA, per=l==='mes'?'este mes':'en lo que va del año';
@@ -1122,7 +1148,7 @@ function tabComercial(){
    {id:'stock',t:'Stock',q:'¿Qué mercadería se vende rápido y cuál sobra?',body:stockSec},
 
   ]);
-  $('#app').innerHTML=kp+SX.html;
+  $('#app').innerHTML=resLineas(state.tab)+SX.html;
   if(!chartsSetup()) return;
   const cc={c1:css('--c1'),c2:css('--c2'),c3:css('--c3'),c4:css('--c4'),c5:css('--c5'),c6:css('--c6'),s:css('--c1s')};
   ch('c-v',{type:'bar',data:{labels:L,datasets:[{label:'Ventas del mes',data:vtD(S)[0],backgroundColor:S.v.map((_,i)=>i===n-1?cc.s:cc.c1),borderRadius:5,order:2},{type:'line',label:'Mismo mes del año anterior',data:vtD(S)[1],borderColor:cc.c2,borderDash:[5,4],borderWidth:2,pointRadius:0,tension:.3,spanGaps:false,order:1}]},options:baseOpts({legend:1,yf:yK,tip:{label:x=>' '+x.dataset.label+': '+vtF(x.parsed.y)}})});
@@ -1361,7 +1387,7 @@ function tabEconomico(){
    {id:'estado',t:'Estado de resultados',q:'¿Cuánto de cada peso vendido se lleva cada renglón? ¿Cómo evolucionó?',last:true,body:erCard2},
 
   ]);
-  $('#app').innerHTML=kp+SX.html;
+  $('#app').innerHTML=resLineas(state.tab)+SX.html;
   if(!chartsSetup()) return;
   erBind();erBind2();
   const cc={c1:css('--c1'),c4:css('--c4'),s:css('--c1s')};
@@ -1697,7 +1723,7 @@ function tabFinanciero(){
    {id:'ciclo',o:5,t:'Stock parado',q:'¿Hay plata inmovilizada en el depósito?',st:secSt(['ciclo']),body:cicloHTML},
 
   ]);
-  $('#app').innerHTML=finCards()+SX2.html;
+  $('#app').innerHTML=resLineas('financiero')+SX2.html;
   const upd=()=>{let t=0;['s-dso','s-inv','s-dpo'].forEach(id=>{const e=document.getElementById(id);if(!e)return;const v=+e.value,x=v*+e.dataset.d;t+=x;document.getElementById(id+'-v').textContent=v;document.getElementById(id+'-o').textContent=usd(x)});const o=document.getElementById('s-tot');if(o)o.textContent=usd(t)};
   document.querySelectorAll('.simu input').forEach(e=>e.addEventListener('input',upd));
   if(!chartsSetup()) return;
