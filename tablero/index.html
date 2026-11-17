@@ -1285,7 +1285,7 @@ function tabEconomico(){
       return `<tr class="t${ty}"><td class="erf-n">${tg}${esc(nom)}${dot}</td>${cells(sr)}</tr>`+(op?kids.map(k=>`<tr class="erm-k"><td class="erf-n">${esc(k[0])}</td>${cells(k[1])}</tr>`).join(''):'');}).join('');
     return `<table class="tb erf erm"><thead><tr><th>Elemento</th>${head}</tr></thead><tbody>${body}</tbody></table>`;
   };
-  const ermBar=`<div class="erm-bar"><span>Meses:</span>${[6,12,n].map(k=>`<button type="button" data-ermn="${k}">${k===n?'Todos':k}</button>`).join('')}<span class="erm-sp"></span><button type="button" data-ermu="m">${UM?'En miles de US$':'En millones de $'}</button><button type="button" data-ermu="p">En % de las ventas</button></div>`;
+  const ermBar=`<div class="erm-bar"><span>Meses:</span>${[3,6,9,12,n].map(k=>`<button type="button" data-ermn="${k}">${k===n?'Todos':k}</button>`).join('')}<span class="erm-sp"></span><button type="button" data-ermu="m">${UM?'En miles de US$':'En millones de $'}</button><button type="button" data-ermu="p">En % de las ventas</button></div>`;
   const erCard2=`<div class="card s12">${ermBar}<div class="sc" id="erm-t"></div></div>`;
   const erBind2=()=>{ const t=document.getElementById('erm-t'); if(!t) return;
     const draw=(keep)=>{ const sl=t.scrollLeft; t.innerHTML=ermHTML(); const sc=t; sc.scrollLeft=keep?sl:0;
@@ -1338,7 +1338,7 @@ function tabEconomico(){
   const SX=secciones([
    {id:'ganancia',t:'Cuánto ganás',q:'¿De cada peso vendido, cuánto queda?',st:secSt(['resultado']),body:cardI('s12','Los márgenes, mes a mes',cv('c-tr'),qTr2)},
    {id:'equilibrio',t:'Punto de equilibrio',q:'¿Cuánto hay que vender para no perder plata?',st:secSt(['resultado']),body:cardI('s12','Ventas contra el punto de equilibrio',eqBig,q3,'')},
-   {id:'estado',t:'Estado de resultados',q:'¿Cuánto de cada peso vendido se lleva cada renglón? ¿Cómo evolucionó?',last:true,body:`<div class="card s12">${erVis}</div>`+foldH('estado','Ver el mismo estado, mes a mes',erCard2)},
+   {id:'estado',t:'Estado de resultados',q:'¿Cuánto de cada peso vendido se lleva cada renglón? ¿Cómo evolucionó?',last:true,body:erCard2},
 
   ]);
   $('#app').innerHTML=kp+SX.html;
