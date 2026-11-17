@@ -689,7 +689,7 @@ function diagData(){
   if(km&&km[8]-km[7]>0.05){const pp=km[8]-km[7], pm=MA.ventas_contables.a*pp/100;
     A.push({p:pm,u:'de ganancia en el año',t:'Recuperar margen.',x:`El margen bruto del año es ${nf(km[7],1)}% contra una meta de ${nf(km[8],0)}%: cada punto que falta son ${usd(MA.ventas_contables.a*0.01)}.${kmm&&kmm[14]?' '+kmm[14]:''}`})}
   A.sort((a,b)=>b.p-a.p);
-  return {med:[{q:'¿Gana plata?',st:stG,x:xG,tab:'economico',tn:'Económico'},{q:'¿Tiene caja?',st:stC,x:xC,tab:'financiero',tn:'Financiero'},{q:'¿Es sólida?',st:stB,x:xB,tab:'patrimonial',tn:'Patrimonial'}],pat,acc:A.slice(0,5)};
+  return {med:[{q:'¿Gana plata?',st:stG,x:xG,tab:'economico',tn:'Económico'},{q:'¿Tiene caja?',st:stC,x:xC,tab:'financiero',tn:'Financiero'}],pat,acc:A.slice(0,5)};
 }
 function resumenEjecutivo(){
   const D=diagData();
@@ -875,7 +875,7 @@ function conclusion(){
   const t=state.tab, l=state.lens, M=MAP[l], H=MAP.hoy, per=l==='mes'?'este mes':'en lo que va del año', yi=l==='mes'?6:5, yk=l==='mes'?'cb':'ca';
   const row=(D,id)=>D.rows[l].find(r=>r[0]===id);
   if(t==='claves') return clavesDx();
-  if(t==='financiero') return finResumen();
+  if(t==='financiero') return '';
   if(t==='patrimonial') return patResumen();
   let x='';
   if(t==='comercial'){
@@ -965,7 +965,7 @@ function claveRow(k){
     <details class="clv-det"><summary>Por qué</summary>${p.causa}</details></div></details>`;
 }
 
-const CL_GO={ventas:{tab:'comercial',sx:'ventas',p:'Comercial',l:'Ver ventas por mes'},clientes:{tab:'comercial',sx:'clientes',p:'Comercial',l:'Ver clientes que dejaron de comprar'},entrega:{tab:'comercial',sx:'',p:'Comercial',l:'Ver entregas completas y a tiempo'},margen:{tab:'economico',sx:'ganancia',p:'Económica',l:'Ver de las ventas a la ganancia'},resultado:{tab:'economico',sx:'estado',p:'Económica',l:'Ver estado de resultados'},caja:{tab:'financiero',sx:'flujo',p:'Financiera',l:'Ver el flujo de fondos'},cobranza:{tab:'financiero',sx:'detalle',p:'Financiera',l:'Ver quién te debe'},stock:{tab:'financiero',sx:'detalle',p:'Financiera',l:'Ver el stock parado'}};
+const CL_GO={ventas:{tab:'comercial',sx:'ventas',p:'Comercial',l:'Ver ventas por mes'},clientes:{tab:'comercial',sx:'clientes',p:'Comercial',l:'Ver clientes que dejaron de comprar'},entrega:{tab:'comercial',sx:'',p:'Comercial',l:'Ver entregas completas y a tiempo'},margen:{tab:'economico',sx:'ganancia',p:'Económica',l:'Ver de las ventas a la ganancia'},resultado:{tab:'economico',sx:'estado',p:'Económica',l:'Ver estado de resultados'},caja:{tab:'financiero',sx:'ciclo',p:'Financiera',l:'Ver el ciclo de la plata'},cobranza:{tab:'financiero',sx:'detalle',p:'Financiera',l:'Ver quién te debe'},stock:{tab:'financiero',sx:'detalle',p:'Financiera',l:'Ver el stock parado'}};
 function claveCard8(k,nogo){
   const p=claveParts(k);
   return `<div class="card kpi clv s3"><span class="bar" style="background:${p.col}"></span>
@@ -1637,10 +1637,8 @@ function tabFinanciero(){
     return `<div class="card s12"><div id="pri-root">${view()}</div></div>`;
   })();
   const SX2=secciones([
-   {id:'ciclo',o:2,t:'Ciclo de la plata',q:'¿Cuántos días está tu plata afuera?',body:cardI('s12','De cuándo pagás la mercadería a cuándo la cobrás',finV.cicloV,finV.qCi)},
-   {id:'caja',o:1,t:'Caja de las próximas semanas',q:'¿Alcanza la plata para lo que viene?',st:(minV<0||dcH<30)?(minV<0?'critico':'alerta'):'cumple',body:cardI('s12','Cuánto entra y cuánto sale cada semana',cv('c-fl1','lg'),qT)+cardI('s12','Con cuánta caja llegás a cada semana',cv('c-fl2','lg'),qCz)},
-   {id:'detalle',o:3,t:'Detalle de clientes, proveedores y stock',q:'¿A quién le reclamás, a quién le pagás primero y qué stock está parado?',body:detNew},
-   {id:'flujo',o:6,t:'Flujo de fondos',q:'¿De dónde entra y adónde sale la plata?',last:true,body:`<div class="card s12">${finV.ffVis}</div>`+foldH('flujo','Ver el mismo flujo, mes a mes',finV.ffCard2)}]);
+   {id:'ciclo',o:1,t:'Ciclo de la plata',q:'¿Cuántos días está tu plata afuera?',body:cardI('s12','De cuándo pagás la mercadería a cuándo la cobrás',finV.cicloV,finV.qCi)},
+   {id:'detalle',o:2,t:'Detalle de clientes, proveedores y stock',q:'¿A quién le reclamás, a quién le pagás primero y qué stock está parado?',last:true,body:detNew}]);
   const kp=finV.cards;const kp0=`<div class="g">${['caja','cobranza'].map(id=>claveCard8(DATA.claves[l].find(x=>x[0]===id),1)).join('')}${kpi('flujo_operativo',{spark:op,color:'var(--c4)'})}${kpi('ciclo_caja',{spark:DATA.s.ccc,color:'var(--c2)'})}</div>`;
   const SX=secciones([
    {id:'flujo',o:6,t:'Flujo de fondos',q:'Detalle: ¿de dónde entra y adónde sale la plata?',last:true,body:cardI('s12','Adónde se fue la caja en 12 meses',cv('c-c12','lg'),qC12)+foldH('flujo','Ver el estado de flujo de fondos completo, por mes y por renglón',ffCard)},
@@ -1652,7 +1650,7 @@ function tabFinanciero(){
    {id:'ciclo',o:5,t:'Stock parado',q:'¿Hay plata inmovilizada en el depósito?',st:secSt(['ciclo']),body:cicloHTML},
 
   ]);
-  $('#app').innerHTML=kp+SX2.html;
+  $('#app').innerHTML=SX2.html;
   const upd=()=>{let t=0;['s-dso','s-inv','s-dpo'].forEach(id=>{const e=document.getElementById(id);if(!e)return;const v=+e.value,x=v*+e.dataset.d;t+=x;document.getElementById(id+'-v').textContent=v;document.getElementById(id+'-o').textContent=usd(x)});const o=document.getElementById('s-tot');if(o)o.textContent=usd(t)};
   document.querySelectorAll('.simu input').forEach(e=>e.addEventListener('input',upd));
   if(!chartsSetup()) return;
@@ -1764,7 +1762,7 @@ function tabConfiabilidad(){
   const ctl=e=>DATA.ctl.filter(c=>c[0].startsWith(e)).map(c=>`<div class="ctl${c[3]?' inf':''}"><span class="n" title="${esc(c[1])}">${esc(c[1])}</span><span class="p" style="color:${c[3]?'var(--muted)':col(c[2])}">${c[2]}</span><span class="b"><i style="width:${c[2]}%;background:${c[3]?'var(--line2)':col(c[2])}"></i></span>${DATA.co[c[0]]&&c[2]<100?`<span class="co">Se pierde: ${esc(DATA.co[c[0]])}</span>`:''}</div>`).join('');
   const mfr=`<div class="em"><b>Matriz de frescura (informativo)</b><div style="overflow-x:auto"><table class="mf"><tr><th>Fuente</th><th>Último dato</th><th>Rezago</th><th>Necesita</th><th>Decisión que soporta</th></tr>${DATA.mfr.map(r=>`<tr><td>${esc(r[0])}</td><td>${fDate(r[1])}</td><td style="color:${r[2]<=r[3]?'var(--pos)':'var(--neg)'}">${r[2]} días</td><td>${r[3]===1?'1 día':r[3]+' días'}</td><td>${esc(r[4])}</td></tr>`).join('')}</table></div><p style="margin:.4rem 0 0;font-size:.78rem">No suma a la nota: el rezago ya lo mide el control de antigüedad del corte.</p></div>`;
   const mr=t=>[...new Set(t.split(', ').flatMap(m=>DATA.mr[m]||[]))].sort();
-  const grupos=['Comercial','Económico','Financiero','Patrimonial'];
+  const grupos=['Comercial','Económico','Financiero'];
   const det=(x)=>`<details data-q="${esc((x[1]+' '+x[2]).toLowerCase())}"><summary>${esc(fixAcc(x[1]))}</summary><div class="bd"><p>${esc(fixAcc(x[2]))}</p><div class="chips"><code>kpi.${esc(x[3].split(' + ').join('</code><code>kpi.'))}</code></div><div class="chips">${x[4].split(', ').map(m=>`<code>marts.${esc(m)}</code>`).join('')}</div><div class="chips">${mr(x[4]).map(r=>`<code>raw.${esc(r)}</code>`).join('')}</div>${x[5]?`<p>${esc(fixAcc(x[5]))}</p>`:''}</div></details>`;
   const expl=grupos.map(g=>`<div class="gx">${g}</div>`+DATA.cat.filter(x=>x[0]===g).map(det).join('')).join('');
   const m=DATA.meta;
@@ -1774,14 +1772,14 @@ function tabConfiabilidad(){
 }
 
 /* ---------- navegación ---------- */
-const TABS=[['claves','Claves'],['comercial','Comercial'],['economico','Económico'],['financiero','Financiero'],['patrimonial','Patrimonial'],['presupuesto','Presupuesto']];
+const TABS=[['claves','Claves'],['comercial','Comercial'],['economico','Económico'],['financiero','Financiero'],['presupuesto','Presupuesto']];
 const RENDER={claves:tabClaves,comercial:tabComercial,economico:tabEconomico,financiero:tabFinanciero,patrimonial:tabPatrimonial,presupuesto:tabPresupuesto,confiabilidad:tabConfiabilidad};
 function balOn(){const sv={per:DATA.per.hoy,map:{}};DATA.per.hoy=DATA.bal.per;Object.keys(MAPB).forEach(id=>{sv.map[id]=MAP.hoy[id];MAP.hoy[id]=MAPB[id]});return sv}
 function balOff(sv){if(!sv)return;DATA.per.hoy=sv.per;Object.keys(sv.map).forEach(id=>{MAP.hoy[id]=sv.map[id]})}
 function renderKeep(){const y=window.scrollY, ap=document.getElementById('app'), h=ap.offsetHeight; ap.style.minHeight=h+'px'; state.keepY=1; try{render()}finally{state.keepY=0} window.scrollTo({top:y,behavior:'auto'}); const fix=()=>window.scrollTo({top:y,behavior:'auto'}); requestAnimationFrame(fix); setTimeout(()=>{fix(); ap.style.minHeight=''},700)}
 function render(){const sv=state.tab==='patrimonial'?balOn():null;try{render0()}finally{balOff(sv)}}
 /* guia */
-const GUIA='<div class="guia" style="position:relative;margin:0 0 1rem;padding:.9rem 2.4rem .9rem 1rem;border:1px solid var(--line2);border-radius:12px;background:var(--bg);font-size:.92rem;line-height:1.5"><button aria-label="Cerrar" onclick="state.guiaOff=1;this.parentElement.remove()" style="position:absolute;top:.4rem;right:.6rem;border:0;background:none;font-size:1.3rem;cursor:pointer;color:inherit">×</button><b>Datos simulados de una distribuidora, al cierre de agosto de 2026.</b> Cómo leerlo en un minuto: <b>1)</b> el diagnóstico dice qué pasó; <b>2)</b> <i>Qué hacer primero</i> ordena las acciones por plata en juego; <b>3)</b> cada pestaña (Comercial, Económico, Financiero, Patrimonial, Presupuesto) muestra solo 4 indicadores de esa perspectiva. Origen de los datos muestra de dónde sale cada indicador.</div>';
+const GUIA='<div class="guia" style="position:relative;margin:0 0 1rem;padding:.9rem 2.4rem .9rem 1rem;border:1px solid var(--line2);border-radius:12px;background:var(--bg);font-size:.92rem;line-height:1.5"><button aria-label="Cerrar" onclick="state.guiaOff=1;this.parentElement.remove()" style="position:absolute;top:.4rem;right:.6rem;border:0;background:none;font-size:1.3rem;cursor:pointer;color:inherit">×</button><b>Datos simulados de una distribuidora, al cierre de agosto de 2026.</b> Cómo leerlo en un minuto: <b>1)</b> el diagnóstico dice qué pasó; <b>2)</b> <i>Qué hacer primero</i> ordena las acciones por plata en juego; <b>3)</b> cada pestaña (Comercial, Económico, Financiero y Presupuesto) responde una pregunta del negocio. Origen de los datos muestra de dónde sale cada indicador.</div>';
 function render0(){ try{render0b()}finally{ if(UM) usdFix(); } }
 function usdFix(){ const w=document.createTreeWalker(document.getElementById('app'),NodeFilter.SHOW_TEXT); let n; while(n=w.nextNode()){ if(n.nodeValue.indexOf('$')>=0) n.nodeValue=n.nodeValue.replace(/(^|[^S])\$(?=[\s\u00a0]*\d)/g,'$1US$$'); } }
 function render0b(){
@@ -1885,7 +1883,7 @@ loadData().then(d=>{Object.assign(DATA,d);init()}).catch(e=>{console.error(e);do
 (function(){
   const $=s=>document.querySelector(s);
   const CANAL={AL:'Almacenes y autoservicios',GA:'Gastronomía',KI:'Kioscos y minimercados',MA:'Mayoristas y subdistribuidores',ON:'Pedidos online',SU:'Supermercados regionales'};
-  const NAVS={claves:[],comercial:['ventas','margen','clientes'],economico:['ganancia','equilibrio','estado'],financiero:['caja','ciclo','detalle','flujo'],patrimonial:['patrimonio','balance'],presupuesto:['ppto']};
+  const NAVS={claves:[],comercial:['ventas','margen','clientes'],economico:['ganancia','equilibrio','estado'],financiero:['ciclo','detalle'],presupuesto:['ppto']};
   const R=(v,d=0)=>v==null||isNaN(v)?null:Math.round(v*Math.pow(10,d))/Math.pow(10,d);
   const norm=t=>String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
   const moneda=()=>state.mon==='usd'?'dólares MEP (cada mes al MEP de ese mes; saldos al MEP de su fecha)':state.mon!=='nom'?'pesos de agosto 2026 (ajustados por inflación)':'pesos históricos de cada período';
@@ -1935,7 +1933,7 @@ loadData().then(d=>{Object.assign(DATA,d);init()}).catch(e=>{console.error(e);do
    inputSchema:{type:'object',properties:{serie:{type:'string',enum:['ventas','margen_bruto_pct','clientes_activos','otif_pct','dias_de_cobro','dias_de_pago','dias_de_stock','ciclo_de_caja','caja_saldo','cobranzas','pagos_proveedores','gastos_pagados','retiros','resultado_neto']},meses:{type:'number',description:'últimos N meses (por defecto 13)'}},required:['serie']},
    execute(i){const S=DATA.s,M={ventas:S.v,margen_bruto_pct:S.mg,clientes_activos:S.ca,otif_pct:S.otif,dias_de_cobro:S.dso,dias_de_pago:S.dpo,dias_de_stock:S.dinv,ciclo_de_caja:S.ccc,caja_saldo:S.caja.sal,cobranzas:S.caja.cob,pagos_proveedores:S.caja.pag,gastos_pagados:S.caja.gas,retiros:S.caja.ret,resultado_neto:S.eco.r},a=M[i.serie];if(!a)throw new Error('serie inválida');const k=Math.min(a.length,Math.max(2,+i.meses||13)),n=a.length;
     return {serie:i.serie,moneda:/dias|pct|clientes/.test(i.serie)?'no aplica':moneda(),meses:S.m.slice(n-k,n),valores:a.slice(n-k,n).map(v=>R(v,2))}}},
-  {name:'mostrar_en_tablero',description:'Lleva al usuario a una sección del tablero. pestana: claves, comercial, economico, financiero, patrimonial o presupuesto. seccion (opcional): comercial→ventas|margen|clientes; economico→ganancia|equilibrio|estado; financiero→caja|ciclo|detalle|flujo; patrimonial→patrimonio|balance; presupuesto→ppto. Usala al final cuando ayude a ver el detalle.',
+  {name:'mostrar_en_tablero',description:'Lleva al usuario a una sección del tablero. pestana: claves, comercial, economico, financiero o presupuesto. seccion (opcional): comercial→ventas|margen|clientes; economico→ganancia|equilibrio|estado; financiero→ciclo|detalle; presupuesto→ppto. Usala al final cuando ayude a ver el detalle.',
    inputSchema:{type:'object',properties:{pestana:{type:'string'},seccion:{type:'string'}},required:['pestana']},
    execute(i){const p=String(i.pestana),s=i.seccion?String(i.seccion):'';if(!NAVS[p])throw new Error('pestaña inválida');if(s&&!NAVS[p].includes(s))throw new Error('sección inválida para esa pestaña');LINKS.push({p,s});return 'ok, el botón de navegación se muestra debajo de la respuesta'}}
   ];
