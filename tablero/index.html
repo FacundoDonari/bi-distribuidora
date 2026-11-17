@@ -210,6 +210,7 @@ main{max-width:1320px;margin:0 auto;padding:1.1rem 1.2rem 3rem}
 .badge.ok{background:rgba(18,128,92,.15);color:var(--pos)}
 .badge.wn{background:rgba(183,121,31,.15);color:var(--warn)}
 .badge.bad{background:rgba(210,69,61,.15);color:var(--neg)}
+.badge.ok,.badge.wn,.badge.bad,.clv-track,.clv-meta,.obj,.sx-nav .dot,.pri-k{display:none!important}
 .clv-track{position:relative;height:.45rem;background:var(--bg);border-radius:999px;margin:.75rem 0 .4rem}
 .clv-track i{display:block;height:100%;border-radius:999px}
 .clv-track b{position:absolute;top:-3px;width:2px;height:calc(100% + 6px);background:var(--ink);opacity:.5;border-radius:1px}
@@ -553,7 +554,7 @@ function donut(id,labels,vals,colors,big,small){
 /* ---------- pestaña CLAVES ---------- */
 const EJEC={'Comercial':'var(--c1)','Económico':'var(--c2)','Financiero':'var(--c3)'};
 const ESTB={cumple:['Cumple','ok'],alerta:['Alerta','wn'],critico:['Crítico','bad']};
-const estColor=e=>e==='cumple'?'var(--pos)':e==='alerta'?'var(--warn)':'var(--neg)';
+const estColor=e=>'var(--brand)';
 const DIAGU={margen:'pp',entrega:'n'};
 const DEF={
  resultado_pct:'Ganancia operativa sobre ventas: lo que queda de cada $ 100 vendidos después de costos y gastos del negocio, antes de intereses e impuestos. Es el margen que mide la gestión.',
@@ -579,7 +580,7 @@ const DEF={
  solvencia_pct:'Qué parte de todo lo que tiene la empresa es de los dueños y no de terceros. También se llama solvencia.',
  stock_sobrestock:'Stock que alcanza para más de 90 días de ventas o que no se vendió en los últimos 90 días. Es plata inmovilizada.',
  pedidos_abiertos:'Pedidos ya tomados que todavía no salieron del depósito.',
- ventas:'Suma de lo facturado en el período, sin IVA. La meta es el presupuesto del Excel para ese período.',
+ ventas:'Suma de lo facturado en el período, sin IVA.',
  margen:'Lo que te queda de cada venta después de descontar el costo del producto, en % sobre la venta.',
  resultado:'Resultado neto: ventas menos costo, gastos de estructura, amortizaciones, intereses del préstamo, impuestos y tasas e Impuesto a las Ganancias. Es la ganancia final del período.',
  caja:'Cuántos días de pagos (proveedores, gastos y cuotas del préstamo) cubre la plata que tenés hoy en caja y bancos.',
@@ -832,7 +833,7 @@ function finResumen(){
   const sob=H.stock_sobrestock.a, stv=H.stock_valor.a;
   const dx=[
    ['Plazos',dsoH>dpoH?`Cobrás en ${nf(dsoH,0)} días y pagás en ${nf(dpoH,0)}: financiás a tus clientes. La plata está afuera ${nf(cic.a,0)} días (hace un año, ${nf(cic.cb,0)}).`:`Cobrás en ${nf(dsoH,0)} días y pagás en ${nf(dpoH,0)}: te financian los proveedores. La plata está afuera ${nf(cic.a,0)} días (hace un año, ${nf(cic.cb,0)}).`,dsoH>dpoH?'alerta':'cumple'],
-   ['Clientes',`Te deben ${usd(vtot)} y ${usd(venc)} (${nf(pV,1)}%) ya está vencido; hace un año era el ${nf(pV0,1)}% (meta: menos de ${nf(kb[8],0)}%).`,kb[10]],
+   ['Clientes',`Te deben ${usd(vtot)} y ${usd(venc)} (${nf(pV,1)}%) ya está vencido; hace un año era el ${nf(pV0,1)}%.`,kb[10]],
    ['Proveedores',`Les debés ${usd(prov)}; en los próximos 30 días vencen ${usd(P30)}${P0>0?`, de los que ${usd(P0)} ya están vencidos`:''}. Tenés ${usd(cj)} en caja y bancos.`,P30>cj?'alerta':'cumple'],
    ['Stock',`Tenés ${usd(stv)} de mercadería y ${usd(sob)} es de más (más de 90 días de cobertura o sin ventas en 90 días).`,sob>0.3*stv?'alerta':'cumple']];
   return `<section class="concl"><h2>En resumen</h2><ul class="dxl">${dx.map(([t,x,st])=>`<li style="--hc:${estColor(st)}"><b>${t}.</b> ${esc(x)}</li>`).join('')}</ul></section>`;
@@ -854,23 +855,14 @@ function patResumen(){
 
 function clavesDx(){
   const l=state.lens, K=DATA.claves[l].filter(k=>k[0]!=='reposicion'), g=id=>K.find(x=>x[0]===id);
-  const v=g('ventas'), r=g('resultado'), c=g('caja'), b=g('cobranza'), cl=g('clientes'), e=g('entrega'), m=g('margen');
-  const nC=K.filter(k=>k[10]==='critico').length, nA=K.filter(k=>k[10]==='alerta').length, nO=K.filter(k=>k[10]==='cumple').length;
-  const worst=(...ks)=>ks.reduce((w,k)=>PRI[k[10]]<PRI[w]?k[10]:w,'cumple');
-  const per=l==='mes'?'Este mes':'En lo que va del año', pc=k=>nf(100*k[7]/k[8],0)+'% de la meta';
+  const v=g('ventas'), r=g('resultado'), c=g('caja'), b=g('cobranza'), cl=g('clientes'), e=g('entrega'), m=g('margen'), st=g('stock');
+  const per=l==='mes'?'Este mes':'En lo que va del año';
   const dx=[
-   ['Ventas y ganancia',`${per} vendiste ${usd(v[7])} (${pc(v)}) y ganaste ${usd(r[7])} (${pc(r)}). El margen bruto está en ${nf(m[7],1)}% (meta: ${nf(m[8],0)}%).`,worst(v,r,m)],
-   ['La plata',`La caja alcanza para ${nf(c[7],0)} días (meta: ${nf(c[8],0)}) y el ${nf(b[7],1)}% de lo que te deben está vencido (meta: menos de ${nf(b[8],0)}%).`,worst(c,b)],
-   ['Clientes y entregas',`El ${nf(cl[7],1)}% de los clientes no compra hace más de 90 días (meta: menos de ${nf(cl[8],0)}%) y el ${nf(e[7],1)}% de las entregas llega a tiempo y completa.`,worst(cl,e)]];
-  const todo=K.filter(k=>k[10]!=='cumple').sort((a,b_)=>PRI[a[10]]-PRI[b_[10]]||Math.abs(b_[9])/b_[8]-Math.abs(a[9])/a[8]);
-  const top=todo.slice(0,3), rest=todo.slice(3), bien=K.filter(k=>k[10]==='cumple').map(k=>k[1]);
-  const goB=k=>{const q=CL_GO[k[0]];return q?`<button type="button" class="clv-go dgx-go" data-gx="${q.tab}:${q.sx||''}">${esc(q.l)} →</button>`:''};
+   ['Ventas y ganancia',`${per} vendiste ${usd(v[7])} y ganaste ${usd(r[7])}. El margen bruto está en ${nf(m[7],1)}%.`],
+   ['La plata',`La caja alcanza para ${nf(c[7],0)} días de pagos y el ${nf(b[7],1)}% de lo que te deben está vencido.${st?` El stock alcanza para ${nf(st[7],0)} días de ventas.`:''}`],
+   ['Clientes y entregas',`El ${nf(cl[7],1)}% de los clientes no compra hace más de 90 días y el ${nf(e[7],1)}% de las entregas llega a tiempo y completa.`]];
   return `<section class="concl dgx"><h2>Diagnóstico general</h2>
-   <p class="dgx-h">De los ${K.length} indicadores, <b>${nC}</b> ${nC===1?'está':'están'} en crítico, <b>${nA}</b> en alerta y <b>${nO}</b> en orden.</p>
-   <ul class="dxl">${dx.map(([t,x,st])=>`<li style="--hc:${estColor(st)}"><b>${t}.</b> ${esc(x)}</li>`).join('')}</ul>
-   ${top.length?`<h3 class="dgx-t">Qué mirar primero</h3><ol class="dgx-o">${top.map((k,i)=>`<li><span class="pri-k" style="background:${estColor(k[10])}">${i+1}</span><div><b>${esc(k[1])}</b> <span class="badge ${ESTB[k[10]][1]}">${ESTB[k[10]][0]}</span><p>${esc(k[14])}</p>${goB(k)}</div></li>`).join('')}</ol>`:''}
-   ${rest.length?`<p class="dgx-r">También en seguimiento: ${rest.map(k=>esc(k[1])).join(', ')}.</p>`:''}
-   ${bien.length?`<p class="dgx-r">Va bien: ${bien.map(esc).join(', ')}.</p>`:''}</section>`;
+   <ul class="dxl">${dx.map(([t,x])=>`<li style="--hc:var(--brand)"><b>${t}.</b> ${esc(x)}</li>`).join('')}</ul></section>`;
 }
 function conclusion(){
   const t=state.tab, l=state.lens, M=MAP[l], H=MAP.hoy, per=l==='mes'?'este mes':'en lo que va del año', yi=l==='mes'?6:5, yk=l==='mes'?'cb':'ca';
@@ -918,7 +910,6 @@ function cmpNote(){
   L.push('Los saldos (caja, lo que te deben, stock, deudas) son al <b>31/08/2026</b> y se comparan con el <b>31/07/2026</b> (cierre del mes anterior) y con el <b>31/08/2025</b> (la misma fecha del año anterior).');
   L.push(state.mon==='usd'?'Los montos están en <b>dólares MEP</b>: cada mes se convierte al dólar MEP de ese mes y los saldos al del cierre. Las comparaciones mezclan lo que pasó con el negocio y lo que pasó con el tipo de cambio.':state.mon!=='nom'?'Los montos están en <b>pesos de hoy</b>: los meses anteriores se ajustan por inflación, así las comparaciones muestran el crecimiento real.':'Los montos están en <b>pesos históricos</b>, sin ajustar por inflación: las comparaciones incluyen la suba de precios.');
   L.push('Los cambios se muestran en %, en puntos o en días, según el indicador: ▲ sube, ▼ baja. Verde es bueno para el negocio y rojo es malo.');
-  if(t==='claves') L.push('La meta de cada indicador es la rayita sobre la barra.');
   return `<details class="cmp"><summary><span class="tip">i</span>¿Contra qué se compara cada número?</summary><ul>${L.map(x=>`<li>${x}</li>`).join('')}</ul></details>`;
 }
 function claveParts(k){
@@ -972,9 +963,6 @@ function claveCard8(k,nogo){
   return `<div class="card kpi clv s3"><span class="bar" style="background:${p.col}"></span>
    <div class="clv-eje" style="color:${p.col}">${esc(p.nombre)}${p.tip}</div>
    <div class="v">${fmtBig({u:p.u,a:p.act})}</div>
-   <div class="cs"><span class="badge ${p.eCls}">${p.eLab}</span></div>
-   <div class="clv-track"><i style="width:${p.fp}%;background:${p.col}"></i><b style="left:${p.mp}%"></b></div>
-   <div class="clv-meta">Meta: ${fmtV({u:p.u},p.meta)} · ${p.gap}</div>
    <div class="cs">${p.chips}</div>
    ${(()=>{const g=CL_GO[k[0]];return g&&!nogo?`<div style="flex:1;min-height:.6rem"></div><button type="button" class="clv-go" data-gx="${g.tab}:${g.sx||''}"><span class="clv-p">${g.p}</span><span class="clv-l">${esc(g.l)} →</span></button>`:''})()}</div>`;
 }
@@ -1059,7 +1047,7 @@ function tabComercial(){
     const mx=Math.max(a,meta)*1.2, cl=a>=meta?'var(--pos)':(a>=meta*0.95?'var(--warn)':'var(--neg)');
     const obj=`<div class="obj"><div class="obj-l"><span>Objetivo</span><b>${nf(meta,0)} cajas</b></div><div class="obj-b"><i style="width:${100*a/mx}%;background:${cl}"></i><u style="left:${100*meta/mx}%"></u></div></div>`;
     const sub=`${obj}${ytd?'':pill(a,pv,'mes anterior')}${pill(a,ya,ytd?'mismo período del año anterior':'mismo mes del año anterior')}`;
-    return {card:kpiX('Unidades vendidas',`${nf(a,0)}<span class="u"> cajas</span>`,sub,'var(--c2)','Cajas vendidas en el período, según los movimientos de venta del sistema. Todos los productos se venden por caja, así que se pueden sumar. El objetivo es la meta de unidades del presupuesto.'),a,ya,pv,meta};
+    return {card:kpiX('Unidades vendidas',`${nf(a,0)}<span class="u"> cajas</span>`,sub,'var(--c2)','Cajas vendidas en el período, según los movimientos de venta del sistema. Todos los productos se venden por caja, así que se pueden sumar.'),a,ya,pv,meta};
   })();
 
   const vK=(()=>{
@@ -1067,7 +1055,7 @@ function tabComercial(){
     const pill=(x,y,lab)=>{ if(!y) return ''; const d=100*(x-y)/y, eq=Math.abs(d)<0.05; return `<div class="cmpw"><span class="pill ${eq?'n':d>0?'g':'r'}"><i>${eq?'=':d>0?'▲':'▼'}</i> ${eq?'Sin cambio':nf(Math.abs(d),1)+'%'} ${lab}</span></div>`};
     let obj=''; if(meta){const mx=Math.max(V.a,meta)*1.2, cl=V.a>=meta?'var(--pos)':(V.a>=meta*0.95?'var(--warn)':'var(--neg)'); obj=`<div class="obj"><div class="obj-l"><span>Objetivo</span><b>${usd(meta)}</b></div><div class="obj-b"><i style="width:${100*V.a/mx}%;background:${cl}"></i><u style="left:${100*meta/mx}%"></u></div></div>`}
     const sub=ytd?obj+pill(V.a,V.ca,'mismo período del año anterior'):obj+pill(V.a,V.ca,'mes anterior')+pill(V.a,V.cb,'mismo mes del año anterior');
-    return kpiX(ytd?'Ventas del año':'Ventas del mes',usd(V.a),sub,'var(--c1)','Ventas netas (sin IVA) del período, en '+(state.mon==='usd'?'dólares MEP':state.mon==='real'?'pesos de hoy':'pesos de cada mes')+'. El objetivo es la meta de ventas del presupuesto.');
+    return kpiX(ytd?'Ventas del año':'Ventas del mes',usd(V.a),sub,'var(--c1)','Ventas netas (sin IVA) del período, en '+(state.mon==='usd'?'dólares MEP':state.mon==='real'?'pesos de hoy':'pesos de cada mes')+'.');
   })();
   const kp=`<div class="g">${vK}${kpi('clientes_en_riesgo',{color:'var(--c4)'})}${uK.card}${kpi('otif_pct',{spark:S.otif,color:'var(--c3)'})}</div>`;
   const SX=secciones([
@@ -1138,9 +1126,9 @@ function tabEconomico(){
     const pct=Math.min(100,Math.max(0,100*ratio)), seg=100*(1-ratio);
     const eq=`<div class="eqg"><div class="eqg-m" style="left:${pct}%"><span>Equilibrio</span><i></i></div><div class="eqbar"><i style="width:${pct}%;background:var(--c4)"></i><i style="flex:1;background:var(--c1)"></i></div><div class="eqleg"><span>Pérdida</span><span>Vendido: ${usd(vv.a)}</span></div></div><div style="margin-top:.35rem">${ratio>1?'No se llegó a cubrir los costos.':`Las ventas pueden caer ${nf(seg,1)}% antes de perder plata.`}</div>`;
     return `<div class="g">`+
-     kpiX('Margen bruto',`${nf(mb.a,1)}<small>%</small>`,`${b('Objetivo: más de '+nf(mB,1)+'%')}<br>${nf(mb[yk],1)}% ${ya}`,estColor(kb[10]),'Lo que te queda de cada $ 100 vendidos después de pagar la mercadería: (ventas netas − costo de la mercadería vendida) ÷ ventas netas. El costo es el contable del modelo, no a valor de reposición. El objetivo es la meta del modelo.')+
-     kpiX('Gastos sobre ventas',`${nf(gp.a,1)}<small>%</small>`,`${b('Objetivo (presupuesto): menos de '+nf(mG,1)+'%')}<br>${nf(gp[yk],1)}% ${ya}`,estColor(sem(gp.a,mG,false)),'Cuánto de cada $ 100 vendidos se va en sueldos, fletes, alquiler, depósito y amortizaciones: gastos de estructura y amortizaciones ÷ ventas netas. El objetivo sale del presupuesto del mismo período.')+
-     kpiX('Margen operativo',`${nf(mo.a,1)}<small>%</small>`,`${b('Objetivo (presupuesto): más de '+nf(mO,1)+'%')}<br>${nf(mo[yk],1)}% ${ya}`,estColor(sem(mo.a,mO,true)),'Margen bruto menos gastos sobre ventas: lo que deja la operación antes de intereses e impuestos. Antes de amortizaciones: '+nf(100*ro.a/vv.a,1)+'%. Si el margen bruto es bueno y este es bajo, el problema es el peso de la estructura. El objetivo sale del presupuesto.')+
+     kpiX('Margen bruto',`${nf(mb.a,1)}<small>%</small>`,`${nf(mb[yk],1)}% ${ya}`,estColor(kb[10]),'Lo que te queda de cada $ 100 vendidos después de pagar la mercadería: (ventas netas − costo de la mercadería vendida) ÷ ventas netas. El costo es el contable del modelo, no a valor de reposición.')+
+     kpiX('Gastos sobre ventas',`${nf(gp.a,1)}<small>%</small>`,`${nf(gp[yk],1)}% ${ya}`,estColor(sem(gp.a,mG,false)),'Cuánto de cada $ 100 vendidos se va en sueldos, fletes, alquiler, depósito y amortizaciones: gastos de estructura y amortizaciones ÷ ventas netas.')+
+     kpiX('Margen operativo',`${nf(mo.a,1)}<small>%</small>`,`${nf(mo[yk],1)}% ${ya}`,estColor(sem(mo.a,mO,true)),'Margen bruto menos gastos sobre ventas: lo que deja la operación antes de intereses e impuestos. Antes de amortizaciones: '+nf(100*ro.a/vv.a,1)+'%. Si el margen bruto es bueno y este es bajo, el problema es el peso de la estructura.')+
      kpiX('Punto de equilibrio',`${usd(pe.a)}`,eq,estColor(sP),'Ventas necesarias para no perder plata: costos fijos ÷ margen de contribución. Hasta ese monto las ventas cubren los costos; lo que se vende por encima es ganancia. El color compara con '+ya+'.')+`</div>`;
   })();
   const mgS=S.mg, gpS=S.v.map((x,i)=>100*(E.g[i]+E.a[i])/x), opS=S.v.map((x,i)=>100*(x-E.c[i]-E.g[i]-E.a[i])/x), dMb=mgS[n-1]-mgS[n-13], dG=gpS[n-1]-gpS[n-13], dOp=opS[n-1]-opS[n-13];
@@ -1542,10 +1530,10 @@ function tabFinanciero(){
     const dc=H9.dias_caja, cj9=H9.caja_bancos.a, fo9=GL('flujo_operativo'), gn9=GL('resultado_neto'), cv9=GL('cobranzas_ventas'), cic9=H9.ciclo_caja, sv=H9.saldo_vencido, sc9=H9.saldo_por_cobrar;
     const pvA=100*sv.a/sc9.a, pvP=100*sv.ca/sc9.ca, pvY=100*sv.cb/sc9.cb, dsoN=S.dso[n-1], dpoN=S.dpo[n-1];
     const cards='<div class="g">'+[
-     kpiX('Caja disponible',`${nf(dc.a,0)}<small> días</small>`,objB(dc.a,kcj[8],'más de '+nf(kcj[8],0)+' días')+cmp2(`Caja y bancos: <b>${usd(cj9)}</b>`)+twoH(dc.a,dc.ca,dc.cb,true,'d'),estColor(kcj[10]),'Cuántos días de gastos y pagos cubrís con la caja y los bancos de hoy, sin cobrar nada. El objetivo es la meta del modelo.'),
+     kpiX('Caja disponible',`${nf(dc.a,0)}<small> días</small>`,objB(dc.a,kcj[8],'más de '+nf(kcj[8],0)+' días')+cmp2(`Caja y bancos: <b>${usd(cj9)}</b>`)+twoH(dc.a,dc.ca,dc.cb,true,'d'),estColor(kcj[10]),'Cuántos días de gastos y pagos cubrís con la caja y los bancos de hoy, sin cobrar nada.'),
      kpiX('Caja que generó el negocio',usd(fo9.a),cmp2(`Ganancia final del período: <b>${usd(gn9.a)}</b>`)+twoL(fo9.a,fo9.ca,fo9[yk9],true,'m'),estColor(fo9.a<0?'critico':fo9.a<gn9.a?'alerta':'cumple'),'Cobranzas menos pagos a proveedores y gastos e impuestos pagados: la plata que de verdad dejó la operación, antes de cuotas del préstamo y retiros de los socios.'),
      kpiX('Cobranzas sobre ventas',`${nf(cv9.a,1)}<small>%</small>`,cmp2('Lo cobrado contra lo vendido')+twoL(cv9.a,cv9.ca,cv9[yk9],true,'pp'),colYA(cv9.a,cv9[yk9],true,1),'Cuánto cobraste por cada $ 100 vendidos en el período. Si es menos de 100, lo que falta cobrar se acumula en lo que te deben.'),
-     kpiX('Deuda vencida de clientes',`${nf(pvA,1)}<small>%</small>`,objB(pvA,kdv[8],'menos de '+nf(kdv[8],0)+'%',true)+cmp2(`<b>${usd(sv.a)}</b> vencidos de ${usd(sc9.a)}`)+twoH(pvA,pvP,pvY,false,'pp'),estColor(kdv[10]),'Qué parte de lo que te deben ya pasó su fecha de vencimiento. El objetivo es la meta del modelo.'),
+     kpiX('Deuda vencida de clientes',`${nf(pvA,1)}<small>%</small>`,objB(pvA,kdv[8],'menos de '+nf(kdv[8],0)+'%',true)+cmp2(`<b>${usd(sv.a)}</b> vencidos de ${usd(sc9.a)}`)+twoH(pvA,pvP,pvY,false,'pp'),estColor(kdv[10]),'Qué parte de lo que te deben ya pasó su fecha de vencimiento.'),
      kpiX('Días de stock',`${nf(S.dinv[n-1],1)}<small> días</small>`,cmp2(`Rota <b>${nf(365/S.dinv[n-1],1)} veces por año</b>`)+twoH(S.dinv[n-1],S.dinv[n-2],S.dinv[n-13],false,'d'),colYA(S.dinv[n-1],S.dinv[n-13],false,2),'Días que tarda la mercadería en venderse: stock promedio del mes dividido por el costo de lo vendido por día. La rotación es 365 ÷ días.'),
      kpiX('Días de cobro',`${nf(dsoN,1)}<small> días</small>`,cmp2(`Rota <b>${nf(365/dsoN,1)} veces por año</b>`)+twoH(dsoN,S.dso[n-2],S.dso[n-13],false,'d'),colYA(dsoN,S.dso[n-13],false,2),'Días que tardan tus clientes en pagarte, en promedio. La rotación es 365 ÷ días.'),
      kpiX('Días de pago',`${nf(dpoN,1)}<small> días</small>`,cmp2(`Rota <b>${nf(365/dpoN,1)} veces por año</b>`)+twoH(dpoN,S.dpo[n-2],S.dpo[n-13],true,'d'),colYA(dpoN,S.dpo[n-13],true,2),'Días que tardás en pagarles a tus proveedores, en promedio. Pagar más tarde te financia, siempre que no pierdas condiciones.'),
