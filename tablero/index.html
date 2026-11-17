@@ -1619,7 +1619,7 @@ function tabFinanciero(){
     const dvS=DATA.claves[state.lens].find(x=>x[0]==='stock')[7];
     const panS=()=>{const op=!!PS().xs, sh=op?sobAll:sobAll.slice(0,5);
       return `<p class="dt-lead">El stock vale <b>${usd(stockV)}</b> (${nf(dvS,0)} días de venta); <b>${usd(sobV)}</b> (${nf(100*sobV/stockV,0)}%) es mercadería de más. Estos son los productos con más plata parada.</p><div class="dt-l">${sh.map(x=>`<div class="dt-r"><div class="dt-n">${esc(x[0])}</div><div class="dt-bar"><i style="background:var(--warn);width:${Math.max(3,100*x[1]/mxS)}%"></i></div><b>${usd(x[1])}</b></div>`).join('')}</div>${moreB('xs',op,sobAll.length-5)}`};
-    const TABS=[['c','Clientes',usd(vencC)+' vencido',panC],['p','Proveedores',usd(pv30)+' a 30 días',panP],['b','Impuestos y banco',usd(totB),panB],['s','Stock',usd(sobV)+' de más',panS]];
+    const TABS=[['c','Clientes',usd(vencC)+' vencido',panC],['p','Proveedores',usd(pv30)+' a 30 días',panP],['s','Stock',usd(sobV)+' de más',panS]];
     const view=()=>{const t=PS().t||'c', cur=TABS.find(x=>x[0]===t)||TABS[0];
       return `<div class="dt-tabs" role="tablist">${TABS.map(x=>`<button type="button" role="tab" data-pri="t:${x[0]}" class="${x[0]===cur[0]?'on':''}"><b>${x[1]}</b><small>${x[2]}</small></button>`).join('')}</div><div class="dt-p">${cur[3]()}</div>`};
     window.priRender=()=>{const r=document.getElementById('pri-root'); if(r) r.innerHTML=view()};
