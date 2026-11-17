@@ -1068,7 +1068,15 @@ function tabComercial(){
     const leyenda=ley('var(--c1)','Se vende en menos de 3 meses',ok)+ley('var(--c2)','Sobra: productos que se venden, pero tenés para más de 3 meses',conV)+ley('var(--c4)','Sobra: productos que no se vendieron en los últimos 3 meses',sinV);
     const lista=bars(DATA.sobretop.slice(0,8).map(x=>({l:x[0]+(x[2]==null?' · sin ventas en 3 meses':' · tenés para '+nf(x[2],0)+' días'),t:usd(x[1])+' de más',w:x[1],c:x[2]==null?'var(--c4)':'var(--c2)'})));
     const q=`Tenés ${usd(stv)} de mercadería, que alcanza para ${nf(dv,0)} días de venta. Pero no todo rota igual: ${usd(sob)} (${pc(sob)}) sobra, porque al ritmo de venta actual va a tardar más de 3 meses en venderse. De eso, ${usd(sinV)} son productos que no se vendieron en los últimos 3 meses. Lo que sobra está repartido en 538 productos: abajo, los que más acumulan.`;
-    return cardI('s12','Cuánto de tu stock se vende rápido y cuánto sobra',bar+leyenda,q,'')+card('s12','Los productos que más sobran',lista);
+    const fx=DATA.sobretop[0][1]/1265432;
+    const paso=(t,x)=>`<li style="margin:.55rem 0"><b>${t}</b><br><span style="color:var(--muted)">${x}</span></li>`;
+    const ejemplo=`<p style="margin:.2rem 0 .4rem">Tomemos el <b>Vino tinto 1 L x12</b>, el producto que más sobra:</p><ol style="margin:0;padding-left:0;list-style:none">`+
+      paso('1. Cuánto se vende por día','En los últimos 90 días se vendieron 474 cajas: 474 ÷ 90 = <b>5,3 cajas por día</b>.')+
+      paso('2. Para cuántos días alcanza el stock','Al 31/08/2026 hay 559 cajas en el depósito: 559 ÷ 5,3 = <b>106 días</b>. Eso es lo que significa "tenés para 106 días".')+
+      paso('3. Cuánto sobra','Para cubrir 3 meses (90 días) alcanzan 474 cajas (5,3 × 90). Hay 559, así que <b>sobran 85 cajas</b>.')+
+      paso('4. Cuánto vale lo que sobra',`Cada caja cuesta ${usd(14887*fx)}: 85 × ${usd(14887*fx)} = <b>${usd(1265432*fx)} de más</b>.`)+
+      `</ol><p style="margin:.6rem 0 0;color:var(--muted)">Si un producto no se vendió en los últimos 90 días, sobra todo su stock. Sumando lo que sobra de cada producto se llega al total de ${usd(sob)}.</p>`;
+    return cardI('s12','Cuánto de tu stock se vende rápido y cuánto sobra',bar+leyenda,q,'')+card('s12','Los productos que más sobran',lista)+card('s12','Cómo se calcula lo que sobra, con un ejemplo',ejemplo);
   })();
   const SX=secciones([
    {id:'ventas',t:'Ventas',q:'¿Cuánto vendemos?',st:secSt(['ventas']),body:cardI('s12','Ventas por mes',cv('c-v','lg'),q1,h1)},
