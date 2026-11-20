@@ -10,6 +10,8 @@ Proyecto de Business Intelligence de punta a punta para el dueño de una distrib
 
 El dueño de una pyme distribuidora tiene los datos en el ERP, pero no las respuestas: ¿cuánto vendí?, ¿cuánto me queda de cada venta?, ¿me alcanza la plata?, ¿quién me debe y desde cuándo?, ¿qué mercadería me sobra y cuál me falta? Es un negocio de margen bajo y mucho volumen, donde la plata queda atrapada en el stock y en lo que deben los clientes. Por eso el tablero no mira solo la ganancia: también mira la caja, los plazos y el stock.
 
+**Todo proyecto de datos empieza por los requerimientos.** Antes de tocar un dato hay que entender qué decisiones toma el dueño y qué preguntas necesita responder. Ahí se define el alcance, la complejidad y la amplitud del tablero: qué entra, qué queda afuera y con qué nivel de detalle. Es una parte fundamental, porque un tablero que responde preguntas que nadie se hace no sirve, por más prolijo que sea. En este proyecto, esa etapa es la que llevó a simplificar el tablero a cuatro pestañas.
+
 ## Qué hice
 
 | Etapa | Qué incluye | Herramientas |

@@ -1,5 +1,7 @@
 # Modelo de datos
 
+**El modelado es la parte crucial del proyecto.** Es donde se mapean los procesos de la empresa (pedir, facturar, cobrar, comprar, pagar, mover stock, registrar en el mayor) y se decide qué representa cada fila. Si el modelo está bien hecho, no importa qué herramienta de BI se use encima (Power BI, Tableau o un agente conversacional conectado al warehouse): los números van a cerrar y las visualizaciones van a estar bien. Si está mal, ninguna herramienta lo arregla.
+
 El warehouse está modelado en **estrella** (modelo dimensional de Kimball):
 
 - **Hechos:** lo que pasa en el negocio y se puede medir. Una venta, un cobro, una compra, un movimiento de stock, un asiento contable. Hay 12.
@@ -24,6 +26,15 @@ Cada diagrama muestra todas las tablas del área con todas sus columnas y tipos.
 Qué se vendió, qué se pidió, qué se debe y qué se cobró.
 
 ![Ventas y clientes](modelo_1_ventas_clientes.png)
+
+**Por qué este modelo.** La venta pasa por cuatro momentos (pedido, factura, deuda y cobro). Cada uno ocurre en otro momento y se mide a otro nivel de detalle, así que cada uno es una tabla de hechos:
+
+- **`fact_pedidos`, por línea de pedido:** compara lo que el cliente pidió con lo que se le entregó. Sin esta tabla no se puede medir "Entregas en tiempo y forma".
+- **`fact_ventas`, por línea de factura:** ventas, unidades y margen por producto.
+- **`fact_cuenta_corriente_cliente`, por factura:** la deuda nace y se cancela factura por factura. Cada una tiene su vencimiento (fecha más el plazo del cliente) y su saldo, y la fila se actualiza con cada cobro. Por cliente se perdería qué parte está vencida; por línea de producto, el saldo se duplicaría al sumar.
+- **`fact_cobranzas`, por cobro aplicado a una factura:** un cobro puede cancelar varias facturas y una factura se puede cobrar en partes. Esta tabla resuelve ese muchos a muchos.
+
+Juntar todo en una sola tabla duplicaría importes al sumar. Las cuatro se cruzan por las dimensiones que comparten (cliente, calendario, producto): primero se suma cada una por cliente y mes, y después se juntan. El número de documento permite seguir un pedido hasta su factura y su cobro.
 
 ### 2. Compras y proveedores
 
