@@ -18,7 +18,7 @@ El dueño de una pyme distribuidora tiene los datos en el ERP, pero no las respu
 | --- | --- | --- |
 | ERP | webERP en Docker con 23 meses de operación simulada (octubre 2024 a agosto 2026): 88.540 líneas de venta, 123 clientes, 1.460 productos y 15 proveedores, con contabilidad por partida doble | MariaDB, Docker, Python |
 | Extracción y carga | Las 145 tablas del ERP y la inflación (INDEC) y el dólar MEP desde APIs públicas | Python, pandas, SQLAlchemy |
-| Data warehouse | Capas `raw` → `staging` → `marts` → `kpi`, con un modelo dimensional de 13 hechos y 8 dimensiones | PostgreSQL (Supabase) |
+| Data warehouse | Capas `raw` → `staging` → `marts` → `kpi`, con un modelo dimensional de 12 hechos y 8 dimensiones | PostgreSQL (Supabase) |
 | Calidad de datos | 63 controles en cuatro ejes (aprovechamiento, cobertura, frescura y veracidad) que avisan qué tan confiable es cada dato | SQL |
 | Tablero | Cuatro pestañas para el dueño, con el mes de agosto 2026, en pesos de hoy o en dólares MEP | HTML, JavaScript, Chart.js |
 

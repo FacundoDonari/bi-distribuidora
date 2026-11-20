@@ -4,7 +4,7 @@
 
 El warehouse está modelado en **estrella** (modelo dimensional de Kimball):
 
-- **Hechos:** lo que pasa en el negocio y se puede medir. Una venta, un cobro, una compra, un movimiento de stock, un asiento contable. Hay 13.
+- **Hechos:** lo que pasa en el negocio y se puede medir. Una venta, un cobro, una compra, un movimiento de stock, un asiento contable. Hay 12.
 - **Dimensiones:** desde dónde se mira lo que pasó. Cuándo (calendario), a quién (cliente), qué (producto), por dónde (canal), quién vendió (vendedor), desde dónde (depósito), a quién se compró (proveedor) y en qué cuenta contable. Hay 8.
 
 Las 8 dimensiones son **compartidas**: el mismo cliente de una venta es el mismo cliente de un cobro. Por eso se puede cruzar "cuánto le vendí" con "cuánto me pagó" sin conciliar a mano.
@@ -13,7 +13,7 @@ Las 8 dimensiones son **compartidas**: el mismo cliente de una venta es el mismo
 
 ![Modelo estrella de ventas](modelo_estrella_ventas.png)
 
-`fact_ventas` es el centro del modelo: una fila por cada línea de factura, conectada a sus seis dimensiones. Los otros doce hechos siguen la misma lógica.
+`fact_ventas` es el centro del modelo: una fila por cada línea de factura, conectada a sus seis dimensiones. Los otros once hechos siguen la misma lógica.
 
 ## El modelo completo, por área
 
@@ -38,7 +38,7 @@ Juntar todo en una sola tabla duplicaría importes al sumar. Las cuatro se cruza
 
 ### 2. Compras y proveedores
 
-Qué se pidió a cada proveedor, qué se recibió y facturó, qué se debe, qué se pagó y a qué factura se aplicó cada pago.
+Qué se pidió a cada proveedor, qué se recibió y facturó, qué se debe, qué se pagó y qué factura canceló cada pago.
 
 ![Compras y proveedores](modelo_2_compras_proveedores.png)
 
@@ -47,8 +47,7 @@ Qué se pidió a cada proveedor, qué se recibió y facturó, qué se debe, qué
 - **`fact_ordenes_compra`, por línea de orden de compra:** compara lo pedido al proveedor con lo recibido y la fecha prometida con la de llegada.
 - **`fact_compras`, por línea de factura de compra:** cuánto se compró, a quién y a qué precio, por producto.
 - **`fact_cuenta_corriente_proveedor`, por factura de compra:** la deuda nace y se cancela por factura. Cada una tiene su vencimiento y su saldo, y la fila se actualiza con cada pago.
-- **`fact_pagos_proveedor`, por pago:** cada transferencia o cheque, con su fecha e importe.
-- **`fact_pagos_proveedor_aplicacion`, por pago aplicado a una factura:** qué factura canceló cada pago y cuántos días después del vencimiento se pagó. Un pago puede cancelar varias facturas y una factura se puede pagar en partes. Es el mismo diseño que `fact_cobranzas` del lado de clientes.
+- **`fact_pagos_proveedor`, por pago:** cada transferencia o cheque, con su fecha, su importe, la factura que canceló y cuántos días después de la factura y del vencimiento se pagó. En los datos cada pago cancela una sola factura (algunas facturas se pagan en partes), así que alcanza con guardar la factura en la misma fila.
 
 Las tablas se cruzan por las dimensiones que comparten (proveedor, calendario, producto). El producto es el mismo que en ventas, así que se puede comparar el costo de compra con el precio de venta. El número de documento permite seguir una compra desde la orden hasta el pago.
 
@@ -77,8 +76,7 @@ La decisión más importante de un hecho es su **grano**: qué es exactamente un
 | `fact_ordenes_compra` | Una línea de orden de compra | Acumulativo | No se usa |
 | `fact_compras` | Una línea de factura de compra | Transaccional | No se usa |
 | `fact_cuenta_corriente_proveedor` | Una factura de compra, con lo pagado y lo que falta | Acumulativo | Días de pago, a pagar en 30 días, detalle de proveedores |
-| `fact_pagos_proveedor` | Un pago a un proveedor | Transaccional | Días de pago |
-| `fact_pagos_proveedor_aplicacion` | La aplicación de un pago a una factura de compra | Transaccional | No se usa (permite medir con qué pago se canceló cada factura y con cuánto atraso) |
+| `fact_pagos_proveedor` | Un pago a un proveedor, con la factura que canceló | Transaccional | Días de pago |
 | `fact_stock_movimiento` | Una entrada o salida de stock | Transaccional | No se usa (el stock sale de la foto de cierre) |
 | `fact_stock_saldo` | Producto × depósito × fecha de cierre | Foto periódica | Días de stock, mercadería que sobra y que falta |
 | `fact_mayor` | Una línea de asiento contable | Transaccional | Estado de resultados, márgenes, punto de equilibrio, caja y bancos |
@@ -102,7 +100,6 @@ Qué dimensiones usa cada hecho. Es la forma rápida de ver qué preguntas se pu
 | `fact_compras` | ● | | ● | | | ● | ● | |
 | `fact_cuenta_corriente_proveedor` | ● | | | | | | ● | |
 | `fact_pagos_proveedor` | ● | | | | | | ● | |
-| `fact_pagos_proveedor_aplicacion` | ● | | | | | | ● | |
 | `fact_stock_movimiento` | ● | ● | ● | | | ● | | |
 | `fact_stock_saldo` | ● | | ● | | | ● | | |
 | `fact_mayor` | ● | | | | | | | ● |
