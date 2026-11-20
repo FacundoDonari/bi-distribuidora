@@ -85,4 +85,4 @@ Las ventas, costos y saldos de la distribuidora son **simulados**: el negocio, s
 
 ## Autor
 
-Facundo Donari, contador público. Proyecto de portfolio para roles de Business Intelligence y análisis de datos.
+Facundo Donari, Contador Público. Proyecto de portfolio para roles de control de gestión, business intelligence, FP&A y análisis de datos.
