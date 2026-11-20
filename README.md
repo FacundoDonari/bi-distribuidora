@@ -22,6 +22,8 @@ El dueño de una pyme distribuidora tiene los datos en el ERP, pero no las respu
 
 ![Arquitectura: ERP, warehouse en capas y tablero](docs/arquitectura.png)
 
+**El warehouse es más amplio que el tablero.** El proyecto empezó con un tablero más grande (balance, presupuesto, flujo de fondos) y después se simplificó para que el dueño vea solo lo esencial. El warehouse conserva todo lo que se cargó (por ejemplo, el presupuesto 2026 y las compras), pero el tablero de hoy usa solo una parte. El [modelo de datos](docs/modelo_datos.md) indica qué hechos usa el tablero y cuáles no.
+
 ## El tablero
 
 Muestra **agosto de 2026** y lo compara con **julio de 2026** (el mes anterior) y con **agosto de 2025** (el mismo mes del año anterior). Los saldos son al 31/08/2026.

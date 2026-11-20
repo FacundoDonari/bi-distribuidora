@@ -47,21 +47,23 @@ El libro mayor, que es la referencia contra la que se controla todo, y lo presup
 
 La decisión más importante de un hecho es su **grano**: qué es exactamente una fila. Define qué se puede sumar sin contar dos veces lo mismo.
 
-| Hecho | Una fila es… | Tipo |
-| --- | --- | --- |
-| `fact_ventas` | Una línea de factura de venta | Transaccional |
-| `fact_pedidos` | Una línea de pedido | Acumulativo: se completa al despachar y al facturar |
-| `fact_cuenta_corriente_cliente` | Una factura, con lo cobrado y lo que falta | Acumulativo |
-| `fact_cobranzas` | La aplicación de un cobro a una factura | Transaccional |
-| `fact_ordenes_compra` | Una línea de orden de compra | Acumulativo |
-| `fact_compras` | Una línea de factura de compra | Transaccional |
-| `fact_cuenta_corriente_proveedor` | Una factura de compra, con lo pagado y lo que falta | Acumulativo |
-| `fact_pagos_proveedor` | Un pago a un proveedor | Transaccional |
-| `fact_stock_movimiento` | Una entrada o salida de stock | Transaccional |
-| `fact_stock_saldo` | Producto × depósito × fecha de cierre | Foto periódica |
-| `fact_mayor` | Una línea de asiento contable | Transaccional |
-| `fact_presupuesto` | Mes × rubro del presupuesto | Plan |
-| `fact_metas_ventas` | Mes × canal × vendedor | Plan |
+| Hecho | Una fila es… | Tipo | Uso en el tablero |
+| --- | --- | --- | --- |
+| `fact_ventas` | Una línea de factura de venta | Transaccional | Ventas, unidades, margen, categorías, clientes que dejaron de comprar |
+| `fact_pedidos` | Una línea de pedido | Acumulativo: se completa al despachar y al facturar | Entregas en tiempo y forma |
+| `fact_cuenta_corriente_cliente` | Una factura, con lo cobrado y lo que falta | Acumulativo | Facturas vencidas sin cobrar, días de cobro, detalle de clientes |
+| `fact_cobranzas` | La aplicación de un cobro a una factura | Transaccional | Días de cobro |
+| `fact_ordenes_compra` | Una línea de orden de compra | Acumulativo | No se usa |
+| `fact_compras` | Una línea de factura de compra | Transaccional | No se usa |
+| `fact_cuenta_corriente_proveedor` | Una factura de compra, con lo pagado y lo que falta | Acumulativo | Días de pago, a pagar en 30 días, detalle de proveedores |
+| `fact_pagos_proveedor` | Un pago a un proveedor | Transaccional | Días de pago |
+| `fact_stock_movimiento` | Una entrada o salida de stock | Transaccional | No se usa (el stock sale de la foto de cierre) |
+| `fact_stock_saldo` | Producto × depósito × fecha de cierre | Foto periódica | Días de stock, mercadería que sobra y que falta |
+| `fact_mayor` | Una línea de asiento contable | Transaccional | Estado de resultados, márgenes, punto de equilibrio, caja y bancos |
+| `fact_presupuesto` | Mes × rubro del presupuesto | Plan | No se usa |
+| `fact_metas_ventas` | Mes × canal × vendedor | Plan | No se usa |
+
+El modelo se armó para un proyecto más amplio y después el tablero se simplificó: los hechos que dicen "No se usa" quedan en el warehouse, listos para crecer (por ejemplo, comparar contra el presupuesto o analizar compras), pero el tablero de hoy no los muestra.
 
 **Transaccional:** cada fila es un evento que no cambia. **Acumulativo:** cada fila es un documento que se va completando a medida que avanza (un pedido se despacha, se factura y se cobra). **Foto periódica:** cada fila es el estado de algo a una fecha.
 
@@ -101,5 +103,5 @@ Qué dimensiones usa cada hecho. Es la forma rápida de ver qué preguntas se pu
 | `raw` | Copia exacta de las 145 tablas del ERP, sin tocar |
 | `staging` | Los mismos datos, limpios y con nombres de negocio |
 | `marts` | El modelo de esta página: hechos y dimensiones |
-| `kpi` | Una vista por indicador, lista para el tablero |
+| `kpi` | Una vista por indicador (el tablero de hoy usa una parte) |
 | `audit` | Los controles de [calidad de datos](calidad_de_datos.md) |
