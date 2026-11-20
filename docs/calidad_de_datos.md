@@ -11,7 +11,7 @@ Esta auditoría vive en el warehouse (esquema `audit`). En el tablero, la secci�
 | Dónde | Qué se revisa |
 | --- | --- |
 | Copia del ERP (`raw`) | Que las 145 tablas lleguen completas, y las de movimientos: facturas y recibos de clientes, facturas y pagos a proveedores, pedidos, órdenes de compra, movimientos de stock y libro mayor |
-| Modelo (`marts`) | Los 13 hechos y las 8 dimensiones |
+| Modelo (`marts`) | Los 12 hechos y las 8 dimensiones |
 | Indicadores (`kpi`) | Que cada número del tablero sea igual al de su indicador |
 | Registro de cargas | Cuándo se cargó cada tabla y con cuántas filas |
 
@@ -46,5 +46,5 @@ Si un eje queda en Crítico (25 puntos o menos), avisa que los indicadores que d
 
 - **La carga llegó 29 días después del último movimiento.** Alcanza para el análisis mensual, no para decidir la cobranza del día.
 - **Se usa un solo depósito de los cuatro.** No es un error.
-- **El ERP no registra recepciones, conciliación bancaria ni presupuesto.** El presupuesto 2026 se carga desde un Excel aparte (el tablero no lo muestra).
+- **El ERP no registra recepciones ni conciliación bancaria.**
 - **286 artículos activos no se vendieron en el último año.** Conviene depurar el catálogo.

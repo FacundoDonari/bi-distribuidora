@@ -15,14 +15,14 @@ El dueño de una pyme distribuidora tiene los datos en el ERP, pero no las respu
 | Etapa | Qué incluye | Herramientas |
 | --- | --- | --- |
 | ERP | webERP en Docker con 23 meses de operación simulada (octubre 2024 a agosto 2026): 88.540 líneas de venta, 123 clientes, 1.460 productos y 15 proveedores, con contabilidad por partida doble | MariaDB, Docker, Python |
-| Extracción y carga | Las 145 tablas del ERP, el presupuesto 2026 en Excel y la inflación (INDEC) y el dólar MEP desde APIs públicas | Python, pandas, SQLAlchemy |
-| Data warehouse | Capas `raw` → `staging` → `marts` → `kpi`, con un modelo dimensional de 13 hechos y 8 dimensiones | PostgreSQL (Supabase) |
+| Extracción y carga | Las 145 tablas del ERP y la inflación (INDEC) y el dólar MEP desde APIs públicas | Python, pandas, SQLAlchemy |
+| Data warehouse | Capas `raw` → `staging` → `marts` → `kpi`, con un modelo dimensional de 12 hechos y 8 dimensiones | PostgreSQL (Supabase) |
 | Calidad de datos | 63 controles en cuatro ejes (aprovechamiento, cobertura, frescura y veracidad) que avisan qué tan confiable es cada dato | SQL |
 | Tablero | Cuatro pestañas para el dueño, con el mes de agosto 2026, en pesos de hoy o en dólares MEP | HTML, JavaScript, Chart.js |
 
 ![Arquitectura: ERP, warehouse en capas y tablero](docs/arquitectura.png)
 
-**El warehouse es más amplio que el tablero.** El proyecto empezó con un tablero más grande (balance, presupuesto, flujo de fondos) y después se simplificó para que el dueño vea solo lo esencial. El warehouse conserva todo lo que se cargó (por ejemplo, el presupuesto 2026 y las compras), pero el tablero de hoy usa solo una parte. El [modelo de datos](docs/modelo_datos.md) indica qué hechos usa el tablero y cuáles no.
+**El warehouse es más amplio que el tablero.** El proyecto empezó con un tablero más grande (balance y flujo de fondos, entre otros) y después se simplificó para que el dueño vea solo lo esencial. El warehouse conserva todo lo que se cargó (por ejemplo, las compras y las metas de ventas), pero el tablero de hoy usa solo una parte. El [modelo de datos](docs/modelo_datos.md) indica qué hechos usa el tablero y cuáles no.
 
 ## El tablero
 

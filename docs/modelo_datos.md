@@ -2,7 +2,7 @@
 
 El warehouse está modelado en **estrella** (modelo dimensional de Kimball):
 
-- **Hechos:** lo que pasa en el negocio y se puede medir. Una venta, un cobro, una compra, un movimiento de stock, un asiento contable. Hay 13.
+- **Hechos:** lo que pasa en el negocio y se puede medir. Una venta, un cobro, una compra, un movimiento de stock, un asiento contable. Hay 12.
 - **Dimensiones:** desde dónde se mira lo que pasó. Cuándo (calendario), a quién (cliente), qué (producto), por dónde (canal), quién vendió (vendedor), desde dónde (depósito), a quién se compró (proveedor) y en qué cuenta contable. Hay 8.
 
 Las 8 dimensiones son **compartidas**: el mismo cliente de una venta es el mismo cliente de un cobro. Por eso se puede cruzar "cuánto le vendí" con "cuánto me pagó" sin conciliar a mano.
@@ -11,7 +11,7 @@ Las 8 dimensiones son **compartidas**: el mismo cliente de una venta es el mismo
 
 ![Modelo estrella de ventas](modelo_estrella_ventas.png)
 
-`fact_ventas` es el centro del modelo: una fila por cada línea de factura, conectada a sus seis dimensiones. Los otros doce hechos siguen la misma lógica.
+`fact_ventas` es el centro del modelo: una fila por cada línea de factura, conectada a sus seis dimensiones. Los otros once hechos siguen la misma lógica.
 
 ## El modelo completo, por área
 
@@ -39,7 +39,7 @@ Cada entrada y salida de mercadería, y la foto del stock al cierre de cada mes.
 
 ### 4. Contabilidad y planificación
 
-El libro mayor, que es la referencia contra la que se controla todo, y lo presupuestado.
+El libro mayor, que es la referencia contra la que se controla todo, y las metas de ventas.
 
 ![Contabilidad y planificación](modelo_4_contabilidad_plan.png)
 
@@ -60,10 +60,9 @@ La decisión más importante de un hecho es su **grano**: qué es exactamente un
 | `fact_stock_movimiento` | Una entrada o salida de stock | Transaccional | No se usa (el stock sale de la foto de cierre) |
 | `fact_stock_saldo` | Producto × depósito × fecha de cierre | Foto periódica | Días de stock, mercadería que sobra y que falta |
 | `fact_mayor` | Una línea de asiento contable | Transaccional | Estado de resultados, márgenes, punto de equilibrio, caja y bancos |
-| `fact_presupuesto` | Mes × rubro del presupuesto | Plan | No se usa |
 | `fact_metas_ventas` | Mes × canal × vendedor | Plan | No se usa |
 
-El modelo se armó para un proyecto más amplio y después el tablero se simplificó: los hechos que dicen "No se usa" quedan en el warehouse, listos para crecer (por ejemplo, comparar contra el presupuesto o analizar compras), pero el tablero de hoy no los muestra.
+El modelo se armó para un proyecto más amplio y después el tablero se simplificó: los hechos que dicen "No se usa" quedan en el warehouse, listos para crecer (por ejemplo, comparar contra las metas o analizar compras), pero el tablero de hoy no los muestra.
 
 **Transaccional:** cada fila es un evento que no cambia. **Acumulativo:** cada fila es un documento que se va completando a medida que avanza (un pedido se despacha, se factura y se cobra). **Foto periódica:** cada fila es el estado de algo a una fecha.
 
@@ -84,7 +83,6 @@ Qué dimensiones usa cada hecho. Es la forma rápida de ver qué preguntas se pu
 | `fact_stock_movimiento` | ● | ● | ● | | | ● | | |
 | `fact_stock_saldo` | ● | | ● | | | ● | | |
 | `fact_mayor` | ● | | | | | | | ● |
-| `fact_presupuesto` | mes | | | | | | | |
 | `fact_metas_ventas` | mes | | | ● | ● | | | |
 
 ## Decisiones de modelado

@@ -20,12 +20,8 @@
   <text x="46" y="116" class="s">ventas, compras, stock, mayor</text>
 
   <rect x="30" y="152" width="200" height="70" rx="12" fill="#f4f6f8" stroke="#cfd6de"/>
-  <text x="46" y="180" class="t">Presupuesto 2026</text>
-  <text x="46" y="200" class="s">Excel (el tablero no lo usa)</text>
-
-  <rect x="30" y="238" width="200" height="70" rx="12" fill="#f4f6f8" stroke="#cfd6de"/>
-  <text x="46" y="266" class="t">APIs públicas</text>
-  <text x="46" y="286" class="s">IPC del INDEC y dólar MEP</text>
+  <text x="46" y="180" class="t">APIs públicas</text>
+  <text x="46" y="200" class="s">IPC del INDEC y dólar MEP</text>
 
   <!-- Warehouse -->
   <text x="300" y="34" class="k">DATA WAREHOUSE · SUPABASE (POSTGRES)</text>
@@ -35,7 +31,6 @@
   <text x="326" y="124" class="t">raw</text>
   <text x="326" y="146" class="s">copia fiel del ERP</text>
   <text x="326" y="164" class="s">145 tablas</text>
-  <text x="326" y="182" class="s">+ presupuesto</text>
 
   <rect x="465" y="96" width="135" height="120" rx="12" fill="#ffffff" stroke="#9fd0cb"/>
   <text x="481" y="124" class="t">staging</text>
@@ -73,8 +68,7 @@
 
   <!-- Flechas -->
   <path class="l" d="M230,93 C262,93 270,140 308,140" marker-end="url(#f)"/>
-  <path class="l" d="M230,187 C262,187 270,160 308,160" marker-end="url(#f)"/>
-  <path class="l" d="M230,273 C262,273 262,330 300,330 L830,330 C842,330 842,320 842,218" marker-end="url(#f)"/>
+  <path class="l" d="M230,187 C262,187 262,330 300,330 L830,330 C842,330 842,320 842,218" marker-end="url(#f)"/>
   <path class="l" d="M445,156 L463,156" marker-end="url(#f)"/>
   <path class="l" d="M600,156 L618,156" marker-end="url(#f)"/>
   <path class="l" d="M755,156 L773,156" marker-end="url(#f)"/>
@@ -83,6 +77,6 @@
   <!-- Scripts -->
   <text x="30" y="372" class="k">CÓMO SE MUEVEN LOS DATOS</text>
   <text x="30" y="396" class="s">1. Un simulador en Python genera 23 meses de operación en webERP.</text>
-  <text x="30" y="416" class="s">2. Un solo comando carga ERP, Excel y APIs, recalcula staging, marts y kpi y corre la auditoría (avisa si algo empeora).</text>
+  <text x="30" y="416" class="s">2. Un solo comando carga ERP y APIs, recalcula staging, marts y kpi y corre la auditoría (avisa si algo empeora).</text>
   <text x="30" y="436" class="s">3. El tablero toma los resultados de kpi y marts y se publica como una página estática, sin conexión a la base.</text>
 </svg>
