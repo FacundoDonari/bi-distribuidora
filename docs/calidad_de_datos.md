@@ -11,7 +11,7 @@ Esta auditoría vive en el warehouse (esquema `audit`). En el tablero, la secci�
 | Dónde | Qué se revisa |
 | --- | --- |
 | Copia del ERP (`raw`) | Que las 145 tablas lleguen completas, y las de movimientos: facturas y recibos de clientes, facturas y pagos a proveedores, pedidos, órdenes de compra, movimientos de stock y libro mayor |
-| Modelo (`marts`) | Los 12 hechos y las 8 dimensiones |
+| Modelo (`marts`) | Los 13 hechos y las 8 dimensiones |
 | Indicadores (`kpi`) | Que cada número del tablero sea igual al de su indicador |
 | Registro de cargas | Cuándo se cargó cada tabla y con cuántas filas |
 
