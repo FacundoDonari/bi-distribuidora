@@ -10,7 +10,7 @@ Proyecto de Business Intelligence de punta a punta para el dueño de una distrib
 
 La idea fue recorrer el camino completo que haría un analista en una empresa, no armar un tablero sobre una planilla prolija.
 
-- **Requerimientos primero.** El proyecto empezó por definir qué preguntas necesita responder el dueño. Recién después se construyó todo lo demás.
+- **Requerimientos primero.** El proyecto empezó por definir qué preguntas necesita responder el dueño. Para eso se mapeó la pyme completa y sus procesos internos (pedidos, facturación, cobranzas, compras, pagos, stock y contabilidad), para entender cómo funciona el negocio y tener criterio para elegir los indicadores. Recién después se construyó todo lo demás.
 - **Un ERP real como origen.** Los datos se extraen de webERP, un sistema de gestión real de código abierto, corriendo en Docker con 23 meses de operación simulada. Son sus 145 tablas tal como las usa el sistema: un modelo transaccional (**OLTP**), normalizado y pensado para registrar operaciones rápido, no para analizarlas.
 - **De OLTP a un modelo dimensional (OLAP).** En el data warehouse (PostgreSQL en Supabase) esas tablas se transforman en un modelo estrella de hechos y dimensiones, pensado para analizar: sumar, comparar y cruzar procesos sin errores.
 - **Carga automática y con control de calidad.** Un script en Python, pensado para correr una vez por mes (o más seguido, si hace falta), carga los datos del ERP y de las APIs públicas. Después recalcula todas las capas del warehouse (`raw` → `staging` → `marts` → `kpi`) y corre la auditoría de calidad antes de usar los datos. Si algo no cierra, avisa.
