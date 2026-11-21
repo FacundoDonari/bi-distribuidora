@@ -6,6 +6,16 @@ Proyecto de Business Intelligence de punta a punta para el dueño de una distrib
 
 ![Pestaña Claves del tablero](docs/capturas/1_claves.png)
 
+## Un proyecto lo más real posible, de principio a fin
+
+La idea fue recorrer el camino completo que haría un analista en una empresa, no armar un tablero sobre una planilla prolija.
+
+- **Requerimientos primero.** El proyecto empezó por definir qué preguntas necesita responder el dueño. Recién después se construyó todo lo demás.
+- **Un ERP real como origen.** Los datos se extraen de webERP, un sistema de gestión real de código abierto, corriendo en Docker con 23 meses de operación simulada. Son sus 145 tablas tal como las usa el sistema: un modelo transaccional (**OLTP**), normalizado y pensado para registrar operaciones rápido, no para analizarlas.
+- **De OLTP a un modelo dimensional (OLAP).** En el data warehouse (PostgreSQL en Supabase) esas tablas se transforman en un modelo estrella de hechos y dimensiones, pensado para analizar: sumar, comparar y cruzar procesos sin errores.
+- **Carga automática y con control de calidad.** Un script en Python, pensado para correr una vez por mes (o más seguido, si hace falta), carga los datos del ERP y de las APIs públicas. Después recalcula todas las capas del warehouse (`raw` → `staging` → `marts` → `kpi`) y corre la auditoría de calidad antes de usar los datos. Si algo no cierra, avisa.
+- **Un tablero que se alimenta del warehouse.** El tablero toma sus números de las capas `kpi` y `marts`. Hoy, su publicación es un paso aparte de la carga; el siguiente paso es unir los dos en un solo proceso programado.
+
 ## El problema
 
 El dueño de una pyme distribuidora tiene los datos en el ERP, pero no las respuestas: ¿cuánto vendí?, ¿cuánto me queda de cada venta?, ¿me alcanza la plata?, ¿quién me debe y desde cuándo?, ¿qué mercadería me sobra y cuál me falta? Es un negocio de margen bajo y mucho volumen, donde la plata queda atrapada en el stock y en lo que deben los clientes. Por eso el tablero no mira solo la ganancia: también mira la caja, los plazos y el stock.
