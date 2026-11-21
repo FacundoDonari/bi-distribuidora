@@ -119,6 +119,16 @@ Los dos primeros dependen de la hora en que se corre la carga, así que `actuali
 
 Veracidad tiene más controles porque es el eje que confirma que los números del tablero son correctos. Cada control cubre un error distinto que puede pasar en la vida real: una factura borrada, un costo sin cargar, una carga a medias o un asiento descuadrado.
 
+### Los controles con menos de 80, en simple
+
+Ninguno indica un error en los números del tablero. Muestran límites del sistema o de la carga:
+
+- **D1.10 Fuentes esperadas con datos (57):** 3 de las 7 fuentes que se esperaban están vacías, porque la empresa no usa esos módulos del ERP: recepciones de mercadería, conciliación bancaria y planificación contable.
+- **D1.11 Uso de descuentos (0, informativo):** ninguna venta tiene descuento. Puede ser que el negocio no los use, por eso no suma a la nota.
+- **D2.04 Depósitos con movimiento (25):** el ERP tiene 4 depósitos cargados, pero se usa 1 solo. No es un error: es cómo trabaja la empresa.
+- **D3.02 Días entre el último movimiento y la carga (25):** la carga se hizo 29 días después del último movimiento. Alcanza para un análisis mensual, pero no para decidir la cobranza del día. Mejora sola con cargas más frecuentes.
+- **D3.08 Fuentes al día (13, informativo):** es el mismo atraso de D3.02, visto fuente por fuente. No suma a la nota para no contarlo dos veces.
+
 ## Ejemplo: las ventas calculadas por tres caminos
 
 | Camino | Ventas de todo el período |
