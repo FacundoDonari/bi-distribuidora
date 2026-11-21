@@ -123,7 +123,7 @@ Veracidad tiene más controles porque es el eje que confirma que los números de
 
 Ninguno indica un error en los números del tablero. Muestran límites del sistema o de la carga:
 
-- **D1.10 Fuentes esperadas con datos (57):** 3 de las 7 fuentes que se esperaban están vacías, porque la empresa no usa esos módulos del ERP: recepciones de mercadería, conciliación bancaria y planificación contable.
+- **D1.10 Fuentes esperadas con datos (57):** revisa si la empresa usa los módulos del ERP que hacen falta para ciertos análisis. Hay datos en 4 de 7: faltan recepciones de mercadería, movimientos bancarios y planificación contable. No es un error de datos, es un límite del uso del sistema, y la auditoría lo deja explícito para que nadie saque conclusiones que los datos no soportan, como dar por conciliada la caja.
 - **D1.11 Uso de descuentos (0, informativo):** ninguna venta tiene descuento. Puede ser que el negocio no los use, por eso no suma a la nota.
 - **D2.04 Depósitos con movimiento (25):** el ERP tiene 4 depósitos cargados, pero se usa 1 solo. No es un error: es cómo trabaja la empresa.
 - **D3.02 Días entre el último movimiento y la carga (25):** la carga se hizo 29 días después del último movimiento. Alcanza para un análisis mensual, pero no para decidir la cobranza del día. Mejora sola con cargas más frecuentes.
