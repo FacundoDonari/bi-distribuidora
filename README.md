@@ -2,7 +2,7 @@
 
 Proyecto de Business Intelligence de punta a punta para el dueño de una distribuidora mayorista de consumo masivo. Arranca en un ERP con 23 meses de operación y termina en un tablero que responde las preguntas que el dueño se hace todos los meses. En el medio hay un data warehouse en capas, un modelo dimensional y una auditoría de calidad de datos.
 
-**[Ver el tablero](https://claude.ai/artifact/UZ83beL8ZhC7Tk1EoA757A)** · **[Leer la documentación completa](https://claude.ai/artifact/Dtcbgk8PiNAUyae2pfuXWJ)**
+**[Ver el tablero funcionando](https://facundodonari.github.io/bi-distribuidora/tablero/)**
 
 ![Pestaña Claves del tablero](docs/capturas/1_claves.png)
 
@@ -65,7 +65,7 @@ Comercial, Económico y Financiero empiezan con un **resumen**: una línea por c
 | **Comercial** ![](docs/capturas/2_comercial.png) | **Económico** ![](docs/capturas/3_economico.png) |
 | **Financiero** ![](docs/capturas/4_financiero.png) | |
 
-El tablero completo es un solo archivo: [tablero/index.html](tablero/index.html). Se descarga y se abre con doble clic (necesita internet para cargar la librería de gráficos).
+El tablero es una página estática: [tablero/index.html](tablero/index.html), con la librería de gráficos ([Chart.js](https://www.chartjs.org), licencia MIT) incluida en la misma carpeta. No hace ninguna conexión externa: se puede descargar la carpeta y abrir `index.html` con doble clic, incluso sin internet.
 
 ## Documentación
 
@@ -83,7 +83,8 @@ El tablero completo es un solo archivo: [tablero/index.html](tablero/index.html)
 ## Estructura del repositorio
 
 ```
-tablero/index.html     el tablero (un solo archivo, con los datos incluidos)
+tablero/index.html     el tablero (con los datos incluidos)
+tablero/chart.umd.min.js  librería de gráficos (Chart.js 4.4.1)
 docs/indicadores.md    catálogo de indicadores
 docs/modelo_datos.md   modelo dimensional del warehouse
 docs/calidad_de_datos.md  auditoría de calidad de datos
